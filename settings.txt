@@ -1,0 +1,23 @@
+-- LemonLake's Factories: Config
+
+-- Logging
+factory.logTaker = true
+
+-- NB: miners require fans in the crafting recipe. recommended to enable fans if miners are enabled.
+-- 	   alternatively change the crafting recipe manually in crafting.lua
+
+factory.enableMiner = true
+factory.enableFan = true
+factory.enableVacuum = true
+
+factory.minerDigLimit = 256
+
+-- Defines the furnace types for movers and takers.
+-- Requires fuel, src and dst inventory types. 
+-- Don't change unless you know what you're doing.
+armDevicesFurnacelike = {"default:furnace", "default:furnace_active", "factory:ind_furnace", "factory:ind_furnace_active", "factory:compressor", "factory:compressor_active", "pipeworks:autocrafter"}
+takerDevicesFurnacelike = {"default:furnace", "default:furnace_active", "factory:ind_furnace", "factory:ind_furnace_active", "factory:compressor", "factory:compressor_active", "pipeworks:autocrafter"}
+
+-- Fuel types for the generator
+generatorFuel = {{name = "factory:tree_sap", value = 20}}
+-- TODO: Add items for other Technic blocks

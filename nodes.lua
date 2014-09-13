@@ -37,7 +37,7 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
 		local _,obj
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
+			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 				local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 				local target = minetest.get_node(b)
@@ -456,7 +456,7 @@ minetest.register_abm({
 		local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 		local target = minetest.get_node(b)
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
+			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local stack = ItemStack(obj:get_luaentity().itemstring)
 				qarm_handle(a, b, target, stack, minv, obj)
 			end

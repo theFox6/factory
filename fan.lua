@@ -46,7 +46,7 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y, z = pos.z}, 1)
 		local _,obj
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
+			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x, y = obj:getpos().y + 3, z = obj:getpos().z})
 			end
 		end
@@ -113,7 +113,7 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x - a.x/2, y = pos.y, z = pos.z - a.z/2}, 1)
 		local _,obj
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
+			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x - a.x*2.0, y = obj:getpos().y, z = obj:getpos().z - a.z*2.0})
 			end
 		end

@@ -144,7 +144,7 @@ function factory.get_objects_with_square_radius(pos, rad)
   rad = rad + .5;
   local objs = {}
   for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, math.sqrt(3)*rad)) do
-    if not object:is_player() and object:get_luaentity() and object:get_luaentity().name == "__builtin:item" then
+    if not object:is_player() and object:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
       local opos = object:getpos()
       if pos.x - rad <= opos.x and opos.x <= pos.x + rad and pos.y - rad <= opos.y and opos.y <= pos.y + rad and pos.z - rad <= opos.z and opos.z <= pos.z + rad then
         objs[#objs + 1] = object

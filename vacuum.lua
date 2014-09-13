@@ -101,7 +101,7 @@ minetest.register_abm({
 		local all_objects = factory.get_objects_with_square_radius({x = pos.x, y = pos.y + 3, z = pos.z}, 2)
 		local _,obj
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
+			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = pos.x, y = pos.y - 0.5, z = pos.z})
 			end
 		end

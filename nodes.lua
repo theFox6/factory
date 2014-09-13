@@ -1,37 +1,3 @@
-minetest.register_node("factory:belt", {
-	description = "Conveyor Belt",
-	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
-	groups = {cracky=1},
-	drawtype = "nodebox",
-	paramtype = "light",
-	paramtype2 = "facedir",
-	is_ground_content = true,
-	legacy_facedir_simple = true,
-	node_box = {
-			type = "fixed",
-			fixed = {{-0.5,-0.5,-0.5,0.5,0.0625,0.5},}
-		},
-})
-
-minetest.register_abm({
-	nodenames = {"factory:belt"},
-	neighbors = nil,
-	interval = 1,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
-		local all_objects = minetest.get_objects_inside_radius(pos, 1)
-		local _,obj
-		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
-				local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
-				local b = {x = obj:getpos().x + (a.x / 3.5), y = pos.y + 0.175, z = obj:getpos().z + (a.z / 3.5),}
-				obj:moveto(b, false)
-			end
-		end
-	end,
-})
-
 minetest.register_node("factory:arm",{
 	drawtype = "nodebox",
 	tiles = {"factory_steel_noise.png"},

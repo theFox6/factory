@@ -154,11 +154,13 @@ function factory.get_objects_with_square_radius(pos, rad)
   return objs
 end
 
+dofile(factory.modpath.."/luaentity.lua")
 
 dofile(factory.modpath.."/nodes.lua")
 dofile(factory.modpath.."/craftitems.lua")
 dofile(factory.modpath.."/crafting.lua")
 
+dofile(factory.modpath.."/belt.lua")
 dofile(factory.modpath.."/ind_furnace.lua")
 dofile(factory.modpath.."/ind_squeezer.lua")
 dofile(factory.modpath.."/swapper.lua")

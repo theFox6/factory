@@ -1,0 +1,84 @@
+
+
+-------------
+  Separator  
+-------------
+
+Irrlicht log: Irrlicht Engine version 1.8.1
+Irrlicht log: Linux 3.13.0-35-generic #62-Ubuntu SMP Fri Aug 15 01:58:42 UTC 2014 x86_64
+Irrlicht log: Using renderer: OpenGL 3.0
+Irrlicht log: Gallium 0.4 on AMD REDWOOD: X.Org
+Irrlicht log: OpenGL driver version is 1.2 or better.
+Irrlicht log: GLSL version: 1.3
+Factory v0.5 is working
+Pipeworks loaded!
+23:00:20: ACTION[main]:         .__               __                   __   
+23:00:20: ACTION[main]:   _____ |__| ____   _____/  |_  ____   _______/  |_ 
+23:00:20: ACTION[main]:  /     \|  |/    \_/ __ \   __\/ __ \ /  ___/\   __\
+23:00:20: ACTION[main]: |  Y Y  \  |   |  \  ___/|  | \  ___/ \___ \  |  |  
+23:00:20: ACTION[main]: |__|_|  /__|___|  /\___  >__|  \___  >____  > |__|  
+23:00:20: ACTION[main]:       \/        \/     \/          \/     \/        
+23:00:20: ACTION[main]: World at [/home/drew/minetest-minetest-2f170a6/bin/../worlds/World 05]
+23:00:20: ACTION[main]: Server for gameid="minetest" listening on 0.0.0.0:62226.
+23:00:20: ERROR[main]: ServerError: ...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: attempt to call method '_add_loaded' (a nil value)
+23:00:20: ERROR[main]: stack traceback:
+23:00:20: ERROR[main]: 	...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: in function '?'
+23:00:20: ERROR[main]: 	...st-minetest-2f170a6/bin/../builtin/game/register.lua:348: in function <...st-minetest-2f170a6/bin/../builtin/game/register.lua:336>
+Unified Inventory. inventory size: 251
+Factory v0.5 is working
+Pipeworks loaded!
+23:00:25: ACTION[main]:         .__               __                   __   
+23:00:25: ACTION[main]:   _____ |__| ____   _____/  |_  ____   _______/  |_ 
+23:00:25: ACTION[main]:  /     \|  |/    \_/ __ \   __\/ __ \ /  ___/\   __\
+23:00:25: ACTION[main]: |  Y Y  \  |   |  \  ___/|  | \  ___/ \___ \  |  |  
+23:00:25: ACTION[main]: |__|_|  /__|___|  /\___  >__|  \___  >____  > |__|  
+23:00:25: ACTION[main]:       \/        \/     \/          \/     \/        
+23:00:25: ACTION[main]: World at [/home/drew/minetest-minetest-2f170a6/bin/../worlds/World 05]
+23:00:25: ACTION[main]: Server for gameid="minetest" listening on 0.0.0.0:63364.
+Unified Inventory. inventory size: 251
+23:00:26: ERROR[main]: ServerError: ...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: attempt to call method '_add_loaded' (a nil value)
+23:00:26: ERROR[main]: stack traceback:
+23:00:26: ERROR[main]: 	...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: in function '?'
+23:00:26: ERROR[main]: 	...st-minetest-2f170a6/bin/../builtin/game/register.lua:348: in function <...st-minetest-2f170a6/bin/../builtin/game/register.lua:336>
+Factory v0.5 is working
+Pipeworks loaded!
+23:00:56: ACTION[main]:         .__               __                   __   
+23:00:56: ACTION[main]:   _____ |__| ____   _____/  |_  ____   _______/  |_ 
+23:00:56: ACTION[main]:  /     \|  |/    \_/ __ \   __\/ __ \ /  ___/\   __\
+23:00:56: ACTION[main]: |  Y Y  \  |   |  \  ___/|  | \  ___/ \___ \  |  |  
+23:00:56: ACTION[main]: |__|_|  /__|___|  /\___  >__|  \___  >____  > |__|  
+23:00:56: ACTION[main]:       \/        \/     \/          \/     \/        
+23:00:56: ACTION[main]: World at [/home/drew/minetest-minetest-2f170a6/bin/../worlds/World 05]
+23:00:56: ACTION[main]: Server for gameid="minetest" listening on 0.0.0.0:55085.
+Unified Inventory. inventory size: 251
+23:00:56: ERROR[main]: ServerError: ...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: attempt to call method 'add_loaded' (a nil value)
+23:00:56: ERROR[main]: stack traceback:
+23:00:56: ERROR[main]: 	...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: in function '?'
+23:00:56: ERROR[main]: 	...st-minetest-2f170a6/bin/../builtin/game/register.lua:348: in function <...st-minetest-2f170a6/bin/../builtin/game/register.lua:336>
+23:04:18: ERROR[main]: ========== ERROR FROM LUA ===========
+23:04:18: ERROR[main]: Failed to load and run script from 
+23:04:18: ERROR[main]: /home/drew/minetest-minetest-2f170a6/bin/../mods/factory/init.lua:
+23:04:18: ERROR[main]: ...netest-minetest-2f170a6/bin/../mods/factory/belt.lua:80: attempt to index global 'luaentity' (a nil value)
+23:04:18: ERROR[main]: stack traceback:
+23:04:18: ERROR[main]: 	...netest-minetest-2f170a6/bin/../mods/factory/belt.lua:80: in main chunk
+23:04:18: ERROR[main]: 	[C]: in function 'dofile'
+23:04:18: ERROR[main]: 	...netest-minetest-2f170a6/bin/../mods/factory/init.lua:163: in main chunk
+23:04:18: ERROR[main]: ======= END OF ERROR FROM LUA ========
+23:04:18: ERROR[main]: Server: Failed to load and run /home/drew/minetest-minetest-2f170a6/bin/../mods/factory/init.lua
+23:04:18: ERROR[main]: ModError: ModError: Failed to load and run /home/drew/minetest-minetest-2f170a6/bin/../mods/factory/init.lua
+Factory v0.5 is working
+Pipeworks loaded!
+23:04:26: ACTION[main]:         .__               __                   __   
+23:04:26: ACTION[main]:   _____ |__| ____   _____/  |_  ____   _______/  |_ 
+23:04:26: ACTION[main]:  /     \|  |/    \_/ __ \   __\/ __ \ /  ___/\   __\
+23:04:26: ACTION[main]: |  Y Y  \  |   |  \  ___/|  | \  ___/ \___ \  |  |  
+23:04:26: ACTION[main]: |__|_|  /__|___|  /\___  >__|  \___  >____  > |__|  
+23:04:26: ACTION[main]:       \/        \/     \/          \/     \/        
+23:04:26: ACTION[main]: World at [/home/drew/minetest-minetest-2f170a6/bin/../worlds/World 05]
+23:04:26: ACTION[main]: Server for gameid="minetest" listening on 0.0.0.0:51373.
+Unified Inventory. inventory size: 251
+23:04:26: ERROR[main]: ServerError: ...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: attempt to call method '_add_loaded' (a nil value)
+23:04:26: ERROR[main]: stack traceback:
+23:04:26: ERROR[main]: 	...t-minetest-2f170a6/bin/../mods/factory/luaentity.lua:329: in function '?'
+23:04:26: ERROR[main]: 	...st-minetest-2f170a6/bin/../builtin/game/register.lua:348: in function <...st-minetest-2f170a6/bin/../builtin/game/register.lua:336>
+23:09:12: INFO: sigint_handler(): Ctrl-C pressed, shutting down.

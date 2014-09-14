@@ -154,7 +154,7 @@ function factory.get_objects_with_square_radius(pos, rad)
   return objs
 end
 
-dofile(factory.modpath.."/luaentity.lua")
+print(minetest.get_modpath("pipeworks"))
 
 dofile(factory.modpath.."/nodes.lua")
 dofile(factory.modpath.."/craftitems.lua")

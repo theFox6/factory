@@ -36,8 +36,8 @@ minetest.register_abm({
 
 function factory.do_moving_item(pos, item)
 	local stack = ItemStack(item)
-	local obj = luaentity.add_entity(pos, "factory:moving_item")
-	obj:set_item(stack:to_string())
+	local obj = minetest.add_entity(pos, "factory:moving_item")
+	obj:get_luaentity():set_item(stack:to_string())
 	return obj
 end
 
@@ -54,10 +54,20 @@ minetest.register_entity("factory:moving_item", {
 		is_visible = false,
 	},
 
-	physical_state = false,
+	physical_state = true,
+	itemstring = '',
 
-	from_data = function(self, itemstring)
+	set_item = function(self, itemstring)
+		self.itemstring = itemstring
 		local stack = ItemStack(itemstring)
+		local count = stack:get_count()
+		local max_count = stack:get_stack_max()
+		if count > max_count then
+			count = max_count
+			self.itemstring = stack:get_name().." "..max_count
+		end
+		local s = 0.15 + 0.15 * (count / max_count)
+		local c = 0.8 * s
 		local itemtable = stack:to_table()
 		local itemname = nil
 		if itemtable then
@@ -65,65 +75,54 @@ minetest.register_entity("factory:moving_item", {
 		end
 		local item_texture = nil
 		local item_type = ""
-		if minetest.registered_items[itemname] then
-			item_texture = minetest.registered_items[itemname].inventory_image
-			item_type = minetest.registered_items[itemname].type
+		if core.registered_items[itemname] then
+			item_texture = core.registered_items[itemname].inventory_image
+			item_type = core.registered_items[itemname].type
 		end
-		self.object:set_properties({
+		prop = {
 			is_visible = true,
-			textures = {stack:get_name()}
+			visual = "wielditem",
+			textures = {itemname},
+			visual_size = {x = s, y = s},
+			collisionbox = {-c, -c, -c, c, c, c},
+			automatic_rotate = math.pi * 0.2,
+		}
+		self.object:set_properties(prop)
+	end,
+
+	get_staticdata = function(self)
+		return core.serialize({
+			itemstring = self.itemstring
 		})
-		local def = stack:get_definition()
-		self.object:setyaw((def and def.type == "node") and 0 or math.pi * 0.25)
 	end,
 
-	get_staticdata = luaentity.get_staticdata,
-	on_activate = function(self, staticdata)
-		if staticdata == "" or staticdata == nil then
-			return
+	on_activate = function(self, staticdata, dtime_s)
+		if string.sub(staticdata, 1, string.len("return")) == "return" then
+			local data = core.deserialize(staticdata)
+			if data and type(data) == "table" then
+				self.itemstring = data.itemstring
+			end
+		else
+			self.itemstring = staticdata
 		end
-		if staticdata == "toremove" then
-			self.object:remove()
-			return
-		end
-		local item = minetest.deserialize(staticdata)
-
-		factory.do_moving_item(self.object:getpos(), item.velocity, item.itemstring)
-		self.object:remove()
-	end,
-})
-
-luaentity.register_entity("factory:moving_item", {
-	itemstring = '',
-	item_entity = nil,
-
-	set_item = function(self, item)
-		local itemstring = ItemStack(item):to_string() -- Accept any input format
-		if self.itemstring == itemstring then
-			return
-		end
-		if self.item_entity then
-			self:remove_attached_entity(self.item_entity)
-		end
-		self.itemstring = itemstring
-		self.item_entity = self:add_attached_entity("factory:moving_item", itemstring)
+		self.object:set_armor_groups({immortal = 1})
+		self:set_item(self.itemstring)
 	end,
 
 	on_step = function(self, dtime)
-		local pos = self:getpos()
+		local pos = self.object:getpos()
 		local stack = ItemStack(self.itemstring)
 		local napos = minetest.get_node(pos) 
 
-		local veldir = self:getvelocity();
+		local veldir = self.object:getvelocity();
 
 		if napos.name == "factory:belt" then
 			local speed = 0.8
 			local dir = minetest.facedir_to_dir(napos.param2)
-			self:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
+			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
 		else
 			minetest.item_drop(stack, "", {x = pos.x + veldir.x / 2, y = pos.y, z = pos.z + veldir.z / 1.5})
-			self:remove()
+			self.object:remove()
 		end
-
 	end
 })

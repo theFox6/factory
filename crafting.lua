@@ -210,3 +210,11 @@ minetest.register_craft({
 		{"", 						"default:steel_ingot", 			""}
 	}
 })
+
+minetest.register_craft({
+	output = "factory:sapling_fertilizer",
+	recipe = {
+		{"default:dirt", 	"default:dirt"},
+		{"default:dirt",	"default:dirt"},
+	}
+})

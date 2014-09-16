@@ -1,6 +1,6 @@
 factory={
-  crafts={},
-  empty={item=ItemStack(nil),time=0}
+crafts={},
+empty={item=ItemStack(nil),time=0}
 }
 
 factory.worldpath = minetest.get_worldpath()
@@ -17,8 +17,8 @@ function factory.register_craft(craft)
     "Invalid craft definition, it must have type, recipe and output")
   assert(type(craft.recipe)=="table" and type(craft.recipe[1])=="table","'recipe' must be a bidimensional table")
   minetest.log("verbose","registerCraft ("..craft.type..", output="..craft.output.." recipe="..dump(craft.recipe))
-  craft._h=#craft.recipe
-  craft._w=#craft.recipe[1]
+    craft._h=#craft.recipe
+    craft._w=#craft.recipe[1]
   -- TODO check that all the arrays have the same length...
   factory.crafts[#factory.crafts+1]=craft
 end
@@ -33,9 +33,9 @@ function factory.get_craft_result(data)
   for zz,craft in ipairs(factory.crafts) do
     r=factory._check_craft(data,w,craft)
     if r ~= nil then
-        if factory.debug then
-          print("Craft found, returning "..dump(r.item))
-        end
+      if factory.debug then
+        print("Craft found, returning "..dump(r.item))
+      end
       return r
     end
   end
@@ -57,7 +57,7 @@ function factory._check_craft(data,w,c)
               local q=(i+m-1-1)*w+j+n-1
               if factory.debug then
                 print("  Checking data.items["..dump(i+m-1).."]["..dump(j+n-1).."]("..dump(q)..")="..dump(data.items[q]:get_name())..
-                " vs craft.recipe["..dump(m).."]["..dump(n).."]="..dump(c.recipe[m][n]))
+                  " vs craft.recipe["..dump(m).."]["..dump(n).."]="..dump(c.recipe[m][n]))
               end
               if c.recipe[m][n] ~= data.items[q]:get_name() then
                 return nil
@@ -105,16 +105,16 @@ function factory._check_craft(data,w,c)
             print("Craft found! "..c.output)
           end
           return {item=ItemStack(c.output),time=1}
-        elseif data.items[p] ~= nil and data.items[p]:get_name() ~= "" then
-          if factory.debug then
-            print("Invalid data item "..dump(data.items[p]:get_name()))
+          elseif data.items[p] ~= nil and data.items[p]:get_name() ~= "" then
+            if factory.debug then
+              print("Invalid data item "..dump(data.items[p]:get_name()))
+            end
+            return nil
           end
-          return nil
         end
       end
     end
   end
-end
 
 -- GUI related stuff
 factory_gui_bg = "bgcolor[#080808BB;true]"
@@ -163,6 +163,7 @@ dofile(factory.modpath.."/crafting.lua")
 dofile(factory.modpath.."/belt.lua")
 dofile(factory.modpath.."/ind_furnace.lua")
 dofile(factory.modpath.."/ind_squeezer.lua")
+dofile(factory.modpath.."/stp.lua")
 dofile(factory.modpath.."/swapper.lua")
 if factory.enableFan then     dofile(factory.modpath.."/fan.lua")         end
 dofile(factory.modpath.."/storage_tank.lua")
@@ -170,4 +171,51 @@ dofile(factory.modpath.."/storage_tank.lua")
 if factory.enableMiner then   dofile(factory.modpath.."/miner.lua")       end
 if factory.enableVacuum then  dofile(factory.modpath.."/vacuum.lua")      end
 
-print("Factory v0.5 is working")
+if factory.fertilizerGeneration then
+  minetest.register_on_generated(function(minp, maxp, seed)
+    if maxp.y >= 2 and minp.y <=0 then
+      -- Generate fertilizer
+      local perlin1 = minetest.get_perlin(576, 3, 0.6, 100)
+      local divlen = 16
+      local divs = (maxp.x-minp.x)/divlen + 1;
+      for divx=0,divs-1 do
+      for divz=0,divs-1 do
+        local x0 = minp.x + math.floor(divx*divlen)
+        local z0 = minp.z + math.floor(divz*divlen)
+        local x1 = minp.x + math.floor((divx+1)*divlen)
+        local z1 = minp.z + math.floor((divz+1)*divlen)
+
+        local grass_amount = math.floor(perlin1:get2d({x=x0, y=z0}) ^ 2)
+
+        local pr = PseudoRandom(seed+249)
+        for i=0,grass_amount do
+          local x = pr:next(x0, x1)
+          local z = pr:next(z0, z1)
+          local ground_y = nil
+          for y=30,0,-1 do
+            if minetest.get_node({x=x,y=y,z=z}).name ~= "air" then
+              ground_y = y
+              break
+            end
+          end
+
+          if ground_y then
+            local p = {x=x, y=ground_y+1, z=z}
+            local nn = minetest.get_node(p).name
+
+            if minetest.registered_nodes[nn] and
+              minetest.registered_nodes[nn].buildable_to then
+              nn = minetest.get_node({x=x,y=ground_y,z=z}).name
+              if nn == "default:dirt_with_grass" then
+                minetest.set_node(p, {name="factory:sapling_fertilizer"})
+              end
+            end
+          end
+        end
+      end
+      end
+    end
+  end)
+end
+
+print("Factory v0.5.1 is working")

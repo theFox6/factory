@@ -20,7 +20,7 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local all_objects = minetest.get_objects_inside_radius(pos, 1)
+		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
 		local _,obj
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
@@ -121,7 +121,7 @@ minetest.register_entity("factory:moving_item", {
 			local dir = minetest.facedir_to_dir(napos.param2)
 			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
 		else
-			minetest.item_drop(stack, "", {x = pos.x + veldir.x / 2, y = pos.y, z = pos.z + veldir.z / 1.5})
+			minetest.item_drop(stack, "", {x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3})
 			self.object:remove()
 		end
 	end

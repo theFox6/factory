@@ -36,12 +36,12 @@ minetest.register_node("factory:sapling_fertilizer", {
 minetest.register_abm({
 	nodenames = {"factory:sapling_fertilizer"},
 	neighbors = nil,
-	interval = 1,
-	chance = 1,
+	interval = 3,
+	chance = 6,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		minetest.add_particlespawner({
-			amount = 4,
-			time = 2,
+			amount = 3,
+			time = 1,
 			minpos = {x = pos.x - 0.05, y = pos.y, z = pos.z - 0.05},
 			maxpos = {x = pos.x + 0.05, y = pos.y, z = pos.z + 0.05},
 			minvel = {x=-0.25, y=0.02, z=-0.25},

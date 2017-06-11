@@ -121,7 +121,7 @@ minetest.register_entity("factory:moving_item", {
 			local dir = minetest.facedir_to_dir(napos.param2)
 			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
 		else
-			minetest.item_drop(stack, "", {x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3})
+			minetest.item_drop(stack, factory.no_player, {x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3})
 			self.object:remove()
 		end
 	end

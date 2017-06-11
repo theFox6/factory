@@ -95,7 +95,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 						if item:get_name() ~= "" then
 							local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
 							if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-							minetest.item_drop(item:peek_item(1), "", droppos)
+							minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
 							item:take_item()
 							inv:set_stack("main", i, item)
 							return
@@ -124,7 +124,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 							if item:get_name() ~= "" then
 								local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
 								if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-								minetest.item_drop(item:peek_item(1), "", droppos)
+								minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
 								item:take_item()
 								inv:set_stack("dst", k, item)
 								return
@@ -174,7 +174,7 @@ function taker_from_swapper(pos, target, facedir, offset)
 				if not item:is_empty() and item:get_name() ~= "" then
 					local droppos = {x = pos.x - (offset.x/1.25), y = pos.y + 0.65, z = pos.z - (offset.z/1.25)}
 					if factory.logTaker then print("Taker at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from swapper") end
-					minetest.item_drop(item:peek_item(1), "", droppos)
+					minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
 					item:take_item()
 					inv:set_stack(takefrom, k, item)
 					return

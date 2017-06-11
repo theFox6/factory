@@ -1,6 +1,7 @@
 factory={
 crafts={},
-empty={item=ItemStack(nil),time=0}
+empty={item=ItemStack(nil),time=0},
+no_player={is_player=function() return false end}
 }
 
 factory.worldpath = minetest.get_worldpath()

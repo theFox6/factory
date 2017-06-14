@@ -14,8 +14,26 @@ minetest.register_node("factory:belt", {
 		},
 })
 
+minetest.register_node("factory:belt_center", {
+	description = "centering Conveyor Belt",
+	--todo:textures for boards
+	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
+		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	groups = {cracky=1},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	is_ground_content = true,
+	legacy_facedir_simple = true,
+	--todo: nodebox for boards
+	node_box = {
+			type = "fixed",
+			fixed = {{-0.5,-0.5,-0.5,0.5,0.0625,0.5},}
+		},
+})
+
 minetest.register_abm({
-	nodenames = {"factory:belt"},
+	nodenames = {"factory:belt", "factory:belt_center"},
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
@@ -35,6 +53,9 @@ minetest.register_abm({
 -- Based off of the pipeworks item code
 
 function factory.do_moving_item(pos, item)
+	if item==":" then
+		return
+	end
 	local stack = ItemStack(item)
 	local obj = minetest.add_entity(pos, "factory:moving_item")
 	obj:get_luaentity():set_item(stack:to_string())
@@ -56,7 +77,6 @@ minetest.register_entity("factory:moving_item", {
 
 	physical_state = true,
 	itemstring = '',
-
 	set_item = function(self, itemstring)
 		self.itemstring = itemstring
 		local stack = ItemStack(itemstring)
@@ -111,16 +131,21 @@ minetest.register_entity("factory:moving_item", {
 
 	on_step = function(self, dtime)
 		local pos = self.object:getpos()
-		local stack = ItemStack(self.itemstring)
 		local napos = minetest.get_node(pos) 
-
-		local veldir = self.object:getvelocity();
-
+		local dir = vector.new(minetest.facedir_to_dir(napos.param2)) -- a copy of the facedir so we don't overwrite the facedir table
+		local speed = 0.8
 		if napos.name == "factory:belt" then
-			local speed = 0.8
-			local dir = minetest.facedir_to_dir(napos.param2)
+			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
+		elseif napos.name == "factory:belt_center" then
+			if dir.x == 0 then
+				dir.x = (math.floor(pos.x + 0.5) - pos.x) * 2
+			elseif dir.z == 0 then
+				dir.z = (math.floor(pos.z + 0.5) - pos.z) * 2
+			end
 			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
 		else
+			local stack = ItemStack(self.itemstring)
+			local veldir = self.object:getvelocity();
 			minetest.item_drop(stack, factory.no_player, {x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3})
 			self.object:remove()
 		end

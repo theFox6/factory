@@ -52,7 +52,40 @@ minetest.register_node("factory:swapper", {
 			return false
 		end
 		return true
-	end
+	end,
+	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+		local inv = minetest.get_meta(pos):get_inventory()
+		if listname == "left" or listname == "right" then
+			stack:set_count(1)
+			inv:set_stack(listname, index, stack)
+			return 0
+		end
+		return stack:get_count()
+	end,
+	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+		local inv = minetest.get_meta(pos):get_inventory()
+		if listname == "left" or listname == "right" then
+			inv:set_stack(listname, index, ItemStack(""))
+			return 0
+		end
+		return stack:get_count()
+	end,
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+		local inv = minetest.get_meta(pos):get_inventory()
+		local stack = inv:get_stack(from_list, from_index)
+
+		if from_list == "left" or from_list == "right" then
+			inv:set_stack(from_list, from_index, ItemStack(""))
+			return 0
+		end
+		if to_list == "left" or to_list == "right" then
+			stack:set_count(1)
+			inv:set_stack(to_list, to_index, stack)
+			return 0
+		end
+
+		return count
+	end,
 })
 
 minetest.register_abm({

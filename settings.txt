@@ -20,11 +20,11 @@ factory.minerDigLimit = 256
 armDevicesFurnacelike = {"default:furnace", "default:furnace_active", 
 						"factory:ind_furnace", "factory:ind_furnace_active", 
 						"factory:compressor", "factory:compressor_active", 
-						"factory:stp", "pipeworks:autocrafter"}
+						"factory:stp", "factory:autocrafter"}
 takerDevicesFurnacelike = {"default:furnace", "default:furnace_active", 
 						"factory:ind_furnace", "factory:ind_furnace_active", 
 						"factory:compressor", "factory:compressor_active", 
-						"factory:stp", "pipeworks:autocrafter"}
+						"factory:stp", "factory:autocrafter"}
 
 -- Fuel types for the generator
 generatorFuel = {{name = "factory:tree_sap", value = 20}}

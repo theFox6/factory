@@ -7,6 +7,7 @@ dofile(factory.modpath.."/machines/swapper.lua")
 dofile(factory.modpath.."/machines/arm.lua")
 dofile(factory.modpath.."/machines/taker.lua")
 dofile(factory.modpath.."/machines/qarm.lua")
+dofile(factory.modpath.."/machines/autocrafter.lua")
 
 if factory.enableFan then dofile(factory.modpath.."/machines/fan.lua") end
 if factory.enableVacuum then dofile(factory.modpath.."/machines/vacuum.lua") end

@@ -25,6 +25,15 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft( {
+	output = "factory:autocrafter",
+	recipe = {
+	        { "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" },
+	        { "factory:small_diamond_gear", "default:steel_ingot", "factory:small_diamond_gear" },
+	        { "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" }
+	},
+})
+
 minetest.register_craft({
 	output = "factory:taker",
 	recipe = {

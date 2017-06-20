@@ -19,7 +19,7 @@ minetest.register_node("factory:fan_on", {
 
 minetest.register_node("factory:fan_off", {
 	description = "Fan",
-	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}, "factory_belt_bottom.png", "factory_belt_side.png",
+	tiles = {"factory_fan_off.png", "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=3, not_in_creative_inventory=1, mesecon_effector_on = 1},
 	drawtype = "nodebox",
@@ -82,7 +82,7 @@ minetest.register_node("factory:fan_wall_on", {
 minetest.register_node("factory:fan_wall_off", {
 	description = "Wall Fan",
 	tiles = {"factory_belt_side.png^[transformFY", "factory_belt_side.png", "factory_belt_side.png^[transformR90",
-		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", {name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}},
+		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", "factory_fan_off.png"},
 	groups = {cracky=3, not_in_creative_inventory=1, mesecon_effector_on = 1},
 	drawtype = "nodebox",
 	paramtype = "light",

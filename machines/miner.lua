@@ -29,8 +29,8 @@ minetest.register_node("factory:miner_on", {
 
 minetest.register_node("factory:miner_off", {
 	description = "Industrial Miner",
-	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}, "factory_belt_bottom.png", "factory_belt_bottom_clean.png",
-		"factory_belt_bottom_clean.png", "factory_belt_bottom_clean.png", {name="factory_miner.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}},
+	tiles = {"factory_fan_off.png", "factory_belt_bottom.png", "factory_belt_bottom_clean.png",
+		"factory_belt_bottom_clean.png", "factory_belt_bottom_clean.png", "factory_miner_off.png"},
 	groups = {cracky = 2, not_in_creative_inventory = 1, mesecon_effector_on = 1},
 	paramtype2 = "facedir",
 	is_ground_content = true,
@@ -138,8 +138,8 @@ minetest.register_node("factory:miner_upgraded_on", {
 
 minetest.register_node("factory:miner_upgraded_off", {
 	description = "Industrial Miner",
-	tiles = {{name="factory_fan.png^factory_gold_ring_x2.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}, "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
-		"factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png", {name="factory_miner_upgraded.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0}}},
+	tiles = {"factory_fan_off.png^factory_gold_ring_x2.png", "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
+		"factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_miner_upgraded_off.png"},
 	groups = {cracky = 2, not_in_creative_inventory = 1, mesecon_effector_on = 1},
 	paramtype2 = "facedir",
 	is_ground_content = true,

@@ -1,11 +1,21 @@
 minetest.register_craft({
 	output = "factory:belt 12",
 	recipe = {
+		{"", "", ""},
+		{"default:stone", "factory:small_steel_gear", "default:stone"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
+	}
+})
+
+minetest.register_craft({
+	output = "factory:belt_center 12",
+	recipe = {
 		{"", "default:gold_ingot", ""},
 		{"default:stone", "factory:small_steel_gear", "default:stone"},
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
 })
+
 
 minetest.register_craft({
 	output = "factory:arm",

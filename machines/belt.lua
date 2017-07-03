@@ -1,6 +1,22 @@
+minetest.register_node("factory:belt_center", {
+	description = "centering Conveyor Belt",
+	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
+		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	groups = {cracky=1},
+	drawtype = "nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	is_ground_content = true,
+	legacy_facedir_simple = true,
+	node_box = {
+			type = "fixed",
+			fixed = {{-0.5,-0.5,-0.5,0.5,0.0625,0.5},}
+		},
+})
+
 minetest.register_node("factory:belt", {
 	description = "Conveyor Belt",
-	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
+	tiles = {{name="factory_belt_st_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
 	drawtype = "nodebox",
@@ -14,24 +30,10 @@ minetest.register_node("factory:belt", {
 		},
 })
 
-minetest.register_node("factory:belt_straight", {
-	description = "straight Conveyor Belt",
-	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
-	groups = {cracky=1},
-	drawtype = "nodebox",
-	paramtype = "light",
-	paramtype2 = "facedir",
-	is_ground_content = true,
-	legacy_facedir_simple = true,
-	node_box = {
-			type = "fixed",
-			fixed = {{-0.5,-0.5,-0.5,0.5,0.0625,0.5},}
-		},
-})
+minetest.register_alias("factory:belt","factory:belt_straight")
 
 minetest.register_abm({
-	nodenames = {"factory:belt", "factory:belt_straight"},
+	nodenames = {"factory:belt_center", "factory:belt"},
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
@@ -47,8 +49,6 @@ minetest.register_abm({
 		end
 	end,
 })
-
--- Based off of the pipeworks item code
 
 function factory.do_moving_item(pos, item)
 	if item==":" then
@@ -97,7 +97,7 @@ minetest.register_entity("factory:moving_item", {
 			item_texture = core.registered_items[itemname].inventory_image
 			item_type = core.registered_items[itemname].type
 		end
-		prop = {
+		local prop = {
 			is_visible = true,
 			visual = "wielditem",
 			textures = {itemname},
@@ -132,9 +132,9 @@ minetest.register_entity("factory:moving_item", {
 		local napos = minetest.get_node(pos) 
 		local dir = vector.new(minetest.facedir_to_dir(napos.param2)) -- a copy of the facedir so we don't overwrite the facedir table
 		local speed = 0.8
-		if napos.name == "factory:belt_straight" then
+		if napos.name == "factory:belt" then
 			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
-		elseif napos.name == "factory:belt" then
+		elseif napos.name == "factory:belt_center" then
 			if dir.x == 0 then
 				dir.x = (math.floor(pos.x + 0.5) - pos.x) * 2
 			elseif dir.z == 0 then

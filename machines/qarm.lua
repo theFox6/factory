@@ -9,6 +9,8 @@ function qarm_handle (a, b, target, stack, minv, obj)
 		elseif minv:room_for_item("main", stack) then
 			minv:add_item("main", stack)
 			if obj~=nil then obj:remove() end
+		else
+			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 		end
 	end
 	if target.name == "factory:swapper" then
@@ -21,7 +23,8 @@ function qarm_handle (a, b, target, stack, minv, obj)
 		elseif minv:room_for_item("main", stack) then
 			minv:add_item("main", stack)
 			if obj~=nil then obj:remove() end
-
+		else
+			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 		end
 	end
 	for i,v in ipairs(armDevicesFurnacelike) do
@@ -37,6 +40,8 @@ function qarm_handle (a, b, target, stack, minv, obj)
 				elseif minv:room_for_item("main", stack) then
 					minv:add_item("main", stack)
 					if obj~=nil then obj:remove() end
+				else
+					obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 				end
 			else
 				-- everytin else, src
@@ -46,6 +51,8 @@ function qarm_handle (a, b, target, stack, minv, obj)
 				elseif minv:room_for_item("main", stack) then
 					minv:add_item("main", stack)
 					if obj~=nil then obj:remove() end
+				else
+					obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 				end
 			end
 		end

@@ -81,15 +81,18 @@ minetest.register_abm({
 			local registered = minetest.registered_nodes[node.name]
 			local meta = minetest.get_meta(pos)
 			if node.name == "ignore" then
+				minetest.forceload_block({x = pos.x, y = pos.y-i, z = pos.z})
 				minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
 				return
 			end
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then
+					node = minetest.get_node(pos)
 					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
+					node = minetest.get_node(pos)
 					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 					return
 				end
@@ -102,6 +105,8 @@ minetest.register_abm({
 				return
 			end
 		end
+		local node = minetest.get_node(pos)
+		minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 	end,
 })
 
@@ -180,10 +185,12 @@ minetest.register_abm({
 			end
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then
+					node = minetest.get_node(pos)
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
+					node = minetest.get_node(pos)
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return
 				end
@@ -196,5 +203,7 @@ minetest.register_abm({
 				return
 			end
 		end
+		local node = minetest.get_node(pos)
+		minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 	end,
 })

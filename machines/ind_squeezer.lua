@@ -229,7 +229,10 @@ minetest.register_abm({
 
 		if minetest.get_node({x = pos.x, y = pos.y + height + 1, z = pos.z}).name ~= "air" then return end
 
-		if height < 1 then return else
+		if height < 1 then
+			meta:set_string("infotext","Industrial Squeezer has no smoke tube")
+			return
+		else
 			if minetest.get_node(pos).name == "factory:ind_squeezer_active" then
 				minetest.add_particlespawner({
 					amount = 4,

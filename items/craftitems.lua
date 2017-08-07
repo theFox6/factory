@@ -1,24 +1,25 @@
+local S = factory.S
 minetest.register_craftitem("factory:tree_sap", {
-	description = "Tree Sap",
+	description = S("Tree Sap"),
 	inventory_image = "factory_tree_sap.png"
 })
 
 minetest.register_craftitem("factory:compressed_clay", {
-	description = "Compressed Clay",
+	description = S("Compressed Clay"),
 	inventory_image = "factory_compressed_clay.png"
 })
 
 minetest.register_craftitem("factory:factory_lump", {
-	description = "Factory Lump",
+	description = S("Factory Lump"),
 	inventory_image = "factory_lump.png"
 })
 
 minetest.register_craftitem("factory:scanner_chip", {
-	description = "Item Scanning Microchip",
+	description = S("Item Scanning Microchip"),
 	inventory_image = "factory_scanner_chip.png"
 })
 
 minetest.register_craftitem("factory:fan_blade", {
-	description = "Small Fanblade",
+	description = S("Small Fanblade"),
 	inventory_image = "factory_fan_blade.png"
 })

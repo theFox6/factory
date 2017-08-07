@@ -82,6 +82,12 @@ factory.register_craft({
 })
 
 
+factory.register_craft({
+	type = "ind_squeezer",
+	output = "default:sandstone",
+	recipe = {{"default:sand"}}
+})
+
 minetest.register_craft({
 	type = "cooking", 
 	output = "factory:factory_lump",

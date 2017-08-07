@@ -1,3 +1,3 @@
 # factory
 A fork of LemonLake's factory mod for minetest.
-Adding factory contraptions like a conveyor belt.
+It adds machines like conveyor belts and an industrial furnace.

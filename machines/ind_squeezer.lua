@@ -1,3 +1,4 @@
+local S = factory.S
 minetest.register_alias("factory:compressor", "factory:ind_squeezer")
 
 function factory.ind_squeezer_active(pos, percent, item_percent)
@@ -49,7 +50,7 @@ factory.ind_squeezer_inactive_formspec =
 	factory.get_hotbar_bg(0,4.25)
 
 minetest.register_node("factory:ind_squeezer", {
-	description = "Industrial Squeezer",
+	description = S("Industrial Squeezer"),
 	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
 		"factory_machine_side_1.png", "factory_machine_side_1.png", "factory_compressor_front.png"},
 	paramtype2 = "facedir",
@@ -59,7 +60,7 @@ minetest.register_node("factory:ind_squeezer", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
-		meta:set_string("infotext", "Industrial Squeezer")
+		meta:set_string("infotext", S("Industrial Squeezer"))
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)
@@ -83,7 +84,7 @@ minetest.register_node("factory:ind_squeezer", {
 		if listname == "fuel" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				if inv:is_empty("src") then
-					meta:set_string("infotext","Industrial Squeezer is empty")
+					meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				end
 				return stack:get_count()
 			else
@@ -102,7 +103,7 @@ minetest.register_node("factory:ind_squeezer", {
 		if to_list == "fuel" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				if inv:is_empty("src") then
-					meta:set_string("infotext","Industrial Squeezer is empty")
+					meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				end
 				return count
 			else
@@ -144,7 +145,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
-		meta:set_string("infotext", "Industrial Squeezer (working)");
+		meta:set_string("infotext", S("Industrial Squeezer (working)"));
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)
@@ -168,7 +169,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 		if listname == "fuel" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				if inv:is_empty("src") then
-					meta:set_string("infotext","Industrial Squeezer is empty")
+					meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				end
 				return stack:get_count()
 			else
@@ -187,7 +188,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 		if to_list == "fuel" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				if inv:is_empty("src") then
-					meta:set_string("infotext","Industrial Squeezer is empty")
+					meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				end
 				return count
 			else
@@ -229,8 +230,8 @@ minetest.register_abm({
 
 		if minetest.get_node({x = pos.x, y = pos.y + height + 1, z = pos.z}).name ~= "air" then return end
 
-		if height < 1 then
-			meta:set_string("infotext","Industrial Squeezer has no smoke tube")
+		if height < 2 then
+			meta:set_string("infotext",S("Industrial Squeezer has no smoke tube"))
 			return
 		else
 			if minetest.get_node(pos).name == "factory:ind_squeezer_active" then
@@ -289,7 +290,7 @@ minetest.register_abm({
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			local percent = math.floor(meta:get_float("fuel_time") /
 					meta:get_float("fuel_totaltime") * 100)
-			meta:set_string("infotext","Industrial Squeezer is working, fuel current used: "..percent.."%")
+			meta:set_string("infotext",S("Industrial Squeezer is working, fuel current used:").." "..percent.."%")
 			factory.swap_node(pos,"factory:ind_squeezer_active")
 			meta:set_string("formspec",factory.ind_squeezer_active_formspec(pos, percent))
 			return
@@ -309,7 +310,7 @@ minetest.register_abm({
 		end
 
 		if not fuel or fuel.time <= 0 then
-			meta:set_string("infotext","Industrial Squeezer has nothing to burn with")
+			meta:set_string("infotext",S("Industrial Squeezer has nothing to burn with"))
 			factory.swap_node(pos,"factory:ind_squeezer")
 			meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
 			return
@@ -317,7 +318,7 @@ minetest.register_abm({
 
 		if cooked.item:is_empty() then
 			if was_active then
-				meta:set_string("infotext","Industrial Squeezer is empty")
+				meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				factory.swap_node(pos,"factory:ind_squeezer")
 				meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
 			end

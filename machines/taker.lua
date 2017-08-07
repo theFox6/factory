@@ -6,7 +6,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 		drawtype = "nodebox",
 		tiles = ctiles,
 		paramtype = "light",
-		description = name,
+		description = factory.S(name),
 		groups = {cracky=3, mesecon_effector_off = 1},
 		paramtype2 = "facedir",
 		legacy_facedir_simple = true,
@@ -41,7 +41,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 		drawtype = "nodebox",
 		tiles = ctiles,
 		paramtype = "light",
-		description = name,
+		description = factory.S(name),
 		groups = {cracky=3, not_in_creative_inventory=1, mesecon_effector_on = 1},
 		paramtype2 = "facedir",
 		legacy_facedir_simple = true,
@@ -95,7 +95,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 						if item:get_name() ~= "" then
 							local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
 							if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-							minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
+							taker_drop(item:peek_item(1),droppos)
 							item:take_item()
 							inv:set_stack("main", i, item)
 							return
@@ -124,7 +124,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 							if item:get_name() ~= "" then
 								local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
 								if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-								minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
+								taker_drop(item:peek_item(1),droppos)
 								item:take_item()
 								inv:set_stack("dst", k, item)
 								return
@@ -174,7 +174,7 @@ function taker_from_swapper(pos, target, facedir, offset)
 				if not item:is_empty() and item:get_name() ~= "" then
 					local droppos = {x = pos.x - (offset.x/1.25), y = pos.y + 0.65, z = pos.z - (offset.z/1.25)}
 					if factory.logTaker then print("Taker at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from swapper") end
-					minetest.item_drop(item:peek_item(1), factory.no_player, droppos)
+					taker_drop(item:peek_item(1),droppos)
 					item:take_item()
 					inv:set_stack(takefrom, k, item)
 					return
@@ -182,6 +182,16 @@ function taker_from_swapper(pos, target, facedir, offset)
 			end
 		end
 	end
+end
+
+function taker_drop(item,pos)
+  local target_nod=minetest.get_node({x=pos.x,y=pos.y-0.65,z=pos.z})
+  local offset=vector.subtract(pos,vector.round(pos))
+  if target_nod.name=="factory:belt" or target_nod.name=="factory:belt_center" then
+    factory.do_moving_item({x=pos.x+offset.x,y=pos.y-0.5,z=pos.z+offset.z}, item)
+  else
+    minetest.item_drop(item, factory.no_player, pos)
+  end
 end
 
 factory.register_taker("", "", 2.5, "Pneumatic Taker", {"factory_steel_noise_red.png"})

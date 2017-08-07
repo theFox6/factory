@@ -1,3 +1,4 @@
+local S = factory.S
 local autocrafterCache = {}  -- caches some recipe data to avoid to call the slow function minetest.get_craft_result() every second
 
 local craft_time = 1
@@ -39,7 +40,7 @@ local function after_recipe_change(pos, inventory)
 	-- if we emptied the grid, there's no point in keeping it running or cached
 	if inventory:is_empty("recipe") then
 		autocrafterCache[minetest.hash_node_position(pos)] = nil
-		meta:set_string("infotext", "unconfigured Autocrafter")
+		meta:set_string("infotext", S("unconfigured Autocrafter"))
 		inventory:set_stack("output", 1, "")
 		return
 	end
@@ -64,7 +65,7 @@ local function after_recipe_change(pos, inventory)
 	craft = craft or get_craft(pos, inventory, hash)
 	local output_item = craft.output.item
 	local description, name = get_item_info(output_item)
-	meta:set_string("infotext", string.format("'%s' Autocrafter (%s)", description, name))
+	meta:set_string("infotext", S("'%s' Autocrafter (%s)"):format(description, name))
 	inventory:set_stack("output", 1, output_item)
 
 end
@@ -126,19 +127,19 @@ local function update_meta(meta)
 
 	local output = meta:get_inventory():get_stack("output", 1)
 	if output:is_empty() then -- doesn't matter if paused or not
-		meta:set_string("infotext", "unconfigured Autocrafter")
+		meta:set_string("infotext", S("unconfigured Autocrafter"))
 		return false
 	end
 
 	local description, name = get_item_info(output)
-	local infotext = string.format("'%s' Autocrafter (%s)", description, name)
+	local infotext = S("'%s' Autocrafter (%s)"):format(description, name)
 
 	meta:set_string("infotext", infotext)
 	return true
 end
 
 minetest.register_node("factory:autocrafter", {
-	description = "Autocrafter",
+	description = S("Autocrafter"),
 	drawtype = "normal",
 	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
 		"factory_machine_side_1.png", "factory_machine_side_1.png", "factory_machine_brick_1.png^factory_small_diamond_gear.png"},
@@ -227,7 +228,7 @@ minetest.register_abm({
 		local output_item = craft.output.item
 		-- only use crafts that have an actual result
 		if output_item:is_empty() or not craft then
-			meta:set_string("infotext", "unconfigured Autocrafter: unknown recipe")
+			meta:set_string("infotext", S("unconfigured Autocrafter: unknown recipe"))
 			return
 		end
 

@@ -1,5 +1,6 @@
+local S = factory.S
 minetest.register_node("factory:fan_on", {
-	description = "Fan",
+	description = S("Fan"),
 	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}, "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=3, mesecon_effector_off = 1},
@@ -18,7 +19,7 @@ minetest.register_node("factory:fan_on", {
 })
 
 minetest.register_node("factory:fan_off", {
-	description = "Fan",
+	description = S("Fan"),
 	tiles = {"factory_fan_off.png", "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=3, not_in_creative_inventory=1, mesecon_effector_on = 1},
@@ -57,7 +58,7 @@ minetest.register_abm({
 
 
 minetest.register_node("factory:fan_wall_on", {
-	description = "Wall Fan",
+	description = S("Wall Fan"),
 	tiles = {"factory_belt_side.png^[transformFY", "factory_belt_side.png", "factory_belt_side.png^[transformR90",
 		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", {name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}},
 	groups = {cracky=3, mesecon_effector_off = 1},
@@ -80,7 +81,7 @@ minetest.register_node("factory:fan_wall_on", {
 })
 
 minetest.register_node("factory:fan_wall_off", {
-	description = "Wall Fan",
+	description = S("Wall Fan"),
 	tiles = {"factory_belt_side.png^[transformFY", "factory_belt_side.png", "factory_belt_side.png^[transformR90",
 		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", "factory_fan_off.png"},
 	groups = {cracky=3, not_in_creative_inventory=1, mesecon_effector_on = 1},

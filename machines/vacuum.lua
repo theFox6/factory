@@ -1,5 +1,5 @@
 minetest.register_node("factory:vacuum_on", {
-	description = "Vacuum",
+	description = factory.S("Vacuum"),
 	tiles = {"factory_machine_steel_dark.png^factory_ring_green.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png",
 		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png", "factory_machine_steel_dark.png"},
 	groups = {cracky=2},
@@ -46,7 +46,7 @@ minetest.register_node("factory:vacuum_on", {
 })
 
 minetest.register_node("factory:vacuum_off", {
-	description = "Vacuum",
+	description = factory.S("Vacuum"),
 	tiles = {"factory_machine_steel_dark.png^factory_ring_red.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png",
 		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png", "factory_machine_steel_dark.png"},
 	groups = {cracky=2, not_in_creative_inventory = 1},

@@ -1,3 +1,5 @@
+local S = factory.S
+
 function qarm_handle (a, b, target, stack, minv, obj)
 	if target.name == "default:chest" or target.name == "default:chest_locked" then
 		local meta = minetest.env:get_meta(b)
@@ -73,7 +75,7 @@ minetest.register_node("factory:queuedarm",{
 	drawtype = "nodebox",
 	tiles = {"factory_steel_noise.png"},
 	paramtype = "light",
-	description = "Queued Pneumatic Mover",
+	description = S("Queued Pneumatic Mover"),
 	groups = {cracky=3},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
@@ -104,7 +106,7 @@ minetest.register_node("factory:queuedarm",{
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec",factory.qformspec)
-		meta:set_string("infotext", "Queued Pneumatic Mover")
+		meta:set_string("infotext", S("Queued Pneumatic Mover"))
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*3)
 	end,

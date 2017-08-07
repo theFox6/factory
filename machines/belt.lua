@@ -1,5 +1,6 @@
+local S = factory.S
 minetest.register_node("factory:belt_center", {
-	description = "centering Conveyor Belt",
+	description = S("centering Conveyor Belt"),
 	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
@@ -15,7 +16,7 @@ minetest.register_node("factory:belt_center", {
 })
 
 minetest.register_node("factory:belt", {
-	description = "Conveyor Belt",
+	description = S("Conveyor Belt"),
 	tiles = {{name="factory_belt_st_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
@@ -30,7 +31,7 @@ minetest.register_node("factory:belt", {
 		},
 })
 
-minetest.register_alias("factory:belt","factory:belt_straight")
+minetest.register_alias("factory:belt_straight","factory:belt")
 
 minetest.register_abm({
 	nodenames = {"factory:belt_center", "factory:belt"},

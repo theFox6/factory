@@ -16,7 +16,7 @@ factory.swapper_formspec =
 	"list[current_player;main;0,6.75;8,3;8]"
 
 minetest.register_node("factory:swapper", {
-	description = "Swapper",
+	description = factory.S("Swapper"),
 	tiles = {"factory_machine_steel_dark.png", "factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_square_blue.png",
 		"factory_machine_steel_dark.png^factory_square_yellow.png", "factory_machine_steel_dark.png^factory_square_white.png", "factory_machine_steel_dark.png^factory_square_red.png"},
 	paramtype2 = "facedir",
@@ -26,7 +26,7 @@ minetest.register_node("factory:swapper", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", factory.swapper_formspec)
-		meta:set_string("infotext", "Swapper")
+		meta:set_string("infotext", factory.S("Swapper"))
 		local inv = meta:get_inventory()
 		inv:set_size("left", 8)
 		inv:set_size("right", 8)

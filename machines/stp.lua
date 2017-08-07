@@ -1,3 +1,5 @@
+local S = factory.S
+
 factory.stp_formspec =
 	"size[8,8.5]"..
 	factory_gui_bg..
@@ -16,7 +18,7 @@ minetest.register_node("factory:sapling_fertilizer", {
 		"default_dirt.png"
 	},
 	inventory_image = "factory_sapling_fertilizer.png",
-	description = "Sapling Fertilizer",
+	description = S("Sapling Fertilizer"),
 	drawtype = "nodebox",
 	paramtype = "light",
 	is_ground_content = true,
@@ -61,7 +63,7 @@ minetest.register_abm({
 })
 
 minetest.register_node("factory:stp", {
-	description = "Sapling Treatment Plant",
+	description = S("Sapling Treatment Plant"),
 	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
 		"factory_machine_side_1.png", "factory_machine_side_1.png", "factory_stp_front.png"},
 	paramtype2 = "facedir",
@@ -71,7 +73,7 @@ minetest.register_node("factory:stp", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec", factory.ind_furnace_inactive_formspec)
-		meta:set_string("infotext", "Sapling Treatment Plant")
+		meta:set_string("infotext", S("Sapling Treatment Plant"))
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)

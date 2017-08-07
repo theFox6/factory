@@ -1,8 +1,9 @@
+local S = factory.S
 minetest.register_node("factory:arm",{
 	drawtype = "nodebox",
 	tiles = {"factory_steel_noise.png"},
 	paramtype = "light",
-	description = "Pneumatic Mover",
+	description = S("Pneumatic Mover"),
 	groups = {cracky=3},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,

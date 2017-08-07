@@ -1,1 +1,93 @@
+# Translation by theFox
 
+### decor/factorybrick.lua ###
+Factory Brick = Fabrik Backstein
+
+### decor/smoketube.lua ###
+Smoke Tube = Schornstein
+
+### items/craftitems.lua ###
+Tree Sap = Baumharz
+Compressed Clay = Komprimierter Lehm
+Factory Lump = Fabrik Klumpen
+Item Scanning Microchip = Gegenstands erkennender Mikrochip
+Small Fanblade = Kleiner Ventilatorfluegel
+
+### items/gears.lua ###
+Small Steel Gear = Kleines Stahl Zahnrad
+Small Gold Gear = Kleines Gold Zahnrad
+Small Diamond Gear = Kleines Diamant Zahnrad
+
+### items/storage_tank.lua ###
+Storage Tank = Fluessigkeitstank
+water = Wasser
+lava = Lava
+full = voll
+
+### init.lua ###
+Factory mod is working = Factory mod läuft
+
+### machines/arm.lua ###
+Pneumatic Mover = Pneumatischer Packer
+
+### machines/autocrafter.lua ###
+unconfigured Autocrafter = unkonfigurierter Hersteller
+'%s' Autocrafter (%s) = '%s' Hersteller (%s)
+Autocrafter = Hersteller
+unconfigured Autocrafter: unknown recipe = unkonfigurierter Hersteller: unbekanntes Rezept
+
+### machines/belt.lua ###
+centering Conveyor Belt = mittelndes Laufband
+Conveyor Belt = Laufband
+
+### machines/fan.lua ###
+Fan = Ventilator
+Wall Fan = Wand Ventilator
+
+### machines/ind_furnace.lua ###
+Industrial Furnace = industrieller Ofen
+Industrial Furnace is empty = industrieller Ofen ist leer
+Industrial Furnace (burning) = industrieller Ofen (brennt)
+Industrial Furnace has no smoke tube = industrieller Ofen hat keinen Schornstein
+Industrial Furnace is smelting, fuel current used: = industrieller Ofen baeckt, Brennstoff verbraucht: 
+Industrial Furnace has nothing to burn with = industrieller Ofen hat kein Brennstoff
+
+### machines/ind_squeezer.lua ###
+Industrial Squeezer = Industrielle Presse
+Industrial Squeezer is empty = industrielle Presse ist leer
+Industrial Squeezer (working) = industrielle Presse (presst)
+Industrial Squeezer has no smoke tube = industrielle Presse hat keinen Schornstein
+Industrial Squeezer is working, fuel current used: = industrielle Presse presst, Brennstoff verbraucht: 
+Industrial Squeezer has nothing to burn with = industrielle Presse hat keinen Brennstoff
+
+### machines/miner.lua ###
+Industrial Miner = Industrieller Bohrer
+Industrial Miner was switched off = industrieller Bohrer ist aus geschaltet
+Industrial Miner hit protected block = industrieller Bohrer ist auf einen geschützten Block gestoßen
+Industrial Miner hit lava = industrieller Bohrer ist auf Lava gestoßen
+Industrial Miner hit undiggable block = industrieller Bohrer ist auf einen nicht grabbaren Block gestoßen
+Industrial Miner has reached the maximum length = industrieller Bohrer hat seine maximale tiefe erreicht
+Upgraded Miner = aufgerüsteter Bohrer
+Upgraded Miner was switched off = aufgerüsteter Bohrer ist aus geschaltet
+Upgraded Miner hit protected block = aufgerüsteter Bohrer ist auf einen geschützten Block gestoßen
+Upgraded Miner hit lava = aufgerüsteter Bohrer ist auf Lava gestoßen
+Upgraded Miner hit undiggable block = aufgerüsteter Bohrer ist auf einen nicht grabbaren Block gestoßen
+Upgraded Miner has reached the maximum length = aufgerüsteter Bohrer hat seine maximale tiefe erreicht
+
+### machines/qarm.lua ###
+Queued Pneumatic Mover = Puffernder Pneumatischer Packer
+
+### machines/stp.lua
+Sapling Fertilizer = Setzling Dünger
+Sapling Treatment Plant = Setzling Verarbeiter
+
+### machines/swapper.lua
+Swapper = Sortierer
+
+### machines/taker.lua
+Pneumatic Taker = Pneumatischer Nehmer
+Pneumatic Taker Mk II = Pneumatischer Nehmer Mk II
+Pneumatic Taker Mk III = Pneumatischer Nehmer Mk III
+
+### machines/vacuum.lua
+Vacuum = Sauger

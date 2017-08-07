@@ -2,7 +2,7 @@ minetest.register_node("factory:smoke_tube", {
 	drawtype = "nodebox",
 	tiles = {"factory_machine_brick_1.png"},
 	paramtype = "light",
-	description = "Smoke Tube",
+	description = factory.S("Smoke Tube"),
 	groups = {cracky=3},
 	node_box = {
 		type = "fixed",

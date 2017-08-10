@@ -14,3 +14,53 @@ minetest.register_craft({
 		{'factory:factory_lump', 'factory:factory_lump'},
 	}
 })
+
+minetest.register_craft({
+	output = 'factory:sieve_stack 6',
+	recipe = {
+		{'factory:factory_brick', '', 'factory:factory_brick'},
+		{'factory:factory_brick', '', 'factory:factory_brick'},
+		{'factory:factory_brick', '', 'factory:factory_brick'},
+	}
+})
+
+minetest.register_craft({
+	output = 'factory:half_sieve_stack 6',
+	recipe = {
+		{'factory:factory_brick', '', 'factory:factory_brick'},
+		{'factory:factory_brick', '', 'factory:factory_brick'},
+	}
+})
+
+minetest.register_craft({
+	output = 'factory:sieve_single 6',
+	recipe = {
+		{'factory:factory_brick', 'factory:sieve_stack', 'factory:factory_brick'},
+		{'factory:factory_brick', 'factory:sieve_stack', 'factory:factory_brick'},
+		{'factory:factory_brick', 'factory:sieve_stack', 'factory:factory_brick'},
+	}
+})
+
+minetest.register_craft({
+	output = 'factory:half_sieve_single 6',
+	recipe = {
+		{'factory:factory_brick', 'factory:sieve_stack', 'factory:factory_brick'},
+		{'factory:factory_brick', 'factory:sieve_stack', 'factory:factory_brick'},
+	}
+})
+
+minetest.register_craft({
+	output = 'factory:sieve_stack',
+	recipe = {
+		{'factory:half_sieve_stack'},
+		{'factory:half_sieve_stack'},
+	}
+})
+
+minetest.register_craft({
+	output = 'factory:sieve_single',
+	recipe = {
+		{'factory:half_sieve_single'},
+		{'factory:half_sieve_single'},
+	}
+})

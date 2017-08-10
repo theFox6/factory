@@ -23,13 +23,13 @@ function factory.ind_squeezer_active(pos, percent, item_percent)
 function factory.ind_squeezer_active_formspec(pos, percent)
 	local meta = minetest.get_meta(pos)local inv = meta:get_inventory()
 	local srclist = inv:get_list("src")
-	local cooked = nil
+	local result = nil
 	if srclist then
-		cooked = factory.get_craft_result({method = "ind_squeezer", width = 1, items = srclist})
+		result = factory.get_recipe("ind_squeezer",srclist)
 	end
 	local item_percent = 0
-	if cooked then
-		item_percent = meta:get_float("src_time")/cooked.time
+	if result then
+		item_percent = meta:get_float("src_time")/result.time
 	end
        
         return factory.ind_squeezer_active(pos, percent, item_percent)
@@ -259,10 +259,10 @@ minetest.register_abm({
 		local inv = meta:get_inventory()
 
 		local srclist = inv:get_list("src")
-		local cooked = nil
+		local result = nil
 		
 		if srclist then
-			cooked = factory.get_craft_result({method = "ind_squeezer", width = 1, items = srclist})
+			result = factory.get_recipe("ind_squeezer", srclist)
 		end
 		
 		local was_active = false
@@ -271,19 +271,29 @@ minetest.register_abm({
 			was_active = true
 			meta:set_float("fuel_time", meta:get_float("fuel_time") + 0.9)
 			meta:set_float("src_time", meta:get_float("src_time") + 0.2)
-			if cooked and cooked.item and meta:get_float("src_time") >= cooked.time then
-				-- check if there's room for output in "dst" list
-				if inv:room_for_item("dst",cooked.item) then
-					-- Put result in "dst" list
-					inv:add_item("dst", cooked.item)
-					-- take stuff from "src" list
-					local afteritem = inv:get_stack("src", 1)
-					afteritem:take_item(1)
-					inv:set_stack("src", 1, afteritem)
-				else
+			local output = result.output
+			if type(output) ~= "table" then output = { output } end
+			local output_stacks = {}
+			for _, o in ipairs(output) do
+				table.insert(output_stacks, ItemStack(o))
+			end
+			if output_stacks and meta:get_float("src_time") >= result.time then
+				local room_for_output = true
+				inv:set_size("dst_tmp", inv:get_size("dst"))
+				inv:set_list("dst_tmp", inv:get_list("dst"))
+				for _, o in ipairs(output_stacks) do
+					if not inv:room_for_item("dst_tmp", o) then
+						room_for_output = false
+						break
+					end
+					inv:add_item("dst_tmp", o)
+				end
+				if not room_for_output then
 					--print("Could not insert '"..cooked.item:to_string().."'")
 				end
 				meta:set_string("src_time", 0)
+				inv:set_list("src", result.new_input)
+				inv:set_list("dst", inv:get_list("dst_tmp"))
 			end
 		end
 		
@@ -298,12 +308,12 @@ minetest.register_abm({
 
 		local fuel = nil
 		local afterfuel
-		local cooked = nil
+		local result = nil
 		local fuellist = inv:get_list("fuel")
 		local srclist = inv:get_list("src")
 		
 		if srclist then
-			cooked = factory.get_craft_result({method = "ind_squeezer", width = 1, items = srclist})
+			result = factory.get_recipe("ind_squeezer", srclist)
 		end
 		if fuellist then
 			fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
@@ -316,7 +326,7 @@ minetest.register_abm({
 			return
 		end
 
-		if cooked.item:is_empty() then
+		if not result then
 			if was_active then
 				meta:set_string("infotext",S("Industrial Squeezer is empty"))
 				factory.swap_node(pos,"factory:ind_squeezer")

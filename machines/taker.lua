@@ -1,3 +1,31 @@
+factory.taker = {}
+
+function factory.taker.take(pos,dir,invlist)
+	local src = vector.add(pos,dir)
+	local meta = minetest.env:get_meta(src)
+	local inv = meta:get_inventory()
+	local target_nod=minetest.get_node(vector.add(pos,vector.multiply(dir,-1)))
+	local targetp=vector.add(pos,vector.multiply(dir,-0.72))
+	if not inv:is_empty(invlist) then
+		local list = inv:get_list(invlist)
+		local i,item
+		for i,item in ipairs(list) do
+			if item:get_name() ~= "" then
+				if target_nod.name=="factory:belt" or target_nod.name=="factory:belt_center" then
+					targetp=vector.add(targetp,vector.multiply({x=dir.x,y=2,z=dir.z},0.075))
+					factory.do_moving_item(targetp, item:peek_item(1))
+				else
+					targetp = vector.add(targetp,{x=0,y=0.5,z=0})
+					minetest.item_drop(item:peek_item(1), factory.no_player, targetp)
+				end
+				item:take_item()
+				inv:set_stack(invlist, i, item)
+				return
+			end
+		end
+	end
+end
+
 function factory.register_taker(prefix, suffix, speed, name, ctiles)
 	-- Backwards compatiblity for any version below 0.5
 	minetest.register_alias("factory:"..prefix.."taker"..suffix, "factory:"..prefix.."taker"..suffix.."_on")
@@ -82,116 +110,47 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 		chance = 1,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			local facedir = minetest.get_node(pos).param2
-			local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
-			local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
-			local target = minetest.get_node(b)
+			local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
+			local src = vector.add(pos,dir)
+			local target = minetest.get_node(src)
 			if target.name == "default:chest" or target.name == "default:chest_locked" then
-				local meta = minetest.env:get_meta(b)
-				local inv = meta:get_inventory()
-				if not inv:is_empty("main") then
-					local list = inv:get_list("main")
-					local i,item
-					for i,item in ipairs(inv:get_list("main")) do
-						if item:get_name() ~= "" then
-							local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
-							if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-							taker_drop(item:peek_item(1),droppos)
-							item:take_item()
-							inv:set_stack("main", i, item)
-							return
-						end
-					end
+				factory.taker.take(pos,dir,"main")
+			end
+			local targetp = vector.add(pos,vector.multiply(dir,-1))
+			if target.name == "factory:swapper" then
+				local takefrom = ""
+				-- 0 = none
+				-- 1 = left
+				-- 2 = middle
+				-- 3 = right
+				if facedir == 1 then
+					if target.param2 == 0 then takefrom = "loverflow" end
+					if target.param2 == 3 then takefrom = "overflow" end
+					if target.param2 == 2 then takefrom = "roverflow" end
+				elseif facedir == 2 then
+					if target.param2 == 1 then takefrom = "loverflow" end
+					if target.param2 == 0 then takefrom = "overflow" end
+					if target.param2 == 3 then takefrom = "roverflow" end
+				elseif facedir == 3 then
+					if target.param2 == 2 then takefrom = "loverflow" end
+					if target.param2 == 1 then takefrom = "overflow" end
+					if target.param2 == 0 then takefrom = "roverflow" end
+				elseif facedir == 0 then
+					if target.param2 == 3 then takefrom = "loverflow" end
+					if target.param2 == 2 then takefrom = "overflow" end
+					if target.param2 == 1 then takefrom = "roverflow" end
+				end
+				if takefrom ~= "" then
+					factory.taker.take(pos,dir,takefrom)
 				end
 			end
-			local targetp
-			if facedir == 1 then
-				targetp = {x = pos.x + 1, y = pos.y, z = pos.z}
-			elseif facedir == 2 then
-				targetp = {x = pos.x, y = pos.y, z = pos.z - 1}
-			elseif facedir == 3 then
-				targetp = {x = pos.x - 1, y = pos.y, z = pos.z}
-			elseif facedir == 0 then
-				targetp = {x = pos.x, y = pos.y, z = pos.z + 1}
-			end
-			taker_from_swapper(pos, targetp, facedir, a)
 			for i,v in ipairs(takerDevicesFurnacelike) do
 				if target.name == v then
-					local meta = minetest.env:get_meta(b)
-					local inv = meta:get_inventory()
-					if not inv:is_empty("dst") then
-						local list = inv:get_list("dst")
-						for k,item in ipairs(inv:get_list("dst")) do
-							if item:get_name() ~= "" then
-								local droppos = {x = pos.x - (a.x/1.25), y = pos.y + 0.65, z = pos.z - (a.z/1.25)}
-								if factory.logTaker then print(name.." at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from "..target.name) end
-								taker_drop(item:peek_item(1),droppos)
-								item:take_item()
-								inv:set_stack("dst", k, item)
-								return
-							end
-						end
-					end
+					factory.taker.take(pos,dir,"dst")
 				end
 			end
 		end,
 	})
-end
-
-function taker_from_swapper(pos, target, facedir, offset)
-	local node = minetest.get_node(target)
-	local takefrom = ""
-	-- 0 = none
-	-- 1 = left
-	-- 2 = middle
-	-- 3 = right
-	if node == nil or node.name ~= "factory:swapper" then return end
-	if facedir == 1 then
-		if node.param2 == 0 then takefrom = "loverflow" end
-		if node.param2 == 3 then takefrom = "overflow" end
-		if node.param2 == 2 then takefrom = "roverflow" end
-	end
-	if facedir == 2 then
-		if node.param2 == 1 then takefrom = "loverflow" end
-		if node.param2 == 0 then takefrom = "overflow" end
-		if node.param2 == 3 then takefrom = "roverflow" end
-	end
-	if facedir == 3 then
-		if node.param2 == 2 then takefrom = "loverflow" end
-		if node.param2 == 1 then takefrom = "overflow" end
-		if node.param2 == 0 then takefrom = "roverflow" end
-	end
-	if facedir == 0 then
-		if node.param2 == 3 then takefrom = "loverflow" end
-		if node.param2 == 2 then takefrom = "overflow" end
-		if node.param2 == 1 then takefrom = "roverflow" end
-	end
-	local meta = minetest.env:get_meta(target)
-	local inv = meta:get_inventory()
-	if takefrom ~= "" then
-		if not inv:is_empty(takefrom) then
-			local list = inv:get_list(takefrom)
-			for k,item in ipairs(inv:get_list(takefrom)) do
-				if not item:is_empty() and item:get_name() ~= "" then
-					local droppos = {x = pos.x - (offset.x/1.25), y = pos.y + 0.65, z = pos.z - (offset.z/1.25)}
-					if factory.logTaker then print("Taker at "..pos.x..", "..pos.y..", "..pos.z.." takes "..item:get_name().." from swapper") end
-					taker_drop(item:peek_item(1),droppos)
-					item:take_item()
-					inv:set_stack(takefrom, k, item)
-					return
-				end
-			end
-		end
-	end
-end
-
-function taker_drop(item,pos)
-  local target_nod=minetest.get_node({x=pos.x,y=pos.y-0.65,z=pos.z})
-  local offset=vector.subtract(pos,vector.round(pos))
-  if target_nod.name=="factory:belt" or target_nod.name=="factory:belt_center" then
-    factory.do_moving_item({x=pos.x+offset.x,y=pos.y-0.5,z=pos.z+offset.z}, item)
-  else
-    minetest.item_drop(item, factory.no_player, pos)
-  end
 end
 
 factory.register_taker("", "", 2.5, "Pneumatic Taker", {"factory_steel_noise_red.png"})

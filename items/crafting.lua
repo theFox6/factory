@@ -1,3 +1,5 @@
+local S = factory.S
+
 minetest.register_craft({
 	output = "factory:small_steel_gear 3",
 	recipe = {
@@ -62,30 +64,32 @@ minetest.register_craft({
 	}
 })
 
-
-factory.register_craft({
-	type = "ind_squeezer",
-	output = "factory:tree_sap",
-	recipe = {{"default:tree"}}
+factory.register_recipe_type("ind_squeezer", {
+	description = S("squeezing"),
+	icon = "factory_compressor_front.png",
+	width = 1,
+	height = 1,
 })
 
-factory.register_craft({
-	type = "ind_squeezer",
+factory.register_recipe("ind_squeezer",{
 	output = "factory:tree_sap",
-	recipe = {{"default:jungle_tree"}}
+	input = {"default:tree"}
 })
 
-factory.register_craft({
-	type = "ind_squeezer",
+factory.register_recipe("ind_squeezer",{
+	output = "factory:tree_sap",
+	input = {"default:jungletree"}
+})
+
+factory.register_recipe("ind_squeezer",{
 	output = "factory:compressed_clay",
-	recipe = {{"default:clay_lump"}}
+	input = {"default:clay_lump"}
 })
 
 
-factory.register_craft({
-	type = "ind_squeezer",
+factory.register_recipe("ind_squeezer",{
 	output = "default:sandstone",
-	recipe = {{"default:sand"}}
+	input = {"default:sand"}
 })
 
 minetest.register_craft({

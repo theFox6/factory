@@ -6,6 +6,9 @@ Factory Brick =
 ### decor/smoketube.lua ###
 Smoke Tube = 
 
+### items/crafting.lua ###
+squeezing = 
+
 ### items/craftitems.lua ###
 Tree Sap = 
 Compressed Clay = 

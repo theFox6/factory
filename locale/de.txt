@@ -6,6 +6,9 @@ Factory Brick = Fabrik Backstein
 ### decor/smoketube.lua ###
 Smoke Tube = Schornstein
 
+### items/crafting.lua ###
+squeezing = pressen
+
 ### items/craftitems.lua ###
 Tree Sap = Baumharz
 Compressed Clay = Komprimierter Lehm

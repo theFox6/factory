@@ -1,105 +1,106 @@
--- This below is the Crafter mod by the legend MasterGollum
+local have_ui = minetest.get_modpath("unified_inventory")
 
-function factory.register_craft(craft)
-  assert(craft.type ~= nil and craft.recipe ~= nil and craft.output ~= nil,
-  "Invalid craft definition, it must have type, recipe and output")
-  assert(type(craft.recipe)=="table" and type(craft.recipe[1])=="table","'recipe' must be a bidimensional table")
-  minetest.log("verbose","registerCraft ("..craft.type..", output="..craft.output.." recipe="..dump(craft.recipe))
-  craft._h=#craft.recipe
-  craft._w=#craft.recipe[1]
-  -- TODO check that all the arrays have the same length...
-  factory.crafts[#factory.crafts+1]=craft
+factory.recipes = { cooking = { input_size = 1, output_size = 1 } }
+function factory.register_recipe_type(typename, origdata)
+	local data = {}
+	for k, v in pairs(origdata) do data[k] = v end
+	data.input_size = data.input_size or 1
+	data.output_size = data.output_size or 1
+	if have_ui and unified_inventory.register_craft_type and data.output_size == 1 then
+		unified_inventory.register_craft_type(typename, {
+			description = data.description,
+			width = data.input_size,
+			height = 1,
+		})
+	end
+	data.recipes = {}
+	factory.recipes[typename] = data
 end
 
-function factory.get_craft_result(data)
-  assert(data.method ~= nil and data.items ~= nil, "Invalid call, method and items must be provided")
-  local w = 1
-  if data.width ~= nil and data.width>0 then
-    w=data.width
-  end
-  local r=nil
-  for zz,craft in ipairs(factory.crafts) do
-    r=factory._check_craft(data,w,craft)
-    if r ~= nil then
-      if factory.debug then
-        print("Craft found, returning "..dump(r.item))
-      end
-      return r
-    end
-  end
-  return factory.empty
+local function get_recipe_index(items)
+	if not items or type(items) ~= "table" then return false end
+	local l = {}
+	for i, stack in ipairs(items) do
+		l[i] = ItemStack(stack):get_name()
+	end
+	table.sort(l)
+	return table.concat(l, "/")
 end
 
-function factory._check_craft(data,w,c)
-  if c.type == data.method then
-    -- Here we go..
-    for i=1,w-c._h+1 do
-      for j=1,w-c._w+1 do
-        local p=(i-1)*w+j
-        if factory.debug then
-          print("Checking data.items["..dump(i).."]["..dump(j).."]("..dump(p)..")="..dump(data.items[p]:get_name()).." vs craft.recipe[1][1]="..dump(c.recipe[1][1]))
-        end
-        if data.items[p]:get_name() == c.recipe[1][1] then
-          for m=1,c._h do
-            for n=1,c._w do
-              local q=(i+m-1-1)*w+j+n-1
-              if factory.debug then
-                print(" Checking data.items["..dump(i+m-1).."]["..dump(j+n-1).."]("..dump(q)..")="..dump(data.items[q]:get_name())..
-                " vs craft.recipe["..dump(m).."]["..dump(n).."]="..dump(c.recipe[m][n]))
-              end
-              if c.recipe[m][n] ~= data.items[q]:get_name() then
-                return nil
-              end
-            end
-          end
-          -- found! we still must check that is not any other stuff outside the limits of the recipe sizes...
-          -- Checking at right of the matching square
-          for m=i-c._h+1+1,w do
-            for n=j+c._w,w do
-              local q=(m-1)*w+n
-              if factory.debug then
-                print(" Checking right data.items["..dump(m).."]["..dump(n).."]("..dump(q)..")="..dump(data.items[q]:get_name()))
-              end
-              if data.items[q]:get_name() ~= "" then
-                return nil
-              end
-            end
-          end
-          -- Checking at left of the matching square (the first row has been already scanned)
-          for m=i-c._h+1+1+1,w do
-            for n=1,j-1 do
-              local q=(m-1)*w+n
-              if factory.debug then
-                print(" Checking left data.items["..dump(m).."]["..dump(n).."]("..dump(q)..")="..dump(data.items[q]:get_name()))
-              end
-              if data.items[q]:get_name() ~= "" then
-                return nil
-              end
-            end
-          end
-          -- Checking at bottom of the matching square
-          for m=i+c._h,w do
-            for n=j,j+c._w do
-              local q=(m-1)*w+n
-              if factory.debug then
-                print(" Checking bottom data.items["..dump(m).."]["..dump(n).."]("..dump(q)..")="..dump(data.items[q]:get_name()))
-              end
-              if data.items[q]:get_name() ~= "" then
-                return nil
-              end
-            end
-          end
-          if factory.debug then
-            print("Craft found! "..c.output)
-          end
-          return {item=ItemStack(c.output),time=1}
-        elseif data.items[p] ~= nil and data.items[p]:get_name() ~= "" then
-          if factory.debug then
-            print("Invalid data item "..dump(data.items[p]:get_name()))
-          end
-          return nil
-        end
-      end
-    end
-  end
+local function register_recipe(typename, data)
+	-- Handle aliases
+	for i, stack in ipairs(data.input) do
+		data.input[i] = ItemStack(stack):to_string()
+	end
+	if type(data.output) == "table" then
+		for i, v in ipairs(data.output) do
+			data.output[i] = ItemStack(data.output[i]):to_string()
+		end
+	else
+		data.output = ItemStack(data.output):to_string()
+	end
+	
+	local recipe = {time = data.time, input = {}, output = data.output}
+	if not recipe.time then recipe.time = 1 end
+	local index = get_recipe_index(data.input)
+	if not index then
+		print("[Factory] ignored registration of garbage recipe!")
+		return
+	end
+	for _, stack in ipairs(data.input) do
+		recipe.input[ItemStack(stack):get_name()] = ItemStack(stack):get_count()
+	end
+	
+	factory.recipes[typename].recipes[index] = recipe
+	if unified_inventory and factory.recipes[typename].output_size == 1 then
+		unified_inventory.register_craft({
+			type = typename,
+			output = data.output,
+			items = data.input,
+			width = 0,
+		})
+	end
+end
+
+function factory.register_recipe(typename, data)
+	minetest.after(0.01, register_recipe, typename, data) -- Handle aliases
+end
+
+function factory.get_recipe(typename, items)
+	if typename == "cooking" then -- Already builtin in Minetest, so use that
+		local result, new_input = minetest.get_craft_result({
+			method = "cooking",
+			width = 1,
+			items = items})
+		-- Compatibility layer
+		if not result or result.time == 0 then
+			return nil
+		else
+			return {time = result.time,
+			        new_input = new_input.items,
+			        output = result.item}
+		end
+	end
+	local index = get_recipe_index(items)
+	if not index then
+		print("[Factory] ignored registration of garbage recipe!")
+		return
+	end
+	local recipe = factory.recipes[typename].recipes[index]
+	if recipe then
+		local new_input = {}
+		for i, stack in ipairs(items) do
+			if stack:get_count() < recipe.input[stack:get_name()] then
+				return nil
+			else
+				new_input[i] = ItemStack(stack)
+				new_input[i]:take_item(recipe.input[stack:get_name()])
+			end
+		end
+		return {time = recipe.time,
+		        new_input = new_input,
+		        output = recipe.output}
+	else
+		return nil
+	end
 end

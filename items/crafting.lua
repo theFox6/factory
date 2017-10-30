@@ -1,7 +1,7 @@
 local S = factory.S
 
 minetest.register_craft({
-	output = "factory:small_steel_gear 3",
+	output = "factory:small_steel_gear 4",
 	recipe = {
 		{"default:steel_ingot", "", "default:steel_ingot"},
 		{"", "default:steel_ingot", ""},
@@ -10,7 +10,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "factory:small_gold_gear 2",
+	output = "factory:small_gold_gear 4",
 	recipe = {
 		{"default:gold_ingot", "", "default:gold_ingot"},
 		{"", "factory:small_steel_gear", ""},
@@ -19,7 +19,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = "factory:small_diamond_gear 2",
+	output = "factory:small_diamond_gear 4",
 	recipe = {
 		{"default:diamond", "", "default:diamond"},
 		{"", "factory:small_gold_gear", ""},
@@ -30,7 +30,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "factory:scanner_chip",
 	recipe = {
-		{"default:steel_ingot", "default:stick", "default:mese_crystal"},
+		{"default:steel_ingot", "factory:copper_wire", "default:mese_crystal"},
 		{"", "factory:tree_sap", ""},
 		{"default:mese_crystal", "", "default:steel_ingot"}
 	}
@@ -96,4 +96,21 @@ minetest.register_craft({
 	type = "cooking", 
 	output = "factory:factory_lump",
 	recipe = "factory:compressed_clay"
+})
+
+factory.register_recipe_type("wire_drawer", {
+	description = S("drawing wire"),
+	icon = "factory_wire_drawer_front.png",
+	width = 1,
+	height = 1,
+})
+
+factory.register_recipe("wire_drawer",{
+	output = "factory:steel_wire 2",
+	input = {"default:steel_ingot"}
+})
+
+factory.register_recipe("wire_drawer",{
+	output = "factory:copper_wire 2",
+	input = {"default:copper_ingot"}
 })

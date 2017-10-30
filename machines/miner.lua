@@ -83,14 +83,15 @@ minetest.register_abm({
 	interval = 4.8,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+		local meta = minetest.get_meta(pos)
 		for i = 1, factory.minerDigLimit do
 			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[node.name]
-			local meta = minetest.get_meta(pos)
 			if node.name == "ignore" then
-				minetest.forceload_block({x = pos.x, y = pos.y-i, z = pos.z})
-				minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
-				return
+				minetest.get_voxel_manip():read_from_map({x = pos.x, y = pos.y-i, z = pos.z}, {x = pos.x, y = pos.y-i-2, z = pos.z})
+				--minetest.forceload_block({x = pos.x, y = pos.y-i, z = pos.z})
+				--minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
+				node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			end
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then
@@ -196,13 +197,14 @@ minetest.register_abm({
 	interval = 1.8,
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+		local meta = minetest.get_meta(pos)
 		for i = 1, factory.minerDigLimit do
 			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[node.name]
-			local meta = minetest.get_meta(pos)
 			if node.name == "ignore" then
-				minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
-				return
+				minetest.get_voxel_manip():read_from_map({x = pos.x, y = pos.y-i, z = pos.z}, {x = pos.x, y = pos.y-i-2, z = pos.z})
+				--minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
+				node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			end
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then

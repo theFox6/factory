@@ -5,19 +5,13 @@ function factory.taker.take(pos,dir,invlist)
 	local meta = minetest.env:get_meta(src)
 	local inv = meta:get_inventory()
 	local target_nod=minetest.get_node(vector.add(pos,vector.multiply(dir,-1)))
-	local targetp=vector.add(pos,vector.multiply(dir,-0.72))
+	local targetp=vector.add(pos,vector.multiply(dir,0.4))
 	if not inv:is_empty(invlist) then
 		local list = inv:get_list(invlist)
 		local i,item
 		for i,item in ipairs(list) do
 			if item:get_name() ~= "" then
-				if target_nod.name=="factory:belt" or target_nod.name=="factory:belt_center" then
-					targetp=vector.add(targetp,vector.multiply({x=dir.x,y=2,z=dir.z},0.075))
-					factory.do_moving_item(targetp, item:peek_item(1))
-				else
-					targetp = vector.add(targetp,{x=0,y=0.5,z=0})
-					minetest.item_drop(item:peek_item(1), factory.no_player, targetp)
-				end
+				factory.do_moving_item(pos, item:peek_item(1))
 				item:take_item()
 				inv:set_stack(invlist, i, item)
 				return

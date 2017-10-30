@@ -81,6 +81,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "factory:wire_drawer",
+	recipe = {
+		{"default:glass", "default:stick", "default:glass"},
+		{"default:glass", "default:stick", "default:glass"},
+		{"factory:small_gold_gear", "default:furnace", "factory:small_gold_gear"}
+	}
+})
+
+minetest.register_craft({
 	output = "factory:swapper",
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},

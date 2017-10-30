@@ -104,7 +104,7 @@ minetest.register_entity("factory:moving_item", {
 			textures = {itemname},
 			visual_size = {x = s, y = s},
 			collisionbox = {-c, -c, -c, c, c, c},
-			automatic_rotate = math.pi * 0.2,
+			--automatic_rotate = math.pi * 0.2,
 		}
 		self.object:set_properties(prop)
 	end,
@@ -134,14 +134,30 @@ minetest.register_entity("factory:moving_item", {
 		local dir = vector.new(minetest.facedir_to_dir(napos.param2)) -- a copy of the facedir so we don't overwrite the facedir table
 		local speed = 0.8
 		if napos.name == "factory:belt" then
-			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
+			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
+			self.object:setvelocity(vector.divide(dir,speed))
 		elseif napos.name == "factory:belt_center" then
+			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
 			if dir.x == 0 then
 				dir.x = (math.floor(pos.x + 0.5) - pos.x) * 2
 			elseif dir.z == 0 then
 				dir.z = (math.floor(pos.z + 0.5) - pos.z) * 2
 			end
-			self.object:setvelocity({x = dir.x / speed, y = 0, z = dir.z / speed})
+			self.object:setvelocity(vector.divide(dir,speed))
+		elseif napos.name == "factory:queuedarm" or napos.name == "factory:arm" then
+			dir = vector.subtract(vector.round(pos),pos) --distance to the middle
+			if math.abs(dir.x)>0.2 or math.abs(dir.z)>0.2 then
+				if dir.y~=0.29 then
+					self.object:setpos(vector.add(pos,{x=0,y=dir.y+0.19,z=0})) -- correct position
+				end
+				dir.y=0
+			end
+			dir=vector.multiply(dir,2) --correct speed
+			self.object:setvelocity(vector.divide(dir,speed))
+		elseif napos.name:find("factory:") and napos.name:find("taker") then
+			dir = vector.multiply(dir,-1) --output direction
+			dir.y = (math.floor(pos.y + 0.5) + 0.19 - pos.y) * 8 --target height
+			self.object:setvelocity(vector.divide(dir,speed))
 		else
 			local stack = ItemStack(self.itemstring)
 			local veldir = self.object:getvelocity();

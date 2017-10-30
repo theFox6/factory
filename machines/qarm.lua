@@ -1,7 +1,7 @@
 local S = factory.S
 
 function qarm_handle (a, b, target, stack, minv, obj)
-	if target.name == "default:chest" or target.name == "default:chest_locked" then
+	if target.name:find("default:chest") then
 		local meta = minetest.env:get_meta(b)
 		local inv = meta:get_inventory()
 
@@ -59,6 +59,22 @@ function qarm_handle (a, b, target, stack, minv, obj)
 			end
 		end
 	end
+	for i,v in ipairs(armDevicesCrafterlike) do
+		if target.name == v then
+			local meta = minetest.env:get_meta(b)
+			local inv = meta:get_inventory()
+
+			if inv:room_for_item("src", stack) then
+				inv:add_item("src", stack)
+				if obj~=nil then obj:remove() end
+			elseif minv:room_for_item("main", stack) then
+				minv:add_item("main", stack)
+				if obj~=nil then obj:remove() end
+			else
+				obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+			end
+		end
+	end
 end
 
 factory.qformspec =
@@ -100,7 +116,7 @@ minetest.register_node("factory:queuedarm",{
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.5,-0.5,-0.5,0.5,0.5,0.5},
+			{-0.5,-0.5,-0.5,0.5,0.8,0.5},
 		}
 	},
 	on_construct = function(pos)
@@ -143,8 +159,8 @@ minetest.register_abm({
 		local target = minetest.get_node(b)
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
-				local stack = ItemStack(obj:get_luaentity().itemstring)
-				qarm_handle(a, b, target, stack, minv, obj)
+				local objStack = ItemStack(obj:get_luaentity().itemstring)
+				qarm_handle(a, b, target, objStack, minv, obj)
 			end
 		end
 		for i,stack in ipairs(minv:get_list("main")) do

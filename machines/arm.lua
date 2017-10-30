@@ -40,7 +40,7 @@ minetest.register_abm({
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
-				local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
+				local b = vector.add(pos,a)
 				local target = minetest.get_node(b)
 				local stack = ItemStack(obj:get_luaentity().itemstring)
 				if target.name == "default:chest" or target.name == "default:chest_locked" then
@@ -50,7 +50,8 @@ minetest.register_abm({
 						inv:add_item("main", stack)
 						obj:remove()
 					else
-						obj:moveto({x = pos.x + (a.x * 2), y = pos.y + 0.5, z = pos.z + (a.z * 2)}, false)
+						minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
+						obj:remove()
 					end
 				end
 				if target.name == "factory:swapper" then
@@ -60,13 +61,25 @@ minetest.register_abm({
 						inv:add_item("input", stack)
 						obj:remove()
 					else
-						obj:moveto({x = pos.x + a.x, y = pos.y + 1, z = pos.z + a.z}, false)
+						minetest.item_drop(stack, factory.no_player, {x = pos.x + a.x, y = pos.y + 1, z = pos.z + a.z})
+						obj:remove()
+					end
+				end
+				for i,v in ipairs(armDevicesCrafterlike) do
+					if target.name == v then
+						local meta = minetest.env:get_meta(b)
+						local inv = meta:get_inventory()
+						if inv:room_for_item("src", stack) then
+							inv:add_item("src", stack)
+							obj:remove()
+						else
+							minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
+							obj:remove()
+						end
 					end
 				end
 				for i,v in ipairs(armDevicesFurnacelike) do
 					if target.name == v then
-						local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
-						local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 						local meta = minetest.env:get_meta(b)
 						local inv = meta:get_inventory()
 
@@ -76,7 +89,8 @@ minetest.register_abm({
 								inv:add_item("fuel", stack)
 								obj:remove()
 							else
-								obj:moveto({x = pos.x + (a.x * 2), y = pos.y + 0.5, z = pos.z + (a.z * 2)}, false)
+								minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
+								obj:remove()
 							end
 						else
 							-- everytin else, src
@@ -84,7 +98,8 @@ minetest.register_abm({
 								inv:add_item("src", stack)
 								obj:remove()
 							else
-								obj:moveto({x = pos.x + (a.x * 2), y = pos.y + 0.5, z = pos.z + (a.z * 2)}, false)
+								minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
+								obj:remove()
 							end
 						end
 					end

@@ -1,6 +1,7 @@
 local S = factory.S
 
 function qarm_handle (a, b, target, stack, minv, obj)
+	local found = false
 	if target.name:find("default:chest") then
 		local meta = minetest.env:get_meta(b)
 		local inv = meta:get_inventory()
@@ -8,11 +9,7 @@ function qarm_handle (a, b, target, stack, minv, obj)
 		if inv:room_for_item("main", stack) then
 			inv:add_item("main", stack)
 			if obj~=nil then obj:remove() end
-		elseif minv:room_for_item("main", stack) then
-			minv:add_item("main", stack)
-			if obj~=nil then obj:remove() end
-		else
-			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+			found = true
 		end
 	end
 	if target.name == "factory:swapper" then
@@ -22,11 +19,7 @@ function qarm_handle (a, b, target, stack, minv, obj)
 		if inv:room_for_item("input", stack) then
 			inv:add_item("input", stack)
 			if obj~=nil then obj:remove() end
-		elseif minv:room_for_item("main", stack) then
-			minv:add_item("main", stack)
-			if obj~=nil then obj:remove() end
-		else
-			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+			found = true
 		end
 	end
 	for i,v in ipairs(armDevicesFurnacelike) do
@@ -39,22 +32,14 @@ function qarm_handle (a, b, target, stack, minv, obj)
 				if inv:room_for_item("fuel", stack) then
 					inv:add_item("fuel", stack)
 					if obj~=nil then obj:remove() end
-				elseif minv:room_for_item("main", stack) then
-					minv:add_item("main", stack)
-					if obj~=nil then obj:remove() end
-				else
-					obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+					found = true
 				end
 			else
 				-- everytin else, src
 				if inv:room_for_item("src", stack) then
 					inv:add_item("src", stack)
 					if obj~=nil then obj:remove() end
-				elseif minv:room_for_item("main", stack) then
-					minv:add_item("main", stack)
-					if obj~=nil then obj:remove() end
-				else
-					obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+					found = true
 				end
 			end
 		end
@@ -67,12 +52,16 @@ function qarm_handle (a, b, target, stack, minv, obj)
 			if inv:room_for_item("src", stack) then
 				inv:add_item("src", stack)
 				if obj~=nil then obj:remove() end
-			elseif minv:room_for_item("main", stack) then
-				minv:add_item("main", stack)
-				if obj~=nil then obj:remove() end
-			else
-				obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+				found = true
 			end
+		end
+	end
+	if not found then
+		if minv:room_for_item("main", stack) then
+			minv:add_item("main", stack)
+			if obj~=nil then obj:remove() end
+		else
+			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 		end
 	end
 end

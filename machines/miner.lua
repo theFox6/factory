@@ -1,5 +1,19 @@
 local S = factory.S
 
+factory.miner = {}
+function factory.miner.afterdig(pos, oldnode, oldmetadata, digger)
+	for i = 1, factory.minerDigLimit do
+		local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
+		if node.name == "ignore" then
+			minetest.get_voxel_manip():read_from_map({x = pos.x, y = pos.y-i, z = pos.z}, {x = pos.x, y = pos.y-i-2, z = pos.z})
+			node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
+		end
+		if node.name == "factory:miner_drillbit" then
+			minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="air"})
+		end
+	end
+end
+
 minetest.register_node("factory:miner_on", {
 	description = S("Industrial Miner"),
 	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}, "factory_belt_bottom.png", "factory_belt_bottom_clean.png",
@@ -22,14 +36,7 @@ minetest.register_node("factory:miner_on", {
 			meta:set_string("infotext",S("Industrial Miner"))
 		end
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		for i = 1, factory.minerDigLimit do
-			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
-			if node.name == "factory:miner_drillbit" then
-				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="air"})
-			end
-		end
-	end,
+	after_dig_node = factory.miner.afterdig,
 })
 
 minetest.register_node("factory:miner_off", {
@@ -52,14 +59,7 @@ minetest.register_node("factory:miner_off", {
 		-- not supposed to be placed. switch to factory:miner_on
 		minetest.swap_node(pos, {name = "factory:miner_on", param2 = node.param2})
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		for i = 1, factory.minerDigLimit do
-			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
-			if node.name == "factory:miner_drillbit" then
-				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="air"})
-			end
-		end
-	end,
+	after_dig_node = factory.miner.afterdig,
 })
 
 minetest.register_node("factory:miner_drillbit", {
@@ -151,14 +151,7 @@ minetest.register_node("factory:miner_upgraded_on", {
 			meta:set_string("infotext",S("Upgraded Miner"))
 		end
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		for i = 1, factory.minerDigLimit do
-			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
-			if node.name == "factory:miner_drillbit" then
-				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="air"})
-			end
-		end
-	end,
+	after_dig_node = factory.miner.afterdig,
 })
 
 minetest.register_node("factory:miner_upgraded_off", {
@@ -181,14 +174,7 @@ minetest.register_node("factory:miner_upgraded_off", {
 		-- not supposed to be placed. switch to factory:miner_on
 		minetest.swap_node(pos, {name = "factory:miner_upgraded_on", param2 = node.param2})
 	end,
-	after_dig_node = function(pos, oldnode, oldmetadata, digger)
-		for i = 1, factory.minerDigLimit do
-			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
-			if node.name == "factory:miner_drillbit" then
-				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="air"})
-			end
-		end
-	end,
+	after_dig_node = factory.miner.afterdig,
 })
 
 minetest.register_abm({

@@ -1,5 +1,8 @@
 # Translation by <your name>
 
+### init.lua ###
+: loaded in %.4f s = 
+
 ### decor/factorybrick.lua ###
 Factory Brick = 
 

@@ -1,5 +1,8 @@
 # Translation by theFox
 
+### init.lua ###
+: loaded in %.4f s = : geladen in %.4f s
+
 ### decor/factorybrick.lua ###
 Factory Brick = Fabrik Backstein
 

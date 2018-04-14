@@ -1,5 +1,7 @@
 -- LemonLake's Factories: Config
 
+--TODO: turn into registrations
+
 -- Logging
 factory.logTaker = false
 

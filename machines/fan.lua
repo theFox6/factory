@@ -45,7 +45,6 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y, z = pos.z}, 1)
-		local _,obj
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x, y = obj:getpos().y + 3, z = obj:getpos().z})

@@ -152,6 +152,11 @@ minetest.register_entity("factory:moving_item", {
 				end
 				dir.y=0
 			end
+			if math.abs(vector.length(dir))<0.001 then
+				local stack = ItemStack(self.itemstring)
+				minetest.item_drop(stack, factory.no_player, pos)
+				self.object:remove()
+			end
 			dir=vector.multiply(dir,2) --correct speed
 			self.object:setvelocity(vector.divide(dir,speed))
 		elseif napos.name:find("factory:") and napos.name:find("taker") then

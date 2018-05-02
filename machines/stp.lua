@@ -97,6 +97,8 @@ minetest.register_node("factory:stp", {
 		if listname == "fuel" then
 			if stack:get_name() == "factory:sapling_fertilizer" then
 				return stack:get_count()
+			else
+				return 0
 			end
 		elseif listname == "src" then
 			return stack:get_count()

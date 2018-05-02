@@ -3,16 +3,7 @@ local autocrafterCache = {}  -- caches some recipe data to avoid to call the slo
 
 local craft_time = 1
 
-local function count_index(invlist)
-	local index = {}
-	for _, stack in pairs(invlist) do
-		if not stack:is_empty() then
-			local stack_name = stack:get_name()
-			index[stack_name] = (index[stack_name] or 0) + stack:get_count()
-		end
-	end
-	return index
-end
+local count_index = factory.count_index
 
 local function get_item_info(stack)
 	local name = stack:get_name()

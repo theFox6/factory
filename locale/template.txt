@@ -80,6 +80,9 @@ Upgraded Miner hit lava =
 Upgraded Miner hit undiggable block = 
 Upgraded Miner has reached the maximum length = 
 
+### machines/oarm.lua ###
+Overflowing Pneumatic Mover = 
+
 ### machines/qarm.lua ###
 Queued Pneumatic Mover = 
 

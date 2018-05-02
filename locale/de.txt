@@ -80,6 +80,9 @@ Upgraded Miner hit lava = aufgerüsteter Bohrer ist auf Lava gestoßen
 Upgraded Miner hit undiggable block = aufgerüsteter Bohrer ist auf einen nicht grabbaren Block gestoßen
 Upgraded Miner has reached the maximum length = aufgerüsteter Bohrer hat seine maximale tiefe erreicht
 
+### machines/oarm.lua ###
+Overflowing Pneumatic Mover = Überfließender Pneumatischer Packer
+
 ### machines/qarm.lua ###
 Queued Pneumatic Mover = Puffernder Pneumatischer Packer
 

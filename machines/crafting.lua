@@ -72,6 +72,12 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	type = "shapeless", 
+	output = "factory:overflowarm",
+	recipe = {"factory:arm", "farming:hoe_steel", "factory:small_gold_gear"}
+})
+
+minetest.register_craft({
 	output = "factory:ind_squeezer",
 	recipe = {
 		{"default:glass", "default:stick", "default:glass"},

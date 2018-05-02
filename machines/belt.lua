@@ -144,7 +144,7 @@ minetest.register_entity("factory:moving_item", {
 				dir.z = (math.floor(pos.z + 0.5) - pos.z) * 2
 			end
 			self.object:setvelocity(vector.divide(dir,speed))
-		elseif napos.name == "factory:queuedarm" or napos.name == "factory:arm" then
+		elseif napos.name == "factory:queuedarm" or napos.name == "factory:arm" or napos.name == "factory:overflowarm" then
 			dir = vector.subtract(vector.round(pos),pos) --distance to the middle
 			if math.abs(dir.x)>0.2 or math.abs(dir.z)>0.2 then
 				if dir.y~=0.29 then

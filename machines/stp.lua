@@ -131,7 +131,7 @@ minetest.register_abm({
 		if inv:contains_item("fuel", ItemStack("factory:sapling_fertilizer 1")) then
 			for i,v in ipairs(factory.stpIO) do
 				local rand = math.random(v.min, v.max)
-				local rands = math.random(0, v.min)
+				local rands = math.random(0, math.floor((v.min/2)+0.5))
 				if inv:contains_item("src", ItemStack({name = v.input})) and
 					inv:room_for_item("dst", {name = v.output, count = rand}) and
 					inv:room_for_item("dst", {name = v.input, count = rands}) then

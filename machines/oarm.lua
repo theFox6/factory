@@ -4,7 +4,6 @@ local count_index = factory.count_index
 
 function oarm_handle (a, b, target, stack, minv, obj)
 	--throws anything that is already in the inventory (more than one stack) out
-	local found = false
 	if target.name:find("default:chest") then
 		local meta = minetest.env:get_meta(b)
 		local inv = meta:get_inventory()
@@ -12,11 +11,14 @@ function oarm_handle (a, b, target, stack, minv, obj)
 
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
-			local dir_right = {x = a.z, y = a.y + 0.25, z = a.x}
+			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 			obj:moveto(vector.add(pos,dir_right), false)
-			found=true
 		else
-			if insert(inv,"main", stack, obj) then found = true end
+			if not insert(inv,"main", stack, obj) then
+				local pos = vector.subtract(b, a)
+				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+				obj:moveto(vector.add(pos,dir_right), false)
+			end
 		end
 	end
 	if target.name == "factory:swapper" then
@@ -26,11 +28,14 @@ function oarm_handle (a, b, target, stack, minv, obj)
 
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
-			local dir_right = {x = a.z, y = a.y + 0.25, z = a.x}
+			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 			obj:moveto(vector.add(pos,dir_right), false)
-			found=true
 		else
-			if insert(inv,"input", stack, obj) then found = true end
+			if not insert(inv,"input", stack, obj) then
+				local pos = vector.subtract(b, a)
+				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+				obj:moveto(vector.add(pos,dir_right), false)
+			end
 		end
 	end
 	for i,v in ipairs(armDevicesFurnacelike) do
@@ -44,11 +49,14 @@ function oarm_handle (a, b, target, stack, minv, obj)
 
 				if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 					local pos = vector.subtract(b, a)
-					local dir_right = {x = a.z, y = a.y + 0.25, z = a.x}
+					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 					obj:moveto(vector.add(pos,dir_right), false)
-					found=true
 				else
-					if insert(inv,"fuel", stack, obj) then found = true end
+					if not insert(inv,"fuel", stack, obj) then
+						local pos = vector.subtract(b, a)
+						local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+						obj:moveto(vector.add(pos,dir_right), false)
+					end
 				end
 			else
 				-- everytin else, src
@@ -56,11 +64,14 @@ function oarm_handle (a, b, target, stack, minv, obj)
 
 				if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 					local pos = vector.subtract(b, a)
-					local dir_right = {x = a.z, y = a.y + 0.25, z = a.x}
+					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 					obj:moveto(vector.add(pos,dir_right), false)
-					found=true
 				else
-					if insert(inv,"src", stack, obj) then found = true end
+					if not insert(inv,"src", stack, obj) then
+						local pos = vector.subtract(b, a)
+						local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+						obj:moveto(vector.add(pos,dir_right), false)
+					end
 				end
 			end
 		end
@@ -71,19 +82,17 @@ function oarm_handle (a, b, target, stack, minv, obj)
 			local inv = meta:get_inventory()
 			local inv_index = count_index(inv:get_list("src"))
 
-			if inv_index[stack:get_name()]>=99 then
+			if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 				local pos = vector.subtract(b, a)
-				local dir_right = {x = a.z, y = a.y + 0.25, z = a.x}
+				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 				obj:moveto(vector.add(pos,dir_right), false)
-				found=true
 			else
-				if insert(inv,"src", stack, obj) then found = true end
+				if not insert(inv,"src", stack, obj) then
+					local pos = vector.subtract(b, a)
+					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+					obj:moveto(vector.add(pos,dir_right), false)
+				end
 			end
-		end
-	end
-	if not found then
-		if not insert(minv,"main", stack, obj) then
-			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 		end
 	end
 end

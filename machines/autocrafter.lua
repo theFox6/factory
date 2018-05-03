@@ -1,7 +1,6 @@
 local S = factory.S
-local autocrafterCache = {}  -- caches some recipe data to avoid to call the slow function minetest.get_craft_result() every second
-
-local craft_time = 1
+local autocrafterCache = {}
+-- caches some recipe data to avoid to call the slow function minetest.get_craft_result() every second
 
 local count_index = factory.count_index
 
@@ -13,13 +12,13 @@ local function get_item_info(stack)
 end
 
 local function get_craft(pos, inventory, hash)
-	local hash = hash or minetest.hash_node_position(pos)
-	local craft = autocrafterCache[hash]
+	local nhash = hash or minetest.hash_node_position(pos)
+	local craft = autocrafterCache[nhash]
 	if not craft then
 		local recipe = inventory:get_list("recipe")
 		local output, decremented_input = minetest.get_craft_result({method = "normal", width = 3, items = recipe})
 		craft = {recipe = recipe, consumption=count_index(recipe), output = output, decremented_input = decremented_input}
-		autocrafterCache[hash] = craft
+		autocrafterCache[nhash] = craft
 	end
 	return craft
 end

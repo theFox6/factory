@@ -15,7 +15,7 @@ if factory.fertilizerGeneration then
         local grass_amount = math.floor(perlin1:get2d({x=x0, y=z0}) ^ 2)
 
         local pr = PseudoRandom(seed+249)
-        for i=0,grass_amount do
+        for _=0,grass_amount do
           local x = pr:next(x0, x1)
           local z = pr:next(z0, z1)
           local ground_y = nil

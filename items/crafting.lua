@@ -93,7 +93,7 @@ factory.register_recipe("ind_squeezer",{
 })
 
 minetest.register_craft({
-	type = "cooking", 
+	type = "cooking",
 	output = "factory:factory_lump",
 	recipe = "factory:compressed_clay"
 })

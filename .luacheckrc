@@ -4,4 +4,7 @@ read_globals = {
 	"minetest",
 	"dump", "vector",
 	"VoxelManip", "VoxelArea",
+	"ItemStack", "PseudoRandom",
+	"stairsplus", "intllib",
+	"unified_inventory",
 }

@@ -2,7 +2,7 @@ local S = factory.S
 local insert = factory.insert_object_item
 local count_index = factory.count_index
 
-function oarm_handle (a, b, target, stack, minv, obj)
+function oarm_handle (a, b, target, stack, obj)
 	--throws anything that is already in the inventory (more than one stack) out
 	if target.name:find("default:chest") then
 		local meta = minetest.env:get_meta(b)
@@ -38,7 +38,7 @@ function oarm_handle (a, b, target, stack, minv, obj)
 			end
 		end
 	end
-	for i,v in ipairs(armDevicesFurnacelike) do
+	for _,v in ipairs(armDevicesFurnacelike) do
 		if target.name == v then
 			local meta = minetest.env:get_meta(b)
 			local inv = meta:get_inventory()
@@ -76,7 +76,7 @@ function oarm_handle (a, b, target, stack, minv, obj)
 			end
 		end
 	end
-	for i,v in ipairs(armDevicesCrafterlike) do
+	for _,v in ipairs(armDevicesCrafterlike) do
 		if target.name == v then
 			local meta = minetest.env:get_meta(b)
 			local inv = meta:get_inventory()
@@ -136,17 +136,18 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local mmeta = minetest.env:get_meta(pos)
-		local minv = mmeta:get_inventory()
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
 		local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 		local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 		local target = minetest.get_node(b)
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
+			if not obj:is_player()
+			and obj:get_luaentity()
+			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local objStack = ItemStack(obj:get_luaentity().itemstring)
-				oarm_handle(a, b, target, objStack, minv, obj)
+				oarm_handle(a, b, target, objStack, obj)
 			end
 		end
 	end,

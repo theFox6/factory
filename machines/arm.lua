@@ -34,7 +34,7 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node, active_object_count, active_object_count_wider) --TODO:use factory.insert_object_item
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
 		local _,obj
 		for _,obj in ipairs(all_objects) do

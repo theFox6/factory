@@ -33,13 +33,13 @@ local function register_recipe(typename, data)
 		data.input[i] = ItemStack(stack):to_string()
 	end
 	if type(data.output) == "table" then
-		for i, v in ipairs(data.output) do
+		for i,_ in ipairs(data.output) do
 			data.output[i] = ItemStack(data.output[i]):to_string()
 		end
 	else
 		data.output = ItemStack(data.output):to_string()
 	end
-	
+
 	local recipe = {time = data.time, input = {}, output = data.output}
 	if not recipe.time then recipe.time = 1 end
 	local index = get_recipe_index(data.input)
@@ -50,7 +50,7 @@ local function register_recipe(typename, data)
 	for _, stack in ipairs(data.input) do
 		recipe.input[ItemStack(stack):get_name()] = ItemStack(stack):get_count()
 	end
-	
+
 	factory.recipes[typename].recipes[index] = recipe
 	if unified_inventory and factory.recipes[typename].output_size == 1 then
 		unified_inventory.register_craft({

@@ -269,15 +269,17 @@ minetest.register_abm({
 		
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			was_active = true
-			meta:set_float("fuel_time", meta:get_float("fuel_time") + 0.9)
 			meta:set_float("src_time", meta:get_float("src_time") + 0.2)
-			local output = result.output
-			if type(output) ~= "table" then output = { output } end
+			meta:set_float("fuel_time", meta:get_float("fuel_time") + 0.9)
+			local output = restult and result.output
+			if type(output) ~= "table" and output then output = { output } end
 			local output_stacks = {}
-			for _, o in ipairs(output) do
-				table.insert(output_stacks, ItemStack(o))
+			if output then
+				for _, o in ipairs(output) do
+					table.insert(output_stacks, ItemStack(o))
+				end
 			end
-			if output_stacks and meta:get_float("src_time") >= result.time then
+			if output_stacks and (result == nil or meta:get_float("src_time") >= result.time) then
 				local room_for_output = true
 				inv:set_size("dst_tmp", inv:get_size("dst"))
 				inv:set_list("dst_tmp", inv:get_list("dst"))
@@ -292,7 +294,7 @@ minetest.register_abm({
 					--print("Could not insert '"..cooked.item:to_string().."'")
 				end
 				meta:set_string("src_time", 0)
-				inv:set_list("src", result.new_input)
+				if result then inv:set_list("src", result.new_input) end
 				inv:set_list("dst", inv:get_list("dst_tmp"))
 			end
 		end

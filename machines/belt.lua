@@ -144,13 +144,18 @@ minetest.register_entity("factory:moving_item", {
 				dir.z = (math.floor(pos.z + 0.5) - pos.z) * 2
 			end
 			self.object:setvelocity(vector.divide(dir,speed))
-		elseif napos.name == "factory:queuedarm" or napos.name == "factory:arm" then
+		elseif napos.name == "factory:queuedarm" or napos.name == "factory:arm" or napos.name == "factory:overflowarm" then
 			dir = vector.subtract(vector.round(pos),pos) --distance to the middle
 			if math.abs(dir.x)>0.2 or math.abs(dir.z)>0.2 then
 				if dir.y~=0.29 then
 					self.object:setpos(vector.add(pos,{x=0,y=dir.y+0.19,z=0})) -- correct position
 				end
 				dir.y=0
+			end
+			if math.abs(vector.length(dir))<0.001 then
+				local stack = ItemStack(self.itemstring)
+				minetest.item_drop(stack, factory.no_player, pos)
+				self.object:remove()
 			end
 			dir=vector.multiply(dir,2) --correct speed
 			self.object:setvelocity(vector.divide(dir,speed))

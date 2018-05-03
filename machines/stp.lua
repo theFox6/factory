@@ -97,6 +97,8 @@ minetest.register_node("factory:stp", {
 		if listname == "fuel" then
 			if stack:get_name() == "factory:sapling_fertilizer" then
 				return stack:get_count()
+			else
+				return 0
 			end
 		elseif listname == "src" then
 			return stack:get_count()
@@ -131,7 +133,11 @@ minetest.register_abm({
 		if inv:contains_item("fuel", ItemStack("factory:sapling_fertilizer 1")) then
 			for i,v in ipairs(factory.stpIO) do
 				local rand = math.random(v.min, v.max)
-				if inv:contains_item("src", ItemStack({name = v.input})) and inv:room_for_item("dst", {name = v.output, count = rand}) then
+				local rands = math.random(0, math.floor((v.min/2)+0.5))
+				if inv:contains_item("src", ItemStack({name = v.input})) and
+					inv:room_for_item("dst", {name = v.output, count = rand}) and
+					inv:room_for_item("dst", {name = v.input, count = rands}) then
+
 					minetest.add_particlespawner({
 						amount = 4,
 						time = 1,
@@ -152,8 +158,9 @@ minetest.register_abm({
 					})
 
 					inv:add_item("dst", ItemStack({name = v.output, count = rand}))
+					inv:add_item("dst", ItemStack({name = v.input, count = rands}))
 
-					inv:remove_item("src", ItemStack({name = inv:get_stack("src", 1):get_name(), count = 1}))
+					inv:remove_item("src", ItemStack({name = v.input, count = 1}))
 					inv:remove_item("fuel", ItemStack({name = inv:get_stack("fuel", 1):get_name(), count = 1}))
 				end
 			end

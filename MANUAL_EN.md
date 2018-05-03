@@ -1,5 +1,6 @@
 * the "Pneumatic Mover" moves items from a conveyor belt into a Chest, a Furnace or others
 * the "Queued Pneumatic Mover" is like a "Pneumatic Mover" but it has got an own inventory
+* the "Overflowing Pneumatic Mover" is like a "Pneumatic Mover" but it won't let more than one stack of one type into the target
 * the "Pneumatic Taker" takes items out of a Chest, a Furnace or others
 * "Conveyor Belts" move dropped items
 * "fans" can blow items away

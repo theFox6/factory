@@ -54,21 +54,27 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	type = "shapeless", 
+	type = "shapeless",
 	output = "factory:taker_gold",
 	recipe = {"factory:taker", "default:goldblock", "factory:small_gold_gear"}
 })
 
 minetest.register_craft({
-	type = "shapeless", 
+	type = "shapeless",
 	output = "factory:taker_diamond",
 	recipe = {"factory:taker_gold", "default:diamondblock", "factory:small_diamond_gear"}
 })
 
 minetest.register_craft({
-	type = "shapeless", 
+	type = "shapeless",
 	output = "factory:queuedarm",
 	recipe = {"factory:arm", "default:chest", "factory:small_gold_gear"}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "factory:overflowarm",
+	recipe = {"factory:arm", "farming:hoe_steel", "factory:small_gold_gear"}
 })
 
 minetest.register_craft({

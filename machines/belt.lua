@@ -40,7 +40,6 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
-		local _,obj
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
 				factory.do_moving_item({x = pos.x, y = pos.y + 0.15, z = pos.z}, obj:get_luaentity().itemstring)
@@ -94,9 +93,9 @@ minetest.register_entity("factory:moving_item", {
 		end
 		local item_texture = nil
 		local item_type = ""
-		if core.registered_items[itemname] then
-			item_texture = core.registered_items[itemname].inventory_image
-			item_type = core.registered_items[itemname].type
+		if minetest.registered_items[itemname] then
+			item_texture = minetest.registered_items[itemname].inventory_image
+			item_type = minetest.registered_items[itemname].type
 		end
 		local prop = {
 			is_visible = true,
@@ -110,14 +109,14 @@ minetest.register_entity("factory:moving_item", {
 	end,
 
 	get_staticdata = function(self)
-		return core.serialize({
+		return minetest.serialize({
 			itemstring = self.itemstring
 		})
 	end,
 
 	on_activate = function(self, staticdata, dtime_s)
 		if string.sub(staticdata, 1, string.len("return")) == "return" then
-			local data = core.deserialize(staticdata)
+			local data = minetest.deserialize(staticdata)
 			if data and type(data) == "table" then
 				self.itemstring = data.itemstring
 			end

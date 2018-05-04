@@ -34,11 +34,12 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider) --TODO:use factory.insert_object_item
+	action = function(pos)
+		--TODO:use factory.insert_object_item
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
-		local _,obj
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
+			if not obj:is_player() and obj:get_luaentity()
+			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 				local b = vector.add(pos,a)
 				local target = minetest.get_node(b)
@@ -65,7 +66,7 @@ minetest.register_abm({
 						obj:remove()
 					end
 				end
-				for i,v in ipairs(armDevicesCrafterlike) do
+				for _,v in ipairs(armDevicesCrafterlike) do
 					if target.name == v then
 						local meta = minetest.env:get_meta(b)
 						local inv = meta:get_inventory()
@@ -78,7 +79,7 @@ minetest.register_abm({
 						end
 					end
 				end
-				for i,v in ipairs(armDevicesFurnacelike) do
+				for _,v in ipairs(armDevicesFurnacelike) do
 					if target.name == v then
 						local meta = minetest.env:get_meta(b)
 						local inv = meta:get_inventory()

@@ -104,6 +104,9 @@ Pneumatic Taker Mk III=
 ### machines/vacuum.lua ###
 Vacuum=
 
+### machines/upward_vacuum.lua ###
+Vacuum Sorter=
+
 ### machines/wire_drawer.lua ###
 Wire Drawer=
 Wire Drawer (working)=

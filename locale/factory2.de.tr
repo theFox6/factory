@@ -104,6 +104,9 @@ Pneumatic Taker Mk III=Pneumatischer Nehmer v3
 ### machines/vacuum.lua ###
 Vacuum=Sauger
 
+### machines/upward_vacuum.lua ###
+Vacuum Sorter=Saugender Sortierer
+
 ### machines/wire_drawer.lua ###
 Wire Drawer=Drahtschneider
 Wire Drawer (working)=Drahtschneider (schneidet)

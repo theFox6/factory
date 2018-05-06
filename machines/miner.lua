@@ -84,7 +84,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local meta = minetest.get_meta(pos)
-		for i = 1, factory.minerDigLimit do
+		for i = 1, math.floor(factory.minerDigLimit/2) do
 			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[node.name]
 			if node.name == "ignore" then
@@ -107,10 +107,12 @@ minetest.register_abm({
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("@1 hit undiggable block",S("Industrial Miner")))
-					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
-					return
+					if node.name ~= "ignore" then
+						node = minetest.get_node(pos)
+						meta:set_string("infotext",S("@1 hit undiggable block",S("Industrial Miner")))
+						minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
+						return
+					end
 				end
 				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="factory:miner_drillbit"})
 				if node.name == "air" then return end
@@ -206,10 +208,12 @@ minetest.register_abm({
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("@1 hit undiggable block",S("Upgraded Miner")))
-					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
-					return
+					if node.name ~= "ignore" then
+						node = minetest.get_node(pos)
+						meta:set_string("infotext",S("@1 hit undiggable block",S("Upgraded Miner")))
+						minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
+						return
+					end
 				end
 				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="factory:miner_drillbit"})
 				if node.name == "air" then return end

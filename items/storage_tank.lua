@@ -2,12 +2,13 @@ local S = factory.S
 minetest.register_node("factory:storage_tank", {
 	description = S("Storage Tank"),
 	drawtype = "glasslike_framed",
-	tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png","factory_glass.png^factory_port.png", "factory_steel_noise.png"},
+	tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
+		"factory_glass.png^factory_port.png", "factory_steel_noise.png"},
 	inventory_image = "factory_storage_tank.png",
 	paramtype = "light",
 	sunlight_propagates = true,
 	groups = {oddly_breakable_by_hand = 2},
-	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+	on_rightclick = function(pos, _, _, itemstack)
 		local stack = ItemStack(itemstack)
 		if stack:get_name() == "bucket:bucket_water" then
 			minetest.swap_node(pos, {name = "factory:storage_tank_water", param2 = 3 + 64 + 128})
@@ -25,16 +26,17 @@ minetest.register_node("factory:storage_tank", {
 })
 
 function factory.register_storage_tank(name, increment, tiles, plaintile, light, bucket_full, bucket_empty)
-	minetest.register_node("factory:storage_tank_" .. name, {	
+	minetest.register_node("factory:storage_tank_" .. name, {
 		drawtype = "glasslike_framed",
-		tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png","factory_glass.png^factory_port.png", "factory_steel_noise.png"},
+		tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
+			"factory_glass.png^factory_port.png", "factory_steel_noise.png"},
 		special_tiles = tiles,
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = light,
 		groups = {oddly_breakable_by_hand = 2, not_in_creative_inventory = 1},
 		drop = nil,
-		on_dig = function(pos, node, digger)
+		on_dig = function(pos, node)
 			local inv = digger:get_inventory()
 			local meta = minetest.get_meta(pos)
 			local stored = meta:get_int("stored")
@@ -46,7 +48,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			end
 			minetest.set_node(pos, {name = "air"})
 		end,
-		on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+		on_rightclick = function(pos, _, _, itemstack)
 			local stack = ItemStack(itemstack)
 			if stack:get_name() == bucket_full then
 				local meta = minetest.get_meta(pos)
@@ -82,7 +84,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		neighbors = nil,
 		interval = 1,
 		chance = 1,
-		action = function(pos, node, active_object_count, active_object_count_wider)
+		action = function(pos)
 			local meta = minetest.get_meta(pos)
 			local stored = meta:get_int("stored")
 			minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
@@ -95,7 +97,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		wield_image = "factory_storage_tank.png",
 		groups = {not_in_creative_inventory = 1},
 		stack_max = 1,
-		on_place = function(itemstack, placer, pointed_thing)
+		on_place = function(itemstack, _, pointed_thing)
 			local pt = pointed_thing
 			if not pt then
 				return
@@ -118,7 +120,10 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				return
 			end
 
-			minetest.place_node(pt.above, {name="factory:storage_tank_" .. name, param2 = tonumber(itemstack:get_metadata()) + 64 + 128})
+			minetest.place_node(pt.above, {
+				name="factory:storage_tank_" .. name,
+				param2 = tonumber(itemstack:get_metadata()) + 64 + 128
+			})
 			local meta = minetest.get_meta(pt.above)
 			meta:set_int("stored", tonumber(itemstack:get_metadata()))
 			meta:set_string("infotext", S("Storage Tank (@1): @2% full"),S(name),math.floor((100/63)*tonumber(itemstack:get_metadata())))
@@ -130,5 +135,9 @@ end
 -- don't forget to add your liquid to the initial node around line 10
 -- TODO: improve this so it can be used external
 
-factory.register_storage_tank("water", 4, {{name="default_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}}}, "default_water.png", 0, "bucket:bucket_water", "bucket:bucket_empty")
-factory.register_storage_tank("lava", 8, {{name="default_lava_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}}}, "default_lava.png", 13, "bucket:bucket_lava", "bucket:bucket_empty")
+factory.register_storage_tank("water", 4,
+	{{name="default_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}}},
+	"default_water.png", 0, "bucket:bucket_water", "bucket:bucket_empty")
+factory.register_storage_tank("lava", 8,
+	{{name="default_lava_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}}},
+	"default_lava.png", 13, "bucket:bucket_lava", "bucket:bucket_empty")

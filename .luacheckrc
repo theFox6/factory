@@ -1,7 +1,7 @@
 allow_defined_top = true
 
 read_globals = {
-	"minetest",
+	"minetest", "default",
 	"dump", "vector",
 	"VoxelManip", "VoxelArea",
 	"ItemStack", "PseudoRandom",

@@ -158,7 +158,7 @@ minetest.register_node("factory:miner_upgraded_on", {
 
 minetest.register_node("factory:miner_upgraded_off", {
 	description = "Upgaded Miner",
-	tiles = {"factory_fan_off.png^factory_gold_ring_x2.png", "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
+	tiles = {"factory_fan_off.png^factory_gold_ring.png", "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
 		"factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_miner_upgraded_off.png"},
 	groups = {cracky = 2, not_in_creative_inventory = 1, mesecon_effector_on = 1},
 	paramtype2 = "facedir",

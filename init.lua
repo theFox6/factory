@@ -11,14 +11,8 @@ factory={
 	no_player={is_player=function() return false end},
 	--pipes={}, -- coming soon (perhaps...)
 	worldpath=minetest.get_worldpath(),
-	modpath=minetest.get_modpath("factory")
+	modpath=minetest.get_modpath("factory"),
 }
--- Boilerplate to support localized strings if intllib mod is installed.
-if minetest.get_modpath( "intllib" ) and intllib then
-	factory.S = intllib.Getter()
-else
-	factory.S = function(s) return s end
-end
 
 dofile(factory.modpath.."/settings.lua")
 
@@ -33,5 +27,5 @@ if minetest.settings:get_bool("log_mods") then
   minetest.log("action", string.format(
 	"[MOD] "..minetest.get_current_modname()..factory.S(": loaded in %.4f s"), time_to_load))
 else
-  print(string.format("[MOD] "..minetest.get_current_modname()..factory.S(": loaded in %.4f s"), time_to_load))
+  print(string.format("[MOD] %s: loaded in %.4f s",minetest.get_current_modname(), time_to_load))
 end

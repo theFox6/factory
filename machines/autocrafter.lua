@@ -7,7 +7,7 @@ local count_index = factory.count_index
 local function get_item_info(stack)
 	local name = stack:get_name()
 	local def = minetest.registered_items[name]
-	local description = def and def.description or "Unknown item"
+	local description = def and def.description or S("unknown item")
 	return description, name
 end
 
@@ -54,7 +54,7 @@ local function after_recipe_change(pos, inventory)
 	craft = craft or get_craft(pos, inventory, hash)
 	local output_item = craft.output.item
 	local description, name = get_item_info(output_item)
-	meta:set_string("infotext", S("'%s' Autocrafter (%s)"):format(description, name))
+	meta:set_string("infotext", S("'@1' Autocrafter (@2)",description, name))
 	inventory:set_stack("output", 1, output_item)
 
 end

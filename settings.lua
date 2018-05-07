@@ -1,5 +1,7 @@
 -- LemonLake's Factories: Config
 
+--TODO: turn into registrations
+
 -- Logging
 factory.logTaker = false
 
@@ -12,7 +14,7 @@ factory.enableVacuum = true
 
 factory.fertilizerGeneration = true
 
-factory.minerDigLimit = 256
+factory.minerDigLimit = 512
 
 -- Defines the device types for movers and takers.
 -- Don't change unless you know what you're doing.

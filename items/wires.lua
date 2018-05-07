@@ -2,12 +2,12 @@ local S = factory.S
 
 if not minetest.get_modpath("homedecor") then
 	minetest.register_craftitem(":homedecor:copper_wire", {
-		description = S("Spool of copper wire"),
+		description = S("spool of @1 wire",S("copper")),
 		inventory_image = "homedecor_copper_wire.png"
 	})
 
 	minetest.register_craftitem(":homedecor:steel_wire", {
-		description = S("Spool of steel wire"),
+		description = S("spool of @1 wire",S("steel")),
 		inventory_image = "homedecor_steel_wire.png"
 	})
 end

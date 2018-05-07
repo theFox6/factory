@@ -92,7 +92,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 	})
 
 	minetest.register_craftitem("factory:storage_tank_" .. name .. "_inventory", {
-		description = S("Storage Tank").." (" .. S(name) .. ")",
+		description = S("Storage Tank (@1)",S(name)),
 		inventory_image = plaintile .. "^factory_storage_tank.png",
 		wield_image = "factory_storage_tank.png",
 		groups = {not_in_creative_inventory = 1},
@@ -126,15 +126,14 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			})
 			local meta = minetest.get_meta(pt.above)
 			meta:set_int("stored", tonumber(itemstack:get_metadata()))
-			meta:set_string("infotext", S("Storage Tank").." (" .. S(name) .. "): "..
-				math.floor((100/63)*tonumber(itemstack:get_metadata())).."% "..S("full"))
+			meta:set_string("infotext", S("Storage Tank (@1): @2% full"),S(name),math.floor((100/63)*tonumber(itemstack:get_metadata())))
 			return ""
 		end
 	})
 end
 
 -- don't forget to add your liquid to the initial node around line 10
--- I may improve this later
+-- TODO: improve this so it can be used external
 
 factory.register_storage_tank("water", 4,
 	{{name="default_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}}},

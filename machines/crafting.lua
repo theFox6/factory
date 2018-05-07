@@ -141,7 +141,16 @@ minetest.register_craft({
 	output = "factory:vacuum_on",
 	recipe = {
 		{"default:steel_ingot", 	"factory:taker_on", 			"default:steel_ingot"},
-		{"factory:small_steel_gear","factory:small_gold_gear", 		"factory:small_steel_gear"},
-		{"", 						"default:steel_ingot", 			""}
+		{"factory:small_steel_gear",	"factory:small_gold_gear", 		"factory:small_steel_gear"},
+		{"", 				"default:steel_ingot", 			""}
+	}
+})
+
+minetest.register_craft({
+	output = "factory:upward_vacuum_off",
+	recipe = {
+		{"default:steel_ingot", 	"default:steel_ingot",		"default:steel_ingot"},
+		{"default:steel_ingot",		"factory:small_gold_gear", 	"factory:taker_on"},
+		{"factory:scanner_chip", 	"factory:vacuum_on", 		"factory:scanner_chip"}
 	}
 })

@@ -25,7 +25,7 @@ minetest.register_node("factory:miner_on", {
 	mesecons = {effector = {
 		action_on = function(pos, node)
 			local meta = minetest.get_meta(pos)
-			meta:set_string("infotext",S("Industrial Miner was switched off"))
+			meta:set_string("infotext",S("@1 was switched off",S("Industrial Miner")))
 			minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 		end
 	}},
@@ -84,7 +84,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
 		local meta = minetest.get_meta(pos)
-		for i = 1, factory.minerDigLimit do
+		for i = 1, math.floor(factory.minerDigLimit/2) do
 			local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[node.name]
 			if node.name == "ignore" then
@@ -96,21 +96,23 @@ minetest.register_abm({
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then
 					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Industrial Miner hit protected block"))
+					meta:set_string("infotext",S("@1 hit protected block",S("Industrial Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 					return
 				end
 				if string.find(node.name, "lava") then
 					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Industrial Miner hit lava"))
+					meta:set_string("infotext",S("@1 hit lava",S("Industrial Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Industrial Miner hit undiggable block"))
-					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
-					return
+					if node.name ~= "ignore" then
+						node = minetest.get_node(pos)
+						meta:set_string("infotext",S("@1 hit undiggable block",S("Industrial Miner")))
+						minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
+						return
+					end
 				end
 				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="factory:miner_drillbit"})
 				if node.name == "air" then return end
@@ -122,7 +124,7 @@ minetest.register_abm({
 			end
 		end
 		local node = minetest.get_node(pos)
-		meta:set_string("infotext",S("Industrial Miner has reached the maximum length"))
+		meta:set_string("infotext",S("@1 has reached the maximum length",S("Industrial Miner")))
 		minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 	end,
 })
@@ -140,7 +142,7 @@ minetest.register_node("factory:miner_upgraded_on", {
 	mesecons = {effector = {
 		action_on = function(pos, node)
 			local meta = minetest.get_meta(pos)
-			meta:set_string("infotext",S("Upgraded Miner was switched off"))
+			meta:set_string("infotext",S("@1 was switched off",S("Upgraded Miner")))
 			minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 		end
 	}},
@@ -156,7 +158,7 @@ minetest.register_node("factory:miner_upgraded_on", {
 
 minetest.register_node("factory:miner_upgraded_off", {
 	description = "Upgaded Miner",
-	tiles = {"factory_fan_off.png^factory_gold_ring_x2.png", "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
+	tiles = {"factory_fan_off.png^factory_gold_ring.png", "factory_belt_bottom.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png",
 		"factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_belt_bottom_clean.png^factory_gold_ring.png", "factory_miner_upgraded_off.png"},
 	groups = {cracky = 2, not_in_creative_inventory = 1, mesecon_effector_on = 1},
 	paramtype2 = "facedir",
@@ -195,21 +197,23 @@ minetest.register_abm({
 			if node.name ~= "factory:miner_drillbit" then
 				if meta:get_string("owner") ~= nil and minetest.is_protected(node.pos, meta:get_string("owner")) then
 					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Upgraded Miner hit protected block"))
+					meta:set_string("infotext",S("@1 hit protected block",S("Upgraded Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return
 				end
 				if string.find(node.name, "lava") then
 					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Upgraded Miner hit lava"))
+					meta:set_string("infotext",S("@1 hit lava",S("Upgraded Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return
 				end
 				if node.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					node = minetest.get_node(pos)
-					meta:set_string("infotext",S("Upgraded Miner hit undiggable block"))
-					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
-					return
+					if node.name ~= "ignore" then
+						node = minetest.get_node(pos)
+						meta:set_string("infotext",S("@1 hit undiggable block",S("Upgraded Miner")))
+						minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
+						return
+					end
 				end
 				minetest.set_node({x = pos.x, y = pos.y-i, z = pos.z}, {name="factory:miner_drillbit"})
 				if node.name == "air" then return end
@@ -222,6 +226,6 @@ minetest.register_abm({
 		end
 		local node = minetest.get_node(pos)
 		minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
-		meta:set_string("infotext",S("Upgraded Miner has reached the maximum length"))
+		meta:set_string("infotext",S("@1 has reached the maximum length",S("Upgraded Miner")))
 	end,
 })

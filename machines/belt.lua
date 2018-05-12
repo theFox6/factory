@@ -1,8 +1,8 @@
 local S = factory.S
 minetest.register_node("factory:belt_center", {
 	description = S("centering Conveyor Belt"),
-	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}},
+		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -17,8 +17,8 @@ minetest.register_node("factory:belt_center", {
 
 minetest.register_node("factory:belt", {
 	description = S("Conveyor Belt"),
-	tiles = {{name="factory_belt_st_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png", "factory_belt_side.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_belt_st_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}},
+		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -38,7 +38,7 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then

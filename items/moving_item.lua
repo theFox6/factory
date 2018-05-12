@@ -29,12 +29,12 @@ minetest.register_entity("factory:moving_item", {
 		if itemtable then
 			itemname = stack:to_table().name
 		end
-		local item_texture = nil
+		--[[local item_texture = nil
 		local item_type = ""
 		if minetest.registered_items[itemname] then
 			item_texture = minetest.registered_items[itemname].inventory_image
 			item_type = minetest.registered_items[itemname].type
-		end
+		end--]]
 		local prop = {
 			is_visible = true,
 			visual = "wielditem",
@@ -52,7 +52,7 @@ minetest.register_entity("factory:moving_item", {
 		})
 	end,
 
-	on_activate = function(self, staticdata, dtime_s)
+	on_activate = function(self, staticdata)
 		if string.sub(staticdata, 1, string.len("return")) == "return" then
 			local data = minetest.deserialize(staticdata)
 			if data and type(data) == "table" then
@@ -65,7 +65,7 @@ minetest.register_entity("factory:moving_item", {
 		self:set_item(self.itemstring)
 	end,
 
-	on_step = function(self, dtime)
+	on_step = function(self)
 		local pos = self.object:getpos()
 		local speed = 0.8
 		local apos = vector.round(pos)
@@ -104,7 +104,8 @@ minetest.register_entity("factory:moving_item", {
 				return
 			end
 		end
-		local dir = vector.new(minetest.facedir_to_dir(napos.param2)) -- a copy of the facedir so we don't overwrite the facedir table
+		-- a copy of the facedir so we don't overwrite the facedir table
+		local dir = vector.new(minetest.facedir_to_dir(napos.param2))
 		if napos.name == "factory:belt" then
 			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
 			self.object:setvelocity(vector.divide(dir,speed))

@@ -1,8 +1,8 @@
 local S = factory.S
 minetest.register_node("factory:fan_on", {
 	description = S("Fan"),
-	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}, "factory_belt_bottom.png", "factory_belt_side.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}, "factory_belt_bottom.png",
+		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=3, mesecon_effector_off = 1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -43,10 +43,11 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y, z = pos.z}, 1)
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
+			if not obj:is_player() and obj:get_luaentity()
+			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x, y = obj:getpos().y + 3, z = obj:getpos().z})
 			end
 		end
@@ -108,10 +109,9 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x - a.x/2, y = pos.y, z = pos.z - a.z/2}, 1)
-		local _,obj
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x - a.x*2.0, y = obj:getpos().y, z = obj:getpos().z - a.z*2.0})

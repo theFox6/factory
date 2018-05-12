@@ -7,4 +7,7 @@ read_globals = {
 	"ItemStack", "PseudoRandom",
 	"stairsplus", "intllib",
 	"unified_inventory",
+	math = { fields = {"sign"} }
 }
+
+ignore = {"122"}

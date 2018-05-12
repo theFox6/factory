@@ -36,7 +36,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		light_source = light,
 		groups = {oddly_breakable_by_hand = 2, not_in_creative_inventory = 1},
 		drop = nil,
-		on_dig = function(pos, node)
+		on_dig = function(pos, _, digger)
 			local inv = digger:get_inventory()
 			local meta = minetest.get_meta(pos)
 			local stored = meta:get_int("stored")
@@ -126,7 +126,8 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			})
 			local meta = minetest.get_meta(pt.above)
 			meta:set_int("stored", tonumber(itemstack:get_metadata()))
-			meta:set_string("infotext", S("Storage Tank (@1): @2% full"),S(name),math.floor((100/63)*tonumber(itemstack:get_metadata())))
+			meta:set_string("infotext", S("Storage Tank (@1): @2% full"),
+				S(name),math.floor((100/63)*tonumber(itemstack:get_metadata())))
 			return ""
 		end
 	})

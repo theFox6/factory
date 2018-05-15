@@ -2,7 +2,7 @@ if not minetest.translate then
 	if minetest.get_translator then
 		minetest.log("warning","minetest.translate not found, this is really strange...")
 	end
-	function minetest.translate(textdomain, str, ...)
+	function minetest.translate(_, str, ...)
 		local arg = {n=select('#', ...), ...}
 		return str:gsub("@(.)", function (matched)
 			local c = string.byte(matched)

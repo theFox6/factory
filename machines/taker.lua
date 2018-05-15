@@ -4,11 +4,8 @@ function factory.taker.take(pos,dir,invlist)
 	local src = vector.add(pos,dir)
 	local meta = minetest.env:get_meta(src)
 	local inv = meta:get_inventory()
-	local target_nod=minetest.get_node(vector.add(pos,vector.multiply(dir,-1)))
-	local targetp=vector.add(pos,vector.multiply(dir,0.4))
 	if not inv:is_empty(invlist) then
 		local list = inv:get_list(invlist)
-		local i,item
 		for i,item in ipairs(list) do
 			if item:get_name() ~= "" then
 				factory.do_moving_item(pos, item:peek_item(1))
@@ -102,15 +99,14 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 		neighbors = nil,
 		interval = speed,
 		chance = 1,
-		action = function(pos, node, active_object_count, active_object_count_wider)
-			local facedir = minetest.get_node(pos).param2
-			local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
+		action = function(pos, node)
+			local facedir = node.param2
+			local dir = minetest.facedir_to_dir(facedir)
 			local src = vector.add(pos,dir)
 			local target = minetest.get_node(src)
 			if target.name == "default:chest" or target.name == "default:chest_locked" then
 				factory.taker.take(pos,dir,"main")
 			end
-			local targetp = vector.add(pos,vector.multiply(dir,-1))
 			if target.name == "factory:swapper" then
 				local takefrom = ""
 				-- 0 = none
@@ -138,7 +134,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 					factory.taker.take(pos,dir,takefrom)
 				end
 			end
-			for i,v in ipairs(takerDevicesFurnacelike) do
+			for _,v in ipairs(takerDevicesFurnacelike) do
 				if target.name == v then
 					factory.taker.take(pos,dir,"dst")
 				end

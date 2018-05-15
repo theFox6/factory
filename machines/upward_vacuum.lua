@@ -10,21 +10,22 @@ factory.vac_sorter_formspec =
 
 minetest.register_node("factory:upward_vacuum_on", {
 	description = S("Vacuum Sorter"),
-	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_green.png", "factory_machine_steel_dark.png",
-		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
+	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_green.png",
+		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
+		"factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
 	groups = {cracky=3, not_in_creative_inventory=1},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	drop="factory:upward_vacuum_off",
 	legacy_facedir_simple = true,
 	is_ground_content = false,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, index, stack)
 		local inv = minetest.get_meta(pos):get_inventory()
 		stack:set_count(1)
 		inv:set_stack(listname, index, stack)
 		return 0
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, listname)
 		local inv = minetest.get_meta(pos):get_inventory()
 		inv:set_stack(listname, index, ItemStack(""))
 		factory.swap_node(pos,"factory:upward_vacuum_off")
@@ -34,8 +35,9 @@ minetest.register_node("factory:upward_vacuum_on", {
 
 minetest.register_node("factory:upward_vacuum_off", {
 	description = S("Vacuum Sorter"),
-	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_red.png", "factory_machine_steel_dark.png",
-		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
+	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_red.png",
+		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
+		"factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
 	groups = {cracky=3},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -48,14 +50,14 @@ minetest.register_node("factory:upward_vacuum_off", {
 		local inv = meta:get_inventory()
 		inv:set_size("sort", 1)
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, index, stack)
 		local inv = minetest.get_meta(pos):get_inventory()
 		stack:set_count(1)
 		inv:set_stack(listname, index, stack)
 		factory.swap_node(pos,"factory:upward_vacuum_on")
 		return 0
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, listname, index)
 		local inv = minetest.get_meta(pos):get_inventory()
 		inv:set_stack(listname, index, ItemStack(""))
 		return 0
@@ -67,7 +69,7 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y-1, z = pos.z}, 0.5)
 		local inv = minetest.get_meta(pos):get_inventory()
 		for _,obj in ipairs(all_objects) do

@@ -17,8 +17,9 @@ factory.swapper_formspec =
 
 minetest.register_node("factory:swapper", {
 	description = factory.S("Swapper"),
-	tiles = {"factory_machine_steel_dark.png", "factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_square_blue.png",
-		"factory_machine_steel_dark.png^factory_square_yellow.png", "factory_machine_steel_dark.png^factory_square_white.png", "factory_machine_steel_dark.png^factory_square_red.png"},
+	tiles = {"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
+		"factory_machine_steel_dark.png^factory_square_blue.png", "factory_machine_steel_dark.png^factory_square_yellow.png",
+		"factory_machine_steel_dark.png^factory_square_white.png", "factory_machine_steel_dark.png^factory_square_red.png"},
 	paramtype2 = "facedir",
 	groups = {cracky=3},
 	legacy_facedir_simple = true,
@@ -35,7 +36,7 @@ minetest.register_node("factory:swapper", {
 		inv:set_size("overflow", 2)
 		inv:set_size("input", 4)
 	end,
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("left") then
@@ -53,7 +54,7 @@ minetest.register_node("factory:swapper", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, index, stack)
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "left" or listname == "right" then
 			stack:set_count(1)
@@ -62,7 +63,7 @@ minetest.register_node("factory:swapper", {
 		end
 		return stack:get_count()
 	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, listname, index, stack)
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "left" or listname == "right" then
 			inv:set_stack(listname, index, ItemStack(""))
@@ -70,7 +71,7 @@ minetest.register_node("factory:swapper", {
 		end
 		return stack:get_count()
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count)
 		local inv = minetest.get_meta(pos):get_inventory()
 		local stack = inv:get_stack(from_list, from_index)
 
@@ -93,12 +94,12 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if not inv:is_empty("input") then
 			for i,item in ipairs(inv:get_list("input")) do
-				if not item:is_empty() and item:get_name() ~= "" then 
+				if not item:is_empty() and item:get_name() ~= "" then
 					local item_to_move = item:peek_item()
 					for _,litem in ipairs(inv:get_list("left")) do
 						if litem:get_name() == item:get_name() and inv:room_for_item("loverflow", item_to_move) then
@@ -126,4 +127,4 @@ minetest.register_abm({
 			end
 		end
 	end
-})	
+})

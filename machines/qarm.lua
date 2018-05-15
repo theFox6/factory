@@ -105,7 +105,8 @@ minetest.register_node("factory:queuedarm",{
 		minetest.log("action", string.format("%s moves stuff to queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
 	end,
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-		minetest.log("action", string.format("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
+		minetest.log("action",
+			string.format("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
 	end,
 })
 
@@ -114,7 +115,7 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local mmeta = minetest.env:get_meta(pos)
 		local minv = mmeta:get_inventory()
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
@@ -122,17 +123,18 @@ minetest.register_abm({
 		local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 		local target = minetest.get_node(b)
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
+			if not obj:is_player() and obj:get_luaentity()
+			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				local objStack = ItemStack(obj:get_luaentity().itemstring)
 				qarm_handle(a, b, target, objStack, minv, obj)
 			end
 		end
-		for i,stack in ipairs(minv:get_list("main")) do
+		for _,stack in ipairs(minv:get_list("main")) do
 			if stack:get_name() ~= "" then
 				minv:remove_item("main", stack)
 				qarm_handle(a, b, target, stack, minv, nil)
 				return
 			end
-		end	
+		end
 	end,
 })

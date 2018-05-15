@@ -92,7 +92,6 @@ minetest.register_node("factory:stp", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
-		local meta = minetest.get_meta(pos)
 		if listname == "fuel" then
 			if stack:get_name() == "factory:sapling_fertilizer" then
 				return stack:get_count()
@@ -105,9 +104,7 @@ minetest.register_node("factory:stp", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count) --pos, from_list, from_index, to_list, to_index, count, player
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
+	allow_metadata_inventory_move = function(pos, _, _, to_list, _, count)
 		if to_list == "fuel" then
 			return count
 		elseif to_list == "src" then

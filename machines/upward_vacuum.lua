@@ -10,9 +10,10 @@ factory.vac_sorter_formspec =
 
 minetest.register_node("factory:upward_vacuum_on", {
 	description = S("Vacuum Sorter"),
-	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_green.png",
-		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
-		"factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
+	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png",
+		"factory_machine_steel_dark.png^factory_ring_green.png", "factory_machine_steel_dark.png",
+		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png",
+		"factory_machine_steel_dark.png"},
 	groups = {cracky=3, not_in_creative_inventory=1},
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -25,7 +26,7 @@ minetest.register_node("factory:upward_vacuum_on", {
 		inv:set_stack(listname, index, stack)
 		return 0
 	end,
-	allow_metadata_inventory_take = function(pos, listname)
+	allow_metadata_inventory_take = function(pos, listname, index)
 		local inv = minetest.get_meta(pos):get_inventory()
 		inv:set_stack(listname, index, ItemStack(""))
 		factory.swap_node(pos,"factory:upward_vacuum_off")
@@ -35,9 +36,10 @@ minetest.register_node("factory:upward_vacuum_on", {
 
 minetest.register_node("factory:upward_vacuum_off", {
 	description = S("Vacuum Sorter"),
-	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png", "factory_machine_steel_dark.png^factory_ring_red.png",
-		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
-		"factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png", "factory_machine_steel_dark.png"},
+	tiles = {"factory_machine_steel_dark.png^factory_vent_slates.png",
+		"factory_machine_steel_dark.png^factory_ring_red.png", "factory_machine_steel_dark.png",
+		"factory_machine_steel_dark.png", "factory_machine_steel_dark.png^factory_8x8_black_square_32x32.png",
+		"factory_machine_steel_dark.png"},
 	groups = {cracky=3},
 	paramtype = "light",
 	paramtype2 = "facedir",

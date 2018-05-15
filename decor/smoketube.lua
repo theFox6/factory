@@ -31,8 +31,16 @@ minetest.register_node("factory:smoke_tube", {
 
 factory.smoke_spawners = {}
 
+function get_smoke_spawner_at(pos)
+	for _,sp in pairs(factory.smoke_spawners) do
+		if vector.equals(sp.pos,pos) then
+			return sp
+		end
+	end
+end
+
 function factory.start_smoke(pos,time)
-	if factory.smoke_spawners[pos] then return false end
+	if get_smoke_spawner_at(pos) then return false end
 	local id = minetest.add_particlespawner({
 		amount = 4,
 		time = time or 0,
@@ -51,60 +59,68 @@ function factory.start_smoke(pos,time)
 		texture = "factory_smoke.png",
 	})
 	if time == 0 or time == nil then
-		factory.smoke_spawners[pos] = id
+		table.insert(factory.smoke_spawners, {pos = pos, id = id})
 	end
 	return true
 end
 
 function factory.stop_smoke(pos)
-	if factory.smoke_spawners[pos] then
-		minetest.delete_particlespawner(factory.smoke_spawners[pos])
-		factory.smoke_spawners[pos] = nil
-		return true
-	else
-		return false
+	for i,sp in pairs(factory.smoke_spawners) do
+		if vector.equals(sp.pos,pos) then
+			minetest.delete_particlespawner(sp.id)
+			factory.smoke_spawners[i] = nil
+		end
 	end
 end
 
 function factory.get_smoke_on_tube(machine_pos)
 	for i=1,7 do
 		local pos = vector.add(machine_pos,{x=0,y=i,z=0})
-		if factory.smoke_spawners[pos] then
+		if get_smoke_spawner_at(pos) then
 			return pos
 		end
 	end
 end
 
 function factory.smoke_on_tube(machine_pos, active)
+	local pos = machine_pos
+	local height = 0
 	for i=1,7 do -- SMOKE TUBE CHECK
-		local dn = minetest.get_node({x = pos.x, y = pos.y + i, z = pos.z})
+		local pos = vector.add(machine_pos,{x=0,y=i,z=0})
+		local dn = minetest.get_node(pos)
 		if dn.name == "factory:smoke_tube" then
 			height = height + 1
 		else break end
 	end
+	pos = vector.add(machine_pos,{x=0,y=height,z=0})
 
-	local last_smoke = get_smoke_on_tube(machine_pos)
+	local last_smoke = factory.get_smoke_on_tube(machine_pos)
 	if last_smoke then
-		if not vector.equals(last_smoke,{x = pos.x, y = pos.y + height, z = pos.z}) then
+		if not vector.equals(last_smoke,pos) then
+			print("wrong smoking place "..minetest.pos_to_string(vector.subtract(last_smoke,pos)))
 			factory.stop_smoke(last_smoke)
 			return factory.smoke_on_tube(machine_pos, active)
 		end
 	end
 
-	if minetest.get_node({x = pos.x, y = pos.y + height + 1, z = pos.z}).name ~= "air" then
-		factory.stop_smoke(last_smoke)
+	if minetest.get_node({x = pos.x, y = pos.y + 1, z = pos.z}).name ~= "air" then
+		if last_smoke then
+			factory.stop_smoke(last_smoke)
+		end
 		return false
 	end
 
 	if height < 2 then
-		factory.stop_smoke(last_smoke)
+		if last_smoke then
+			factory.stop_smoke(last_smoke)
+		end
 		return false
 	else
 		if active then
-			factory.start_smoke(vector.add(pos,{x=0,y=height,z=0}))
+			factory.start_smoke(pos)
 			return true
 		else
-			factory.stop_smoke(vector.add(pos,{x=0,y=height,z=0}))
+			factory.stop_smoke(pos)
 			return true
 		end
 	end

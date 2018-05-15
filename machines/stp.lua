@@ -40,7 +40,7 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 3,
 	chance = 6,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		minetest.add_particlespawner({
 			amount = 3,
 			time = 1,
@@ -79,7 +79,7 @@ minetest.register_node("factory:stp", {
 		inv:set_size("src", 1)
 		inv:set_size("dst", 4)
 	end,
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
@@ -91,9 +91,8 @@ minetest.register_node("factory:stp", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, _, stack)
 		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
 		if listname == "fuel" then
 			if stack:get_name() == "factory:sapling_fertilizer" then
 				return stack:get_count()
@@ -106,10 +105,9 @@ minetest.register_node("factory:stp", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count) --pos, from_list, from_index, to_list, to_index, count, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
 		if to_list == "fuel" then
 			return count
 		elseif to_list == "src" then
@@ -124,38 +122,19 @@ minetest.register_abm({
 	nodenames = {"factory:stp"},
 	interval = 2.5,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 
-		local srclist = inv:get_list("src")
-				
 		if inv:contains_item("fuel", ItemStack("factory:sapling_fertilizer 1")) then
-			for i,v in ipairs(factory.stpIO) do
+			for _,v in ipairs(factory.stpIO) do
 				local rand = math.random(v.min, v.max)
 				local rands = math.random(0, math.floor((v.min/2)+0.5))
 				if inv:contains_item("src", ItemStack({name = v.input})) and
 					inv:room_for_item("dst", {name = v.output, count = rand}) and
 					inv:room_for_item("dst", {name = v.input, count = rands}) then
 
-					minetest.add_particlespawner({
-						amount = 4,
-						time = 1,
-						minpos = {x = pos.x - 0.2, y = pos.y, z = pos.z - 0.2},
-						maxpos = {x = pos.x + 0.2, y = pos.y, z = pos.z + 0.2},
-						minvel = {x=-0.4, y=0.4, z=-0.4},
-						maxvel = {x=0.4, y=0.7, z=0.4},
-						minacc = {x=0, y=0, z=0},
-						maxacc = {x=0, y=0, z=0},
-						minexptime = 0.8,
-						maxexptime = 2,
-						minsize = 2,
-						maxsize = 4,
-						collisiondetection = false,
-						vertical = false,
-						texture = "factory_smoke.png",
-						playername = nil,
-					})
+					factory.start_smoke(pos,1)
 
 					inv:add_item("dst", ItemStack({name = v.output, count = rand}))
 					inv:add_item("dst", ItemStack({name = v.input, count = rands}))

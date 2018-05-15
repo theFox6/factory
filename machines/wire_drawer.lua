@@ -205,7 +205,7 @@ minetest.register_abm({
 	nodenames = {"factory:wire_drawer","factory:wire_drawer_active"},
 	interval = 1.0,
 	chance = 1,
-	action = function(pos)
+	action = function(pos, node)
 		local meta = minetest.get_meta(pos)
 		for _, name in ipairs({
 				"fuel_totaltime",
@@ -218,41 +218,9 @@ minetest.register_abm({
 			end
 		end
 
-		local height = 0
-
-		for i=1,7 do -- SMOKE TUBE CHECK
-			local dn = minetest.get_node({x = pos.x, y = pos.y + i, z = pos.z})
-			if dn.name == "factory:smoke_tube" then
-				height = height + 1
-			else break end
-		end
-
-		if minetest.get_node({x = pos.x, y = pos.y + height + 1, z = pos.z}).name ~= "air" then return end
-
-		if height < 2 then
+		if not factory.smoke_on_tube(pos, node.name == "factory:wire_drawer_active") then
 			meta:set_string("infotext",S("@1 has no smoke tube",S("Wire Drawer")))
 			return
-		else
-			if minetest.get_node(pos).name == "factory:wire_drawer_active" then
-				minetest.add_particlespawner({
-					amount = 4,
-					time = 3,
-					minpos = {x = pos.x - 0.2, y = pos.y + height + 0.3, z = pos.z - 0.2},
-					maxpos = {x = pos.x + 0.2, y = pos.y + height + 0.6, z = pos.z + 0.2},
-					minvel = {x=-0.4, y=1, z=-0.4},
-					maxvel = {x=0.4, y=2, z=0.4},
-					minacc = {x=0, y=0, z=0},
-					maxacc = {x=0, y=0, z=0},
-					minexptime = 0.8,
-					maxexptime = 2,
-					minsize = 2,
-					maxsize = 4,
-					collisiondetection = false,
-					vertical = false,
-					texture = "factory_smoke.png",
-					playername = nil,
-				})
-			end
 		end
 
 		local inv = meta:get_inventory()

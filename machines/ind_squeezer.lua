@@ -1,8 +1,8 @@
 local S = factory.S
 minetest.register_alias("factory:compressor", "factory:ind_squeezer")
 
-function factory.ind_squeezer_active(pos, percent, item_percent)
-    local formspec = 
+function factory.ind_squeezer_active(percent, item_percent)
+    local formspec =
 	"size[8,8.5]"..
 	factory_gui_bg..
 	factory_gui_bg_img..
@@ -21,7 +21,8 @@ function factory.ind_squeezer_active(pos, percent, item_percent)
   end
 
 function factory.ind_squeezer_active_formspec(pos, percent)
-	local meta = minetest.get_meta(pos)local inv = meta:get_inventory()
+	local meta = minetest.get_meta(pos)
+	local inv = meta:get_inventory()
 	local srclist = inv:get_list("src")
 	local result = nil
 	if srclist then
@@ -31,8 +32,8 @@ function factory.ind_squeezer_active_formspec(pos, percent)
 	if result then
 		item_percent = meta:get_float("src_time")/result.time
 	end
-       
-        return factory.ind_squeezer_active(pos, percent, item_percent)
+
+        return factory.ind_squeezer_active(percent, item_percent)
 end
 
 factory.ind_squeezer_inactive_formspec =
@@ -66,7 +67,7 @@ minetest.register_node("factory:ind_squeezer", {
 		inv:set_size("src", 1)
 		inv:set_size("dst", 4)
 	end,
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
@@ -78,7 +79,7 @@ minetest.register_node("factory:ind_squeezer", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, stack)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
@@ -96,7 +97,7 @@ minetest.register_node("factory:ind_squeezer", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local stack = inv:get_stack(from_list, from_index)
@@ -151,7 +152,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 		inv:set_size("src", 1)
 		inv:set_size("dst", 4)
 	end,
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		if not inv:is_empty("fuel") then
@@ -163,7 +164,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, stack)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
@@ -181,7 +182,7 @@ minetest.register_node("factory:ind_squeezer_active", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		local stack = inv:get_stack(from_list, from_index)
@@ -206,9 +207,9 @@ minetest.register_abm({
 	nodenames = {"factory:ind_squeezer","factory:ind_squeezer_active"},
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	action = function(pos, node)
 		local meta = minetest.get_meta(pos)
-		for i, name in ipairs({
+		for _, name in ipairs({
 				"fuel_totaltime",
 				"fuel_time",
 				"src_totaltime",
@@ -219,59 +220,27 @@ minetest.register_abm({
 			end
 		end
 
-		local height = 0
-
-		for i=1,7 do -- SMOKE TUBE CHECK
-			local dn = minetest.get_node({x = pos.x, y = pos.y + i, z = pos.z})
-			if dn.name == "factory:smoke_tube" then
-				height = height + 1
-			else break end
-		end
-
-		if minetest.get_node({x = pos.x, y = pos.y + height + 1, z = pos.z}).name ~= "air" then return end
-
-		if height < 2 then
+		if not factory.smoke_on_tube(pos, node.name == "factory:ind_squeezer_active") then
 			meta:set_string("infotext",S("@1 has no smoke tube", S("Industrial Squeezer")))
 			return
-		else
-			if minetest.get_node(pos).name == "factory:ind_squeezer_active" then
-				minetest.add_particlespawner({
-					amount = 4,
-					time = 3,
-					minpos = {x = pos.x - 0.2, y = pos.y + height + 0.3, z = pos.z - 0.2},
-					maxpos = {x = pos.x + 0.2, y = pos.y + height + 0.6, z = pos.z + 0.2},
-					minvel = {x=-0.4, y=1, z=-0.4},
-	    			maxvel = {x=0.4, y=2, z=0.4},
-	    			minacc = {x=0, y=0, z=0},
-	    			maxacc = {x=0, y=0, z=0},
-	    			minexptime = 0.8,
-	   				maxexptime = 2,
-	   				minsize = 2,
-	    			maxsize = 4,
-	    			collisiondetection = false,
-	    			vertical = false,
-	    			texture = "factory_smoke.png",
-	    			playername = nil,
-				})
-			end
 		end
 
 		local inv = meta:get_inventory()
 
 		local srclist = inv:get_list("src")
 		local result = nil
-		
+
 		if srclist then
 			result = factory.get_recipe("ind_squeezer", srclist)
 		end
-		
+
 		local was_active = false
-		
+
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			was_active = true
 			meta:set_float("src_time", meta:get_float("src_time") + 0.2)
 			meta:set_float("fuel_time", meta:get_float("fuel_time") + 0.9)
-			local output = restult and result.output
+			local output = result and result.output
 			if type(output) ~= "table" and output then output = { output } end
 			local output_stacks = {}
 			if output then
@@ -291,14 +260,14 @@ minetest.register_abm({
 					inv:add_item("dst_tmp", o)
 				end
 				if not room_for_output then
-					--print("Could not insert '"..cooked.item:to_string().."'")
+					print("Could not insert '"..cooked.item:to_string().."'")
 				end
 				meta:set_string("src_time", 0)
 				if result then inv:set_list("src", result.new_input) end
 				inv:set_list("dst", inv:get_list("dst_tmp"))
 			end
 		end
-		
+
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			local percent = math.floor(meta:get_float("fuel_time") /
 					meta:get_float("fuel_totaltime") * 100)
@@ -310,10 +279,10 @@ minetest.register_abm({
 
 		local fuel = nil
 		local afterfuel
-		local result = nil
+		result = nil
 		local fuellist = inv:get_list("fuel")
-		local srclist = inv:get_list("src")
-		
+		srclist = inv:get_list("src")
+
 		if srclist then
 			result = factory.get_recipe("ind_squeezer", srclist)
 		end
@@ -339,7 +308,7 @@ minetest.register_abm({
 
 		meta:set_string("fuel_totaltime", fuel.time)
 		meta:set_string("fuel_time", 0)
-		
+
 		inv:set_stack("fuel", 1, afterfuel.items[1])
 	end,
 })

@@ -134,7 +134,7 @@ minetest.register_abm({
 					inv:room_for_item("dst", {name = v.output, count = rand}) and
 					inv:room_for_item("dst", {name = v.input, count = rands}) then
 
-					factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),1)
+					factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),0.35,1)
 
 					inv:add_item("dst", ItemStack({name = v.output, count = rand}))
 					inv:add_item("dst", ItemStack({name = v.input, count = rands}))

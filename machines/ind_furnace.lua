@@ -24,7 +24,7 @@ function factory.ind_furnace_active_formspec(pos, percent)
 	local srclist = inv:get_list("src")
 	local cooked = nil
 	if srclist then
-		cooked, _ = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
+		cooked = minetest.get_craft_result({method = "cooking", width = 1, items = srclist})
 	end
 	local item_percent = 0
 	if cooked then

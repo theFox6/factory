@@ -260,7 +260,7 @@ minetest.register_abm({
 					inv:add_item("dst_tmp", o)
 				end
 				if not room_for_output then
-					print("Could not insert '"..cooked.item:to_string().."'")
+					print("Could not insert '"..result.item:to_string().."'")
 				end
 				meta:set_string("src_time", 0)
 				if result then inv:set_list("src", result.new_input) end

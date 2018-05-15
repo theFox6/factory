@@ -1,8 +1,9 @@
 local S = factory.S
 minetest.register_node("factory:belt_center", {
 	description = S("centering Conveyor Belt"),
-	tiles = {{name="factory_belt_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}},
-		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_belt_top_animation.png",
+		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png",
+		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -17,8 +18,9 @@ minetest.register_node("factory:belt_center", {
 
 minetest.register_node("factory:belt", {
 	description = S("Conveyor Belt"),
-	tiles = {{name="factory_belt_st_top_animation.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}},
-		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_belt_st_top_animation.png",
+		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png",
+		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",

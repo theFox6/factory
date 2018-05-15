@@ -37,7 +37,7 @@ takerDevicesFurnacelike = {"default:furnace", "default:furnace_active",
 
 -- Fuel types for the generator
 --generatorFuel = {{name = "factory:tree_sap", value = 20}}
--- TODO: Add items for other Technic blocks
+-- obviously something was planned here dunno what it is though
 
 -- Sapling IO for the Sapling Treatment Plant
 factory.stpIO = {	{input = "default:sapling", output = "default:tree",				min = 4, 	max = 7},

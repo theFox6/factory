@@ -84,10 +84,10 @@ function factory.get_smoke_on_tube(machine_pos)
 end
 
 function factory.smoke_on_tube(machine_pos, active)
-	local pos = machine_pos
+	local pos
 	local height = 0
 	for i=1,7 do -- SMOKE TUBE CHECK
-		local pos = vector.add(machine_pos,{x=0,y=i,z=0})
+		pos = vector.add(machine_pos,{x=0,y=i,z=0})
 		local dn = minetest.get_node(pos)
 		if dn.name == "factory:smoke_tube" then
 			height = height + 1

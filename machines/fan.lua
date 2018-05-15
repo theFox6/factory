@@ -1,8 +1,8 @@
 local S = factory.S
 minetest.register_node("factory:fan_on", {
 	description = S("Fan"),
-	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}, "factory_belt_bottom.png",
-		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}},
+		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
 	groups = {cracky=3, mesecon_effector_off = 1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -60,7 +60,8 @@ minetest.register_abm({
 minetest.register_node("factory:fan_wall_on", {
 	description = S("Wall Fan"),
 	tiles = {"factory_belt_side.png^[transformFY", "factory_belt_side.png", "factory_belt_side.png^[transformR90",
-		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", {name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}},
+		"factory_belt_side.png^[transformR270", "factory_belt_bottom.png", {name="factory_fan.png",
+		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}}},
 	groups = {cracky=3, mesecon_effector_off = 1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -113,7 +114,8 @@ minetest.register_abm({
 		local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x - a.x/2, y = pos.y, z = pos.z - a.z/2}, 1)
 		for _,obj in ipairs(all_objects) do
-			if not obj:is_player() and obj:get_luaentity() and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
+			if not obj:is_player() and obj:get_luaentity()
+			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
 				obj:moveto({x = obj:getpos().x - a.x*2.0, y = obj:getpos().y, z = obj:getpos().z - a.z*2.0})
 			end
 		end

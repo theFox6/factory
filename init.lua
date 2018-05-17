@@ -5,7 +5,6 @@ else
   print("[MOD] "..minetest.get_current_modname()..": loading")
 end
 
-rawset(_G,"factory",false)
 factory={
 	crafts={},
 	empty={item=ItemStack(nil),time=0},

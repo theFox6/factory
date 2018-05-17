@@ -2,7 +2,8 @@ local S = factory.S
 minetest.register_node("factory:fan_on", {
 	description = S("Fan"),
 	tiles = {{name="factory_fan.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.2}},
-		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+		"factory_belt_bottom.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png",
+		"factory_belt_side.png"},
 	groups = {cracky=3, mesecon_effector_off = 1},
 	drawtype = "nodebox",
 	paramtype = "light",

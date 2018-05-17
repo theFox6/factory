@@ -15,7 +15,7 @@ function qarm_handle (a, b, target, stack, minv, obj)
 
 		if insert(inv,"input", stack, obj) then found = true end
 	end
-	for i,v in ipairs(armDevicesFurnacelike) do
+	for _,v in pairs(armDevicesFurnacelike) do
 		if target.name == v then
 			local meta = minetest.env:get_meta(b)
 			local inv = meta:get_inventory()
@@ -29,7 +29,7 @@ function qarm_handle (a, b, target, stack, minv, obj)
 			end
 		end
 	end
-	for i,v in ipairs(armDevicesCrafterlike) do
+	for _,v in pairs(armDevicesCrafterlike) do
 		if target.name == v then
 			local meta = minetest.env:get_meta(b)
 			local inv = meta:get_inventory()
@@ -93,18 +93,20 @@ minetest.register_node("factory:queuedarm",{
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*3)
 	end,
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
 		return inv:is_empty("main")
 	end,
-	on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-		minetest.log("action", string.format("%s moves stuff in queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
+	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
+		minetest.log("action", string.format("%s moves stuff in queued mover at %s",
+			player:get_player_name(),minetest.pos_to_string(pos)))
 	end,
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
-		minetest.log("action", string.format("%s moves stuff to queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
+    on_metadata_inventory_put = function(pos, _, _, _, player)
+		minetest.log("action", string.format("%s moves stuff to queued mover at %s",
+			player:get_player_name(),minetest.pos_to_string(pos)))
 	end,
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
+    on_metadata_inventory_take = function(pos, _, _, _, player)
 		minetest.log("action",
 			string.format("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
 	end,

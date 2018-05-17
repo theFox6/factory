@@ -91,7 +91,7 @@ minetest.register_node("factory:stp", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	allow_metadata_inventory_put = function(_, listname, _, stack)
 		if listname == "fuel" then
 			if stack:get_name() == "factory:sapling_fertilizer" then
 				return stack:get_count()
@@ -104,7 +104,7 @@ minetest.register_node("factory:stp", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(pos, _, _, to_list, _, count)
+	allow_metadata_inventory_move = function(_, _, _, to_list, _, count)
 		if to_list == "fuel" then
 			return count
 		elseif to_list == "src" then

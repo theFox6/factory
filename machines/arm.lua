@@ -35,7 +35,7 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	action = function(pos)
-		local insert = factory_insert_object_item
+		local insert = factory.insert_object_item
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity()

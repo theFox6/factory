@@ -1,7 +1,7 @@
 local S = factory.S
 minetest.register_node("factory:storage_tank", {
 	description = S("Storage Tank"),
-	drawtype = "glasslike_framed",
+	drawtype = "glasslike_framed", --FIXME: connects to others
 	tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
 		"factory_glass.png^factory_port.png", "factory_steel_noise.png"},
 	inventory_image = "factory_storage_tank.png",
@@ -31,6 +31,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
 			"factory_glass.png^factory_port.png", "factory_steel_noise.png"},
 		special_tiles = tiles,
+		paramtype2 = "glasslikeliquidlevel",
 		paramtype = "light",
 		sunlight_propagates = true,
 		light_source = light,
@@ -69,7 +70,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 					meta:set_int("stored", stored)
 					meta:set_string("infotext", "Storage Tank (" .. name .. "): "..math.floor((100/63)*stored).."% full")
 					minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
-					return ItemStack(bucket_full)
+					return ItemStack(bucket_full) --FIXME: more that one Bucket will also be taken
 				elseif stored <= increment then
 					meta:set_string("infotext", nil)
 					minetest.swap_node(pos, {name = "factory:storage_tank"})

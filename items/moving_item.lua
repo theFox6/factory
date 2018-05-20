@@ -95,7 +95,7 @@ minetest.register_entity("factory:moving_item", {
 				else
 					if math.abs(vector.length(dir))<0.001 then
 						local stack = ItemStack(self.itemstring)
-						minetest.item_drop(stack, factory.no_player, pos)
+						minetest.add_item(pos, stack)
 						self.object:remove()
 					end
 				end
@@ -127,7 +127,7 @@ minetest.register_entity("factory:moving_item", {
 			end
 			if math.abs(vector.length(dir))<0.001 then
 				local stack = ItemStack(self.itemstring)
-				minetest.item_drop(stack, factory.no_player, pos)
+				minetest.add_item(pos, stack)
 				self.object:remove()
 			end
 			dir=vector.multiply(dir,2) --correct speed

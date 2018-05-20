@@ -139,7 +139,7 @@ minetest.register_entity("factory:moving_item", {
 		else
 			local stack = ItemStack(self.itemstring)
 			local veldir = self.object:getvelocity();
-			minetest.item_drop(stack, factory.no_player, {x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3})
+			minetest.add_item({x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3}, stack)
 			self.object:remove()
 		end
 	end

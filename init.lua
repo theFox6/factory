@@ -8,7 +8,7 @@ end
 factory={
 	crafts={},
 	empty={item=ItemStack(nil),time=0},
-	no_player={is_player=function() return false end},
+	--no_player={is_player=function() return false end},
 	--pipes={}, -- coming soon (perhaps...)
 	worldpath=minetest.get_worldpath(),
 	modpath=minetest.get_modpath("factory"),

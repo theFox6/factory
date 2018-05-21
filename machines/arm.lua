@@ -48,16 +48,16 @@ minetest.register_abm({
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"main", stack, obj) then
-						minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
-						obj:remove()
+						obj:setvelocity({x=0,y=0,z=0})
+						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
 				if target.name == "factory:swapper" then
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"input", stack, obj) then
-						minetest.item_drop(stack, factory.no_player, {x = pos.x + a.x, y = pos.y + 1, z = pos.z + a.z})
-						obj:remove()
+						obj:setvelocity({x=0,y=0,z=0})
+						obj:moveto({x = pos.x + a.x, y = pos.y + 1, z = pos.z + a.z}, false)
 					end
 				end
 				for _,v in ipairs(armDevicesCrafterlike) do
@@ -65,8 +65,8 @@ minetest.register_abm({
 						local meta = minetest.env:get_meta(b)
 						local inv = meta:get_inventory()
 						if not insert(inv,"src", stack, obj) then
-							minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
-							obj:remove()
+							obj:setvelocity({x=0,y=0,z=0})
+							obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 						end
 					end
 				end
@@ -78,14 +78,14 @@ minetest.register_abm({
 						if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
 							-- back, fuel
 							if not insert(inv,"fuel", stack, obj) then
-								minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
-								obj:remove()
+								obj:setvelocity({x=0,y=0,z=0})
+								obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 							end
 						else
 							-- everytin else, src
 							if not insert(inv,"src", stack, obj) then
-								minetest.item_drop(stack, factory.no_player, {x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z})
-								obj:remove()
+								obj:setvelocity({x=0,y=0,z=0})
+								obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 							end
 						end
 					end

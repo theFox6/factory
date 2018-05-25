@@ -199,7 +199,8 @@ minetest.register_abm({
 				dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			end
 			if dnode.name ~= "factory:miner_drillbit" then
-				if meta:get_string("owner") ~= nil and minetest.is_protected(dnode.pos, meta:get_string("owner")) then
+				if meta:get_string("owner") ~= nil 
+					and minetest.is_protected({x = pos.x, y = pos.y-i, z = pos.z}, meta:get_string("owner")) then
 					meta:set_string("infotext",S("@1 hit protected block",S("Upgraded Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return

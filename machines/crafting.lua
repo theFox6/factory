@@ -16,12 +16,17 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	type = "shapeless",
+	output = "factory:belt_center",
+	recipe = {"factory:belt", "default:gold_ingot"}
+})
 
 minetest.register_craft({
 	output = "factory:arm",
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "farming:hoe_steel"},
-		{"default:steel_ingot", "default:gold_ingot", "factory:small_steel_gear"},
+		{"default:steel_ingot", "", "factory:small_steel_gear"},
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
 })
@@ -47,8 +52,8 @@ minetest.register_craft( {
 minetest.register_craft({
 	output = "factory:taker",
 	recipe = {
-		{"default:shovel_steel", "default:steel_ingot", "default:gold_ingot"},
-		{"factory:small_steel_gear", "factory:small_steel_gear", "default:gold_ingot"},
+		{"default:shovel_steel", "default:steel_ingot", "default:steel_ingot"},
+		{"factory:small_steel_gear", "factory:small_steel_gear", "default:steel_ingot"},
 		{"default:steel_ingot", "default:steelblock", "default:steel_ingot"}
 	}
 })

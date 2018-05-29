@@ -26,8 +26,8 @@ minetest.register_craft({
 	output = "factory:arm",
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "farming:hoe_steel"},
-		{"default:steel_ingot", "", "factory:small_steel_gear"},
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
+		{"default:steel_ingot", "factory:small_steel_gear", "factory:small_steel_gear"},
+		{"default:steel_ingot", "default:steelblock", "default:steel_ingot"}
 	}
 })
 

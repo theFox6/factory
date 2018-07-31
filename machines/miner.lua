@@ -36,6 +36,7 @@ minetest.register_node("factory:miner_on", {
 		if placer:is_player() then
 			meta:set_string("owner", placer:get_player_name())
 			meta:set_string("infotext",S("Industrial Miner"))
+			meta:set_int("last_depth", 1)
 		end
 	end,
 	after_dig_node = factory.miner.afterdig,
@@ -87,7 +88,10 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node)
 		local meta = minetest.get_meta(pos)
-		for i = 1, math.floor(factory.minerDigLimit/2) do
+		if meta:get_int("last_depth") < 1 then
+			meta:set_int("last_depth", 1)
+		end
+		for i = meta:get_int("last_depth"), math.floor(factory.minerDigLimit/2) do
 			local dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[dnode.name]
 			if dnode.name == "ignore" then
@@ -97,6 +101,7 @@ minetest.register_abm({
 				dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			end
 			if dnode.name ~= "factory:miner_drillbit" then
+				meta:set_int("last_depth",i)
 				if meta:get_string("owner") ~= nil
 				and minetest.is_protected({x = pos.x, y = pos.y-i, z = pos.z}, meta:get_string("owner")) then
 					meta:set_string("infotext",S("@1 hit protected block",S("Industrial Miner")))
@@ -153,6 +158,7 @@ minetest.register_node("factory:miner_upgraded_on", {
 		if placer:is_player() then
 			meta:set_string("owner", placer:get_player_name())
 			meta:set_string("infotext",S("Upgraded Miner"))
+			meta:set_int("last_depth", 1)
 		end
 	end,
 	after_dig_node = factory.miner.afterdig,
@@ -190,7 +196,10 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node)
 		local meta = minetest.get_meta(pos)
-		for i = 1, factory.minerDigLimit do
+		if meta:get_int("last_depth") < 1 then
+			meta:set_int("last_depth", 1)
+		end
+		for i = meta:get_int("last_depth"), factory.minerDigLimit do
 			local dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[dnode.name]
 			if dnode.name == "ignore" then
@@ -199,6 +208,7 @@ minetest.register_abm({
 				dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			end
 			if dnode.name ~= "factory:miner_drillbit" then
+				meta:set_int("last_depth", i)
 				if meta:get_string("owner") ~= nil
 					and minetest.is_protected({x = pos.x, y = pos.y-i, z = pos.z}, meta:get_string("owner")) then
 					meta:set_string("infotext",S("@1 hit protected block",S("Upgraded Miner")))

@@ -55,6 +55,7 @@ minetest.register_node("factory:miner_off", {
 		action_off = function(pos, node)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("infotext",S("Industrial Miner"))
+			meta:set_int("last_depth", 1)
 			minetest.swap_node(pos, {name = "factory:miner_on", param2 = node.param2})
 		end
 	}},
@@ -178,6 +179,7 @@ minetest.register_node("factory:miner_upgraded_off", {
 		action_off = function(pos, node)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("infotext",S("Upgraded Miner"))
+			meta:set_int("last_depth", 1)
 			minetest.swap_node(pos, {name = "factory:miner_upgraded_on", param2 = node.param2})
 		end
 	}},

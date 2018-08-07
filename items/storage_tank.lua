@@ -1,4 +1,7 @@
 local S = factory.S
+
+factory.registered_storage_tanks = {}
+
 minetest.register_node("factory:storage_tank", {
 	description = S("Storage Tank"),
 	drawtype = "glasslike_framed", --FIXME: connects to others
@@ -8,24 +11,35 @@ minetest.register_node("factory:storage_tank", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	groups = {oddly_breakable_by_hand = 2},
-	on_rightclick = function(pos, _, _, itemstack)
+	on_rightclick = function(pos, _, clicker, itemstack)
 		local stack = ItemStack(itemstack)
-		if stack:get_name() == "bucket:bucket_water" then
-			minetest.swap_node(pos, {name = "factory:storage_tank_water", param2 = 3 + 64 + 128})
-			local meta = minetest.get_meta(pos)
-			meta:set_int("stored", 3)
-			return ItemStack("bucket:bucket_empty")
-		end
-		if stack:get_name() == "bucket:bucket_lava" then
-			minetest.swap_node(pos, {name = "factory:storage_tank_lava", param2 = 7 + 64 + 128})
-			local meta = minetest.get_meta(pos)
-			meta:set_int("stored", 7)
-			return ItemStack("bucket:bucket_empty")
+		for n,d in pairs(factory.registered_storage_tanks) do
+			if stack:get_name() == d.bucket_full then
+				minetest.swap_node(pos, {name = "factory:storage_tank_"..n, param2 = d.increment + 64 + 128})
+				local meta = minetest.get_meta(pos)
+				meta:set_int("stored", d.increment)
+				local inv = clicker:get_inventory()
+				if inv:room_for_item("main", {name=d.bucket_empty}) then
+					inv:add_item("main", d.bucket_empty)
+				else
+					local pos = clicker:getpos()
+					pos.y = math.floor(pos.y + 0.5)
+					minetest.add_item(pos, d.bucket_empty)
+				end
+				stack:take_item(1)
+				return stack
+			end
 		end
 	end,
 })
 
 function factory.register_storage_tank(name, increment, tiles, plaintile, light, bucket_full, bucket_empty)
+	factory.registered_storage_tanks[name] = {
+		increment = increment,
+		bucket_full = bucket_full,
+		bucket_empty = bucket_empty
+	}
+	--TODO: support bucket tables for multiple vessels or bucket registration
 	minetest.register_node("factory:storage_tank_" .. name, {
 		drawtype = "glasslike_framed",
 		tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
@@ -49,7 +63,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			end
 			minetest.set_node(pos, {name = "air"})
 		end,
-		on_rightclick = function(pos, _, _, itemstack)
+		on_rightclick = function(pos, _, clicker, itemstack)
 			local stack = ItemStack(itemstack)
 			if stack:get_name() == bucket_full then
 				local meta = minetest.get_meta(pos)
@@ -70,25 +84,21 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 					meta:set_int("stored", stored)
 					meta:set_string("infotext", "Storage Tank (" .. name .. "): "..math.floor((100/63)*stored).."% full")
 					minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
-					return ItemStack(bucket_full) --FIXME: more that one Bucket will also be taken
 				elseif stored <= increment then
 					meta:set_string("infotext", nil)
 					minetest.swap_node(pos, {name = "factory:storage_tank"})
-					return ItemStack(bucket_full)
 				end
+				local inv = clicker:get_inventory()
+				if inv:room_for_item("main", {name=bucket_full}) then
+					inv:add_item("main", bucket_full)
+				else
+					local pos = clicker:getpos()
+					pos.y = math.floor(pos.y + 0.5)
+					minetest.add_item(pos, bucket_full)
+				end
+				stack:take_item(1)
+				return stack
 			end
-		end,
-	})
-
-	minetest.register_abm({
-		nodenames = {"factory:storage_tank_" .. name},
-		neighbors = nil,
-		interval = 1,
-		chance = 1,
-		action = function(pos)
-			local meta = minetest.get_meta(pos)
-			local stored = meta:get_int("stored")
-			minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
 		end,
 	})
 
@@ -121,21 +131,20 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				return
 			end
 
+			local stored = tonumber(itemstack:get_metadata())
+
 			minetest.place_node(pt.above, {
 				name="factory:storage_tank_" .. name,
-				param2 = tonumber(itemstack:get_metadata()) + 64 + 128
+				param2 = stored + 64 + 128
 			})
 			local meta = minetest.get_meta(pt.above)
-			meta:set_int("stored", tonumber(itemstack:get_metadata()))
-			meta:set_string("infotext", S("Storage Tank (@1): @2% full"),
-				S(name),math.floor((100/63)*tonumber(itemstack:get_metadata())))
+			meta:set_int("stored", stored)
+			meta:set_string("infotext", S("Storage Tank (@1): @2% full",S(name),math.floor((100/63)*stored)))
+			minetest.swap_node(pt.above, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
 			return ""
 		end
 	})
 end
-
--- don't forget to add your liquid to the initial node around line 10
--- TODO: improve this so it can be used external
 
 factory.register_storage_tank("water", 4,
 	{{name="default_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}}},

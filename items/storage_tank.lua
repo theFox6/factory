@@ -104,11 +104,12 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 
 	minetest.register_craftitem("factory:storage_tank_" .. name .. "_inventory", {
 		description = S("Storage Tank (@1)",S(name)),
+		--TODO: make inventorycube from lowerpart of the plaintile and storage tank tiles
 		inventory_image = plaintile .. "^factory_storage_tank.png",
 		wield_image = "factory_storage_tank.png",
 		groups = {not_in_creative_inventory = 1},
 		stack_max = 1,
-		on_place = function(itemstack, _, pointed_thing)
+		on_place = function(itemstack, placer, pointed_thing)
 			local pt = pointed_thing
 			if not pt then
 				return
@@ -118,29 +119,28 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			end
 			local under = minetest.get_node(pt.under)
 			local above = minetest.get_node(pt.above)
+			local pos = minetest.pointed_thing_to_face_pos(placer, pointed_thing)
+			local node = minetest.get_node(pos)
 			if not minetest.registered_nodes[under.name] then
 				return
 			end
 			if not minetest.registered_nodes[above.name] then
 				return
 			end
-			if pt.above.y ~= pt.under.y+1 then
-				return
-			end
-			if not minetest.registered_nodes[above.name].buildable_to then
+			if not minetest.registered_nodes[node.name].buildable_to then
 				return
 			end
 
 			local stored = tonumber(itemstack:get_metadata())
 
-			minetest.place_node(pt.above, {
+			minetest.place_node(pos, {
 				name="factory:storage_tank_" .. name,
 				param2 = stored + 64 + 128
 			})
-			local meta = minetest.get_meta(pt.above)
+			local meta = minetest.get_meta(pos)
 			meta:set_int("stored", stored)
 			meta:set_string("infotext", S("Storage Tank (@1): @2% full",S(name),math.floor((100/63)*stored)))
-			minetest.swap_node(pt.above, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
+			minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
 			return ""
 		end
 	})

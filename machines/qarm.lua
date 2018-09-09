@@ -53,7 +53,9 @@ factory.qformspec =
 	"list[current_name;main;0,0.3;8,3;]"..
 	"list[current_player;main;0,4.25;8,1;]"..
 	"list[current_player;main;0,5.5;8,3;8]"..
-	factory.get_hotbar_bg(0,4.25)
+	factory.get_hotbar_bg(0,4.25)..
+	"listring[current_player;main]"..
+	"listring[current_name;main]"
 
 minetest.register_node("factory:queuedarm",{
 	drawtype = "nodebox",

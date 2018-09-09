@@ -6,7 +6,9 @@ factory.vac_sorter_formspec =
 	factory_gui_slots..
 	"list[current_name;sort;3.5,0;1,1;]"..
 	"list[current_player;main;0,1.5;8,1;]"..
-	"list[current_player;main;0,2.75;8,3;8]"
+	"list[current_player;main;0,2.75;8,3;8]"..
+	"listring[current_player;main]"..
+	"listring[current_name;sort]"
 
 minetest.register_node("factory:upward_vacuum_on", {
 	description = S("Vacuum Sorter"),

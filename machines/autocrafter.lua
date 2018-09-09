@@ -110,8 +110,7 @@ local function update_meta(meta)
 			"listring[current_player;main]"..
 			"listring[context;src]" ..
 			"listring[current_player;main]"..
-			"listring[context;dst]" ..
-			"listring[current_player;main]"
+			"listring[context;dst]"
 	meta:set_string("formspec",fs)
 
 	local output = meta:get_inventory():get_stack("output", 1)

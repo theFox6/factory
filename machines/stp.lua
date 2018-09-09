@@ -11,7 +11,13 @@ factory.stp_formspec =
 	"list[current_name;dst;4.75,0.5;2,2;]"..
 	"list[current_player;main;0,4.25;8,1;]"..
 	"list[current_player;main;0,5.5;8,3;8]"..
-	factory.get_hotbar_bg(0,4.25)
+	factory.get_hotbar_bg(0,4.25)..
+	"listring[current_player;main]"..
+	"listring[current_name;src]"..
+	"listring[current_player;main]"..
+	"listring[current_name;fuel]"..
+	"listring[current_player;main]"..
+	"listring[current_name;dst]"
 
 minetest.register_node("factory:sapling_fertilizer", {
 	tiles = {

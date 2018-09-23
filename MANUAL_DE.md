@@ -15,7 +15,7 @@
 * die Industrielle Presse kann die aus Bäumen den saft holen und mit der man Lehm ("clay") komprimieren zu Komprimierten Lehm; oben die Recource unten Brennstoff; braucht auch zwei Schornsteine
 * die Schornsteine müssen minimal 2 und maximal 7 Blöcke lang sein
 
-#Sortierer
+# Sortierer
 Der sortierer nimmt Gegenstände aus den unteren Feldern und überprüft ob sie die selben wie in einer der langen Seiten sind.
 Wenn ein Gegenstand der gleiche ist, wird er in den Ausgang auf der entspechenden Seite gelegt.
 Wenn ein Gegenstand nicht passt wird er in den oberen Ausgangsslot gelegt.

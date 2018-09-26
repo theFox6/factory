@@ -20,10 +20,11 @@ function factory.forms.combustion_generator(fuel_percent)
 
 minetest.register_node("factory:combustion_generator", {
 	description = S("Combustion Generator"),
-	tiles = {"factory_machine_steel.png", "factory_machine_steel_dark.png", "factory_machine_steel.png^factory_lightning.png",
-		"factory_machine_steel.png^factory_lightning.png", "factory_machine_steel.png", "factory_machine_steel.png"},
+	tiles = {"factory_steel_noise.png^factory_smoke_tube_duct.png", "factory_machine_steel_dark.png", "factory_steel_noise.png",
+		"factory_steel_noise.png", "factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
 	paramtype2 = "facedir",
-	groups = {cracky=3,hot=1,factory_electronic = 1},
+	legacy_facedir_simple = true,
+	groups = {cracky=3, hot=1 ,factory_electronic = 1},
 	is_ground_content = false,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -121,7 +122,7 @@ minetest.register_craft({
 	output = "factory:combustion_generator",
 	recipe = {
 		{"default:steel_ingot", "factory:electric_engine", "default:steel_ingot"},
-		{"default:steel_ingot", "bucket:bucket_water", "default:steel_ingot"},
+		{"default:steel_ingot", "bucket:bucket_water", "factory:battery_item"},
 		{"default:steel_ingot", "default:furnace", "default:steel_ingot"},
 	},
 })

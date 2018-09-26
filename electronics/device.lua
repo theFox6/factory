@@ -98,7 +98,7 @@ function factory.electronics.device.distribute(pos,energy_amount,exclude_sides)
 			break
 		end
 		local node = minetest.get_node(vector.add(pos,dir))
-		if is_device(node)
+		if factory.electronics.is_device(node) then
 			local nodedef = minetest.registered_nodes[node.name]
 			if nodedef then
 				local pushfunc = nodedef.on_push_electricity

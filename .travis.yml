@@ -6,11 +6,7 @@ addons:
     - luarocks
 before_install:
   - luarocks install --local luacheck
-env:
-  - CONFIG=.luacheckrc
-  - CONFIG=.luacheck_tidy
 matrix:
-  exclude:
   - name: "health check"
     env: CONFIG=.luacheckrc
   allow_failures:

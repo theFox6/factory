@@ -98,7 +98,7 @@ function factory.smoke_on_tube(machine_pos, active)
 	local last_smoke = factory.get_smoke_on_tube(machine_pos)
 	if last_smoke then
 		if not vector.equals(last_smoke,pos) then
-			print("wrong smoking place "..minetest.pos_to_string(vector.subtract(last_smoke,pos)))
+			minetest.log("info","smoking place changed "..minetest.pos_to_string(pos))
 			factory.stop_smoke(last_smoke)
 			return factory.smoke_on_tube(machine_pos, active)
 		end

@@ -26,7 +26,8 @@ function factory.ind_furnace_active(percent, item_percent)
   end
 
 function factory.ind_furnace_active_formspec(pos, percent)
-	local meta = minetest.get_meta(pos)local inv = meta:get_inventory()
+	local meta = minetest.get_meta(pos)
+	local inv = meta:get_inventory()
 	local srclist = inv:get_list("src")
 	local cooked = nil
 	if srclist then

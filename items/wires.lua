@@ -12,6 +12,15 @@ if not minetest.get_modpath("homedecor") then
 	})
 end
 
+if not minetest.get_modpath("mesecons_materials") then
+	minetest.register_craftitem(":mesecons_materials:fiber", {
+	image = "mesecons_fiber.png",
+	on_place_on_ground = minetest.craftitem_place_item,
+	description=S("Fiber"),
+})
+end
+
 minetest.register_alias("factory:copper_wire", "homedecor:copper_wire")
 minetest.register_alias("factory:steel_wire", "homedecor:steel_wire")
+minetest.register_alias("factory:fiber", "mesecons_materials:fiber")
 --1 ingot = 2 wire spools

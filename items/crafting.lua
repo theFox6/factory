@@ -114,3 +114,8 @@ factory.register_recipe("wire_drawer",{
 	output = "factory:copper_wire 2",
 	input = {"default:copper_ingot"}
 })
+
+factory.register_recipe("wire_drawer",{
+	output = "factory:fiber 2",
+	input = {"factory:tree_sap"}
+})

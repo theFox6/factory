@@ -13,6 +13,18 @@ half item sieve=
 ### decor/smoketube.lua ###
 Smoke Tube=
 
+## devices ###
+no fuel to burn=
+no smoke tube=
+active=
+fully charged=
+
+### electronics/device.lua ###
+@1charge: @2%=
+
+### electronics/combustion_generator.lua ###
+Combustion Generator=
+
 ### items/crafting.lua ###
 squeezing=
 drawing wire=
@@ -40,6 +52,7 @@ lava=
 spool of @1 wire=
 copper=
 steel=
+Fiber=
 
 ### machines ###
 @1 is empty=

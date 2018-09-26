@@ -9,9 +9,9 @@ factory={
 	crafts={},
 	empty={item=ItemStack(nil),time=0},
 	--no_player={is_player=function() return false end},
-	--pipes={}, -- coming soon (perhaps...)
 	worldpath=minetest.get_worldpath(),
 	modpath=minetest.get_modpath("factory"),
+	forms={},
 }
 
 dofile(factory.modpath.."/settings.lua")
@@ -20,6 +20,7 @@ dofile(factory.modpath.."/util/init.lua")
 dofile(factory.modpath.."/machines/init.lua")
 dofile(factory.modpath.."/items/init.lua")
 dofile(factory.modpath.."/decor/init.lua")
+dofile(factory.modpath.."/electronics/init.lua")
 
 --ready
 local time_to_load= os.clock() - init

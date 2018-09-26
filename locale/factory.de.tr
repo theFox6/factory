@@ -13,6 +13,18 @@ half item sieve=halbes gegenstandssieb
 ### decor/smoketube.lua ###
 Smoke Tube=Schornstein
 
+## devices ###
+no fuel to burn=kein Brennstoff
+no smoke tube=kein Schornschtein
+active=aktiv
+fully charged=aufgeladen
+
+### electronics/device.lua ###
+@1charge: @2%=@1Ladung: @2%
+
+### electronics/combustion_generator.lua ###
+Combustion Generator=Verbrennungs Generator
+
 ### items/crafting.lua ###
 squeezing=pressen
 drawing wire=drahtschneiden
@@ -40,6 +52,7 @@ lava=Lava
 spool of @1 wire=Spule mit @1draht
 copper=Kupfer
 steel=Stahl
+Fiber=Harzfaser
 
 ### machines ###
 @1 is empty=@1 ist leer

@@ -7,12 +7,12 @@ addons:
 before_install:
   - luarocks install --local luacheck
 matrix:
-  include:
-  - name: "health check"
-    env: CONFIG=.luacheckrc
   allow_failures:
   - name: "beauty check"
     env: CONFIG=.luacheck_tidy
+  include:
+  - name: "health check"
+    env: CONFIG=.luacheckrc
 script: 
 - $HOME/.luarocks/bin/luacheck --config $CONFIG .
 notifications:

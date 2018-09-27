@@ -1,5 +1,5 @@
 local S = factory.S
-factory.electronics.combustion_gen_max_energy = 100
+local max_energy = 100
 
 function factory.forms.combustion_generator(fuel_percent)
     local formspec =
@@ -20,8 +20,9 @@ function factory.forms.combustion_generator(fuel_percent)
 
 minetest.register_node("factory:combustion_generator", {
 	description = S("Combustion Generator"),
-	tiles = {"factory_steel_noise.png^factory_smoke_tube_duct.png", "factory_machine_steel_dark.png", "factory_steel_noise.png",
-		"factory_steel_noise.png", "factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
+	tiles = {"factory_steel_noise.png^factory_smoke_tube_duct.png", "factory_machine_steel_dark.png",
+		"factory_steel_noise.png", "factory_steel_noise.png",
+		"factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
 	groups = {cracky=3, hot=1 ,factory_electronic = 1},
@@ -46,7 +47,6 @@ minetest.register_node("factory:combustion_generator", {
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
 		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
 		if listname == "main" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				return stack:get_count()
@@ -62,7 +62,7 @@ minetest.register_abm({
 	nodenames = {"factory:combustion_generator"},
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node)
+	action = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 
@@ -74,7 +74,7 @@ minetest.register_abm({
 			end
 			--currently active
 			meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
-			factory.electronics.device:store(meta, factory.electronics.device.distribute(pos,10), factory.electronics.combustion_gen_max_energy)
+			factory.electronics.device:store(meta, factory.electronics.device.distribute(pos,10), max_energy)
 			local percent = meta:get_float("fuel_time") / meta:get_float("fuel_totaltime") * 100
 			meta:set_string("formspec", factory.forms.combustion_generator(percent))
 			return

@@ -1,5 +1,4 @@
 local S = factory.S
-local max_energy = 100
 local device = factory.electronics.device
 
 function factory.forms.combustion_generator(fuel_percent)
@@ -38,6 +37,7 @@ minetest.register_node("factory:combustion_generator", {
 		inv:set_size("src", 1)
 		device.set_name(meta,S("Combustion Generator"))
 		device.set_energy(meta, 0)
+		device.set_max_charge(meta,100)
 	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
@@ -75,7 +75,7 @@ minetest.register_abm({
 			end
 			--currently active
 			meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
-			device.store(meta, 10, max_energy)
+			device.store(meta, 10)
 			local percent = meta:get_float("fuel_time") / meta:get_float("fuel_totaltime") * 100
 			meta:set_string("formspec", factory.forms.combustion_generator(percent))
 			device.set_energy(meta,device.distribute(pos,factory.electronics.device.get_energy(meta)))
@@ -102,7 +102,7 @@ minetest.register_abm({
 			return
 		end
 
-		if factory.electronics.device.get_energy(meta) >= max_energy then
+		if factory.electronics.device.get_energy(meta) >= device.get_max_charge(meta) then
 			factory.electronics.device.set_status(meta,S("fully charged"))
 			factory.smoke_on_tube(pos, false)
 			return

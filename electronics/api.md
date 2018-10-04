@@ -1,5 +1,3 @@
-TODO: deprecated
-
 ##device definition
 
 a node that is an electronic device has to follow the following node definitions:
@@ -30,6 +28,13 @@ factory.electronics.device.set_status(meta,status)
 * set the status of a device
 * can be ""
 * is shown in the infotexts
+
+factory.electronics.device.set_max_charge(meta,max_charge)
+* set the maximum of energy that can be stored in a device
+* set the meta field "factory_max_charge"
+
+factory.electronics.device.get_max_charge(meta)
+* get the maximum charge
 
 factory.electronics.device.store(meta, push_energy, max_energy)
 * store the push_energy with a maximum of max_energy and return the remaining push_energy

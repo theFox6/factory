@@ -16,7 +16,8 @@ function device.set_infotext(meta)
 	if status ~= "" then
 		desc = desc .. "\nstatus: " .. status
 	end
-	meta:set_string("infotext", S("@1charge: @2", desc.."\n", meta:get_int("factory_energy")))
+	local charge = meta:get_int("factory_energy") .. "/" .. meta:get_int("factory_max_charge")
+	meta:set_string("infotext", S("@1charge: @2", desc.."\n", charge))
 end
 
 function device.get_energy(meta)
@@ -38,8 +39,18 @@ function device.set_status(meta,status)
 	device.set_infotext(meta)
 end
 
-function device.store(meta, push_energy, max_energy)
+function device.set_max_charge(meta,max_charge)
+	meta:set_int("factory_max_charge", max_charge)
+	device.set_infotext(meta)
+end
+
+function device.get_max_charge(meta)
+	return meta:get_int("factory_max_charge")
+end
+
+function device.store(meta, push_energy)
 	local energy = device.get_energy(meta)
+	local max_energy = device.get_max_charge(meta)
 	local taken = math.min(push_energy, max_energy - energy)
 	device.set_energy(meta, taken + energy)
 	return push_energy - taken

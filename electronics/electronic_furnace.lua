@@ -1,5 +1,4 @@
 local S = factory.S
-local max_energy = 200
 local device = factory.electronics.device
 
 function factory.forms.electronic_furnace(item_percent)
@@ -40,6 +39,7 @@ minetest.register_node("factory:electronic_furnace", {
 		inv:set_size("dst", 4)
 		device.set_name(meta,S("Electronic Furnace"))
 		device.set_energy(meta, 0)
+		device.set_max_charge(meta,200)
 	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
@@ -67,7 +67,7 @@ minetest.register_node("factory:electronic_furnace", {
 	end,
 	on_push_electricity = function(pos,energy)
 		local meta = minetest.get_meta(pos)
-		return device.store(meta,energy,max_energy)
+		return device.store(meta,energy)
 	end
 })
 

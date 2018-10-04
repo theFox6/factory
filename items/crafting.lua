@@ -121,3 +121,9 @@ factory.register_recipe("wire_drawer",{
 	output = "factory:fiber 2",
 	input = {"factory:tree_sap"}
 })
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "factory:tree_sap",
+	burntime = 20,
+})

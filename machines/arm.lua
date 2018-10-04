@@ -44,7 +44,7 @@ minetest.register_abm({
 				local b = vector.add(pos,a)
 				local target = minetest.get_node(b)
 				local stack = ItemStack(obj:get_luaentity().itemstring)
-				--TODO: remove
+
 				if target.name == "default:chest" or target.name == "default:chest_locked" then
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()

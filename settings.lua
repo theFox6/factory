@@ -11,11 +11,6 @@ factory.fertilizerGeneration = true
 
 factory.minerDigLimit = 512
 
--- Fuel types for the generator
---generatorFuel = {{name = "factory:tree_sap", value = 20}}
--- obviously something was planned here
--- dunno what it is though (has nothing to do with my generator)
-
 --TODO: turn into registrations
 -- Sapling IO for the Sapling Treatment Plant
 factory.stpIO = {	{input = "default:sapling", output = "default:tree",				min = 4, 	max = 7},

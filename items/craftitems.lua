@@ -23,3 +23,5 @@ minetest.register_craftitem("factory:fan_blade", {
 	description = S("Small Fanblade"),
 	inventory_image = "factory_fan_blade.png"
 })
+
+--TODO: tar from cooking tree sap

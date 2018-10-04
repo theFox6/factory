@@ -38,60 +38,39 @@ function oarm_handle (a, b, target, stack, obj)
 			end
 		end
 	end
-	for _,v in ipairs(armDevicesFurnacelike) do
-		if target.name == v then
-			local meta = minetest.env:get_meta(b)
-			local inv = meta:get_inventory()
-
-			if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-				-- back, fuel
-				local inv_index = count_index(inv:get_list("fuel"))
-
-				if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
-					local pos = vector.subtract(b, a)
-					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-					obj:moveto(vector.add(pos,dir_right), false)
-				else
-					if not insert(inv,"fuel", stack, obj) then
-						local pos = vector.subtract(b, a)
-						local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-						obj:moveto(vector.add(pos,dir_right), false)
-					end
-				end
-			else
-				-- everytin else, src
-				local inv_index = count_index(inv:get_list("src"))
-
-				if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
-					local pos = vector.subtract(b, a)
-					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-					obj:moveto(vector.add(pos,dir_right), false)
-				else
-					if not insert(inv,"src", stack, obj) then
-						local pos = vector.subtract(b, a)
-						local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-						obj:moveto(vector.add(pos,dir_right), false)
-					end
-				end
-			end
-		end
-	end
-	for _,v in ipairs(armDevicesCrafterlike) do
-		if target.name == v then
-			local meta = minetest.env:get_meta(b)
-			local inv = meta:get_inventory()
-			local inv_index = count_index(inv:get_list("src"))
+	if factory.has_fuel_input(target) then
+		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
+			-- back, fuel
+			local inv_index = count_index(inv:get_list("fuel"))
 
 			if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 				obj:moveto(vector.add(pos,dir_right), false)
 			else
-				if not insert(inv,"src", stack, obj) then
+				if not insert(inv,"fuel", stack, obj) then
 					local pos = vector.subtract(b, a)
 					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
 					obj:moveto(vector.add(pos,dir_right), false)
 				end
+			end
+			return
+		end
+	end
+	if factory.has_src_input(target) then
+		local meta = minetest.env:get_meta(b)
+		local inv = meta:get_inventory()
+		local inv_index = count_index(inv:get_list("src"))
+
+		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
+			local pos = vector.subtract(b, a)
+			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+			obj:moveto(vector.add(pos,dir_right), false)
+		else
+			if not insert(inv,"src", stack, obj) then
+				local pos = vector.subtract(b, a)
+				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
+				obj:moveto(vector.add(pos,dir_right), false)
 			end
 		end
 	end

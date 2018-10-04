@@ -3,6 +3,7 @@ local max_energy = 200
 local device = factory.electronics.device
 
 function factory.forms.electronic_furnace(item_percent)
+	--TODO: fix positions
     local formspec =
 	"size[8,8.5]"
 	..factory_gui_bg
@@ -29,7 +30,7 @@ minetest.register_node("factory:electronic_furnace", {
 		"factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
-	groups = {cracky=3, hot=1 ,factory_electronic = 1},
+	groups = {cracky=3, hot=1 ,factory_electronic = 1, factory_src_input = 1, factory_dst_output = 1},
 	is_ground_content = false,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)

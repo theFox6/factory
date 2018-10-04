@@ -15,27 +15,20 @@ function qarm_handle (a, b, target, stack, minv, obj)
 
 		if insert(inv,"input", stack, obj) then found = true end
 	end
-	for _,v in pairs(armDevicesFurnacelike) do
-		if target.name == v then
-			local meta = minetest.env:get_meta(b)
-			local inv = meta:get_inventory()
+	if factory.has_fuel_input(target) then
+		local meta = minetest.env:get_meta(b)
+		local inv = meta:get_inventory()
 
-			if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-				-- back, fuel
-				if insert(inv,"fuel", stack, obj) then found = true end
-			else
-				-- everytin else, src
-				if insert(inv,"src", stack, obj) then found = true end
-			end
+		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
+			-- back, fuel
+			if insert(inv,"fuel", stack, obj) then found = true end
 		end
 	end
-	for _,v in pairs(armDevicesCrafterlike) do
-		if target.name == v then
-			local meta = minetest.env:get_meta(b)
-			local inv = meta:get_inventory()
+	if factory.has_src_input(target) and not found then
+		local meta = minetest.env:get_meta(b)
+		local inv = meta:get_inventory()
 
-			if insert(inv,"src", stack, obj) then found = true end
-		end
+		if insert(inv,"src", stack, obj) then found = true end
 	end
 	if not found then
 		if not insert(minv,"main", stack, obj) then

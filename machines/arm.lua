@@ -44,6 +44,7 @@ minetest.register_abm({
 				local b = vector.add(pos,a)
 				local target = minetest.get_node(b)
 				local stack = ItemStack(obj:get_luaentity().itemstring)
+				--TODO: remove
 				if target.name == "default:chest" or target.name == "default:chest_locked" then
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()
@@ -52,42 +53,27 @@ minetest.register_abm({
 						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
-				if target.name == "factory:swapper" then
-					local meta = minetest.env:get_meta(b)
-					local inv = meta:get_inventory()
-					if not insert(inv,"input", stack, obj) then
-						obj:setvelocity({x=0,y=0,z=0})
-						obj:moveto({x = pos.x + a.x, y = pos.y + 1, z = pos.z + a.z}, false)
-					end
-				end
-				for _,v in ipairs(armDevicesCrafterlike) do
-					if target.name == v then
-						local meta = minetest.env:get_meta(b)
-						local inv = meta:get_inventory()
-						if not insert(inv,"src", stack, obj) then
-							obj:setvelocity({x=0,y=0,z=0})
-							obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
-						end
-					end
-				end
-				for _,v in ipairs(armDevicesFurnacelike) do
-					if target.name == v then
+				if factory.has_fuel_input(target) then
+					if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
 						local meta = minetest.env:get_meta(b)
 						local inv = meta:get_inventory()
 
-						if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-							-- back, fuel
-							if not insert(inv,"fuel", stack, obj) then
-								obj:setvelocity({x=0,y=0,z=0})
-								obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
-							end
-						else
-							-- everytin else, src
-							if not insert(inv,"src", stack, obj) then
-								obj:setvelocity({x=0,y=0,z=0})
-								obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
-							end
+						-- back, fuel
+						if not insert(inv,"fuel", stack, obj) then
+							obj:setvelocity({x=0,y=0,z=0})
+							obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 						end
+						return
+					end
+				end
+
+				if factory.has_src_input(target) then
+					local meta = minetest.env:get_meta(b)
+					local inv = meta:get_inventory()
+
+					if not insert(inv,"src", stack, obj) then
+						obj:setvelocity({x=0,y=0,z=0})
+						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
 			end

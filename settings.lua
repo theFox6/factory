@@ -1,7 +1,5 @@
 -- LemonLake's Factories: Config
 
---TODO: turn into registrations
-
 -- Logging
 factory.logTaker = false
 
@@ -16,29 +14,11 @@ factory.fertilizerGeneration = true
 
 factory.minerDigLimit = 512
 
--- Defines the device types for movers and takers.
--- Don't change unless you know what you're doing.
-
--- Requires fuel and src inventory lists.
-armDevicesFurnacelike = {"default:furnace", "default:furnace_active",
-						"factory:ind_furnace", "factory:ind_furnace_active",
-						"factory:ind_squeezer", "factory:ind_squeezer_active",
-						"factory:wire_drawer", "factory:wire_drawer_active",
-						"factory:stp"}
--- Requires src invenory list.
-armDevicesCrafterlike = {"factory:autocrafter"}
-
--- Requires dst inventory list.
-takerDevicesFurnacelike = {"default:furnace", "default:furnace_active",
-						"factory:ind_furnace", "factory:ind_furnace_active",
-						"factory:ind_squeezer", "factory:ind_squeezer_active",
-						"factory:wire_drawer", "factory:wire_drawer_active",
-						"factory:stp", "factory:autocrafter"}
-
 -- Fuel types for the generator
 --generatorFuel = {{name = "factory:tree_sap", value = 20}}
--- obviously something was planned here dunno what it is though
+-- obviously something was planned here dunno what it is though (has nothing to do with my generator)
 
+--TODO: turn into registrations
 -- Sapling IO for the Sapling Treatment Plant
 factory.stpIO = {	{input = "default:sapling", output = "default:tree",				min = 4, 	max = 7},
 					{input = "default:junglesapling", output="default:jungletree",		min = 8, 	max = 12},

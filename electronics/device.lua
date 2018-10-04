@@ -56,16 +56,7 @@ function device.try_use(meta,energy_amount)
 end
 
 function factory.electronics.is_device(node)
-	local nname
-	if type(node) == "string" then
-		nname = node
-	elseif type(node) == "table" then
-		if node.name then
-			nname = node.name
-		elseif node.x then
-			nname = minetest.get_node(node).name
-		end
-	end
+	local nname = factory.get_node_name(node)
 	return minetest.get_item_group(nname, "factory_electronic") > 0
 end
 

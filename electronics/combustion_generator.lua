@@ -3,19 +3,20 @@ local max_energy = 100
 local device = factory.electronics.device
 
 function factory.forms.combustion_generator(fuel_percent)
+	--TODO: fix positions
     local formspec =
 	"size[8,8.5]"
 	..factory_gui_bg
 	..factory_gui_bg_img
 	..factory_gui_slots
-	.."list[current_name;main;2.75,2.5;1,1;]"
+	.."list[current_name;src;2.75,2.5;1,1;]"
 	.."image[2.75,1.5;1,1;factory_ind_furnace_fire_bg.png^[lowpart:"
 		..(100-fuel_percent)..":factory_ind_furnace_fire_fg.png]"
 	.."list[current_player;main;0,4.25;8,1;]"
 	.."list[current_player;main;0,5.5;8,3;8]"
 	..factory.get_hotbar_bg(0,4.25)
 	.."listring[current_player;main]"
-	.."listring[current_name;main]"
+	.."listring[current_name;src]"
     return formspec
   end
 
@@ -26,7 +27,7 @@ minetest.register_node("factory:combustion_generator", {
 		"factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
-	groups = {cracky=3, hot=1 ,factory_electronic = 1},
+	groups = {cracky=3, hot=1 ,factory_electronic = 1, factory_src_input = 1},
 	is_ground_content = false,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -34,20 +35,20 @@ minetest.register_node("factory:combustion_generator", {
 		meta:set_float("fuel_time",0.0)
 		meta:set_float("fuel_total_time",0.0)
 		local inv = meta:get_inventory()
-		inv:set_size("main", 1)
+		inv:set_size("src", 1)
 		device.set_name(meta,S("Combustion Generator"))
 		device.set_energy(meta, 0)
 	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
-		if not inv:is_empty("main") then
+		if not inv:is_empty("src") then
 			return false
 		end
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
-		if listname == "main" then
+		if listname == "src" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				return stack:get_count()
 			else
@@ -87,7 +88,7 @@ minetest.register_abm({
 		meta:set_string("formspec", factory.forms.combustion_generator(100))
 
 		--look for more
-		local fuellist = inv:get_list("main")
+		local fuellist = inv:get_list("src")
 		local fuel, afterfuel
 		if fuellist then
 			fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
@@ -115,7 +116,7 @@ minetest.register_abm({
 		meta:set_string("fuel_totaltime", fuel.time)
 		meta:set_string("fuel_time", 0)
 
-		inv:set_stack("main", 1, afterfuel.items[1])
+		inv:set_stack("src", 1, afterfuel.items[1])
 		factory.electronics.device.set_status(meta,S("active"))
 		meta:set_string("formspec", factory.forms.combustion_generator(0))
 	end

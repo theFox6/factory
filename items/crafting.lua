@@ -71,6 +71,8 @@ factory.register_recipe_type("ind_squeezer", {
 	height = 1,
 })
 
+--TODO: register group:tree instead
+
 factory.register_recipe("ind_squeezer",{
 	output = "factory:tree_sap",
 	input = {"default:tree"}

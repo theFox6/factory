@@ -134,10 +134,8 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 					factory.taker.take(pos,dir,takefrom)
 				end
 			end
-			for _,v in ipairs(takerDevicesFurnacelike) do
-				if target.name == v then
-					factory.taker.take(pos,dir,"dst")
-				end
+			if factory.has_dst_output(target) then
+				factory.taker.take(pos,dir,"dst")
 			end
 		end,
 	})

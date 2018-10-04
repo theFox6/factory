@@ -24,3 +24,47 @@ function factory.get_objects_with_square_radius(pos, rad)
   end
   return objs
 end
+
+function factory.get_node_name(node)
+	local nname
+	if type(node) == "string" then
+		nname = node
+	elseif type(node) == "table" then
+		if node.name then
+			nname = node.name
+		elseif node.x then
+			nname = minetest.get_node(node).name
+		end
+	end
+	return nname
+end
+
+function factory.has_src_input(node)
+	local nname = factory.get_node_name(node)
+	if minetest.get_item_group(nname, "factory_src_input") > 0 then
+		return true
+	elseif nname == "default:furnace" or nname == "default:furnace_active" then
+		return true
+	end
+	return false
+end
+
+function factory.has_fuel_input(node)
+	local nname = factory.get_node_name(node)
+	if minetest.get_item_group(nname, "factory_fuel_input") > 0 then
+		return true
+	elseif nname == "default:furnace" or nname == "default:furnace_active" then
+		return true
+	end
+	return false
+end
+
+function factory.has_dst_output(node)
+	local nname = factory.get_node_name(node)
+	if minetest.get_item_group(nname, "factory_dst_output") > 0 then
+		return true
+	elseif nname == "default:furnace" or nname == "default:furnace_active" then
+		return true
+	end
+	return false
+end

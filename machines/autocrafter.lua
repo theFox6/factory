@@ -132,7 +132,7 @@ minetest.register_node("factory:autocrafter", {
 	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png",
 		"factory_machine_side_1.png", "factory_machine_side_1.png",
 		"factory_machine_side_1.png", "factory_machine_brick_1.png^factory_small_diamond_gear.png"},
-	groups = {cracky = 3},
+	groups = {cracky = 3, factory_src_input = 1, factory_dst_output = 1},
 	paramtype2 = "facedir",
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)

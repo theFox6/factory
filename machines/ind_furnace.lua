@@ -66,7 +66,7 @@ minetest.register_node("factory:ind_furnace", {
 	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
 		"factory_machine_side_1.png", "factory_machine_side_1.png", "factory_ind_furnace_front.png"},
 	paramtype2 = "facedir",
-	groups = {cracky=3},
+	groups = {cracky=3,factory_src_input=1,factory_fuel_input=1,factory_dst_output=1},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
 	on_construct = function(pos)
@@ -151,7 +151,7 @@ minetest.register_node("factory:ind_furnace_active", {
 	paramtype2 = "facedir",
 	light_source = 14,
 	drop = "factory:ind_furnace",
-	groups = {cracky=3, not_in_creative_inventory=1,hot=1},
+	groups = {cracky=3, not_in_creative_inventory=1,hot=1, factory_src_input = 1,factory_fuel_input=1,factory_dst_output=1},
 	legacy_facedir_simple = true,
 	is_ground_content = false,
 	on_construct = function(pos)

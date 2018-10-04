@@ -19,22 +19,22 @@ factory.electronics.device.get_energy(meta)
 * get the energy stored in a device
 * get the meta field "factory_energy"
 
-factory.electronics.device:set_energy(meta,value)
+factory.electronics.device.set_energy(meta,value)
 * set the energy stored in a device
 
-factory.electronics.device:set_name(meta,device_name)
+factory.electronics.device.set_name(meta,device_name)
 * set the name (description) of a device
 * is shown in the infotext
 
-factory.electronics.device:set_status(meta,status)
+factory.electronics.device.set_status(meta,status)
 * set the status of a device
 * can be ""
 * is shown in the infotexts
 
-factory.electronics.device:store(meta, push_energy, max_energy)
+factory.electronics.device.store(meta, push_energy, max_energy)
 * store the push_energy with a maximum of max_energy and return the remaining push_energy
 
-factory.electronics.device:try_use(meta,energy_amount)
+factory.electronics.device.try_use(meta,energy_amount)
 * if enough energy is stored draw energy_amount from it and return true
 * if not enough energy is stored return false
 
@@ -43,5 +43,5 @@ factory.electronics.is_device(node)
 * check for the item group "factory_electronic"
 * node can be a node name or a node or a position
 
-factory.electronics.device.distribute(pos,energy_amount,exclude_sides)
+factory.electronics.device.distribute(pos,energy_amount)
 * distribute the energy_amount to all connected devices and return the energy remaining

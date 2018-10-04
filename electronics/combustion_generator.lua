@@ -1,5 +1,6 @@
 local S = factory.S
 local max_energy = 100
+local device = factory.electronics.device
 
 function factory.forms.combustion_generator(fuel_percent)
     local formspec =
@@ -34,8 +35,8 @@ minetest.register_node("factory:combustion_generator", {
 		meta:set_float("fuel_total_time",0.0)
 		local inv = meta:get_inventory()
 		inv:set_size("main", 1)
-		factory.electronics.device:set_name(meta,S("Combustion Generator"))
-		factory.electronics.device:set_energy(meta, 0)
+		device.set_name(meta,S("Combustion Generator"))
+		device.set_energy(meta, 0)
 	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
@@ -68,17 +69,20 @@ minetest.register_abm({
 
 		if meta:get_float("fuel_time") < meta:get_float("fuel_totaltime") then
 			if not factory.smoke_on_tube(pos, true) then
-				factory.electronics.device:set_status(meta,S("no smoke tube"))
+				device.set_status(meta,S("no smoke tube"))
 				meta:set_string("formspec", factory.forms.combustion_generator(100))
 				return
 			end
 			--currently active
 			meta:set_float("fuel_time", meta:get_float("fuel_time") + 1)
-			factory.electronics.device:store(meta, factory.electronics.device.distribute(pos,10), max_energy)
+			device.store(meta, 10, max_energy)
 			local percent = meta:get_float("fuel_time") / meta:get_float("fuel_totaltime") * 100
 			meta:set_string("formspec", factory.forms.combustion_generator(percent))
+			device.set_energy(meta,device.distribute(pos,factory.electronics.device.get_energy(meta)))
 			return
 		end
+
+		device.set_energy(meta,device.distribute(pos,factory.electronics.device.get_energy(meta)))
 
 		--gen has eaten up all the fuel
 		meta:set_string("formspec", factory.forms.combustion_generator(100))
@@ -93,19 +97,19 @@ minetest.register_abm({
 		end
 
 		if not fuel or fuel.time <= 0 then
-			factory.electronics.device:set_status(meta,S("no fuel to burn"))
+			factory.electronics.device.set_status(meta,S("no fuel to burn"))
 			factory.smoke_on_tube(pos, false)
 			return
 		end
 
-		if factory.electronics.device.get_energy(meta) >= factory.electronics.combustion_gen_max_energy then
-			factory.electronics.device:set_status(meta,S("fully charged"))
+		if factory.electronics.device.get_energy(meta) >= max_energy then
+			factory.electronics.device.set_status(meta,S("fully charged"))
 			factory.smoke_on_tube(pos, false)
 			return
 		end
 
 		if not factory.smoke_on_tube(pos, true) then
-			factory.electronics.device:set_status(meta,S("no smoke tube"))
+			factory.electronics.device.set_status(meta,S("no smoke tube"))
 			return
 		end
 
@@ -113,7 +117,7 @@ minetest.register_abm({
 		meta:set_string("fuel_time", 0)
 
 		inv:set_stack("main", 1, afterfuel.items[1])
-		factory.electronics.device:set_status(meta,S("active"))
+		factory.electronics.device.set_status(meta,S("active"))
 		meta:set_string("formspec", factory.forms.combustion_generator(0))
 	end
 })

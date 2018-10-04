@@ -20,10 +20,15 @@ active=
 fully charged=
 
 ### electronics/device.lua ###
-@1charge: @2%=
+@1charge: @2=
+empty=
+unpowered=
 
 ### electronics/combustion_generator.lua ###
 Combustion Generator=
+
+### electronics/electronic_furnace.lua ###
+Electronic Furnace=
 
 ### items/crafting.lua ###
 squeezing=

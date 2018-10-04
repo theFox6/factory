@@ -23,8 +23,16 @@ minetest.register_node("factory:cable", {
             place = <SimpleSoundSpec>,
             place_failed = <SimpleSoundSpec>,
         },]]
-	on_push_electricity = function(pos,energy,side_from)
-		return factory.electronics.device.distribute(pos,energy,side_from)
+	on_push_electricity = function(pos,energy)
+		local meta = minetest.get_meta(pos)
+		if meta:get_int("distribution_heat") == 0 then
+			meta:set_int("distribution_heat",1)
+			local remain = factory.electronics.device.distribute(pos,energy)
+			meta:set_int("distribution_heat",0)
+			return remain
+		else
+			return energy
+		end
 	end
 })
 
@@ -33,4 +41,15 @@ minetest.register_craft({
 	recipe = {
 		{"factory:fiber", "factory:copper_wire", "factory:fiber"}
 	},
+})
+
+minetest.register_lbm({
+        label = "cooldown cables",
+        name = "factory:cooldown_cables",
+        nodenames = {"factory:cable"},
+        run_at_every_load = true,
+        action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		meta:set_int("distribution_heat",0)
+	end,
 })

@@ -24,8 +24,9 @@ end
 minetest.register_node("factory:electronic_furnace", {
 	description = S("Electronic Furnace"),
 	--TODO: more recognizable texture
-	tiles = {"factory_steel_noise.png^factory_vent_slates.png", "factory_machine_steel_dark.png", "factory_steel_noise.png",
-		"factory_steel_noise.png", "factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
+	tiles = {"factory_steel_noise.png^factory_vent_slates.png", "factory_machine_steel_dark.png",
+		"factory_steel_noise.png", "factory_steel_noise.png",
+		"factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
 	groups = {cracky=3, hot=1 ,factory_electronic = 1},
@@ -56,7 +57,7 @@ minetest.register_node("factory:electronic_furnace", {
 			return 0
 		end
 	end,
-	allow_metadata_inventory_move = function(_, from_list, _, to_list, _, count)
+	allow_metadata_inventory_move = function(_, _, _, to_list, _, count)
 		if to_list == "src" then
 			return count
 		elseif to_list == "dst" then
@@ -73,7 +74,7 @@ minetest.register_abm({
 	nodenames = {"factory:electronic_furnace"},
 	interval = 1.0,
 	chance = 1,
-	action = function(pos, node)
+	action = function(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 

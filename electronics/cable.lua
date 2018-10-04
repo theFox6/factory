@@ -48,7 +48,7 @@ minetest.register_lbm({
         name = "factory:cooldown_cables",
         nodenames = {"factory:cable"},
         run_at_every_load = true,
-        action = function(pos, node)
+        action = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_int("distribution_heat",0)
 	end,

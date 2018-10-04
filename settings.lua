@@ -1,8 +1,5 @@
 -- LemonLake's Factories: Config
 
--- Logging
-factory.logTaker = false
-
 -- NB: miners require fans in the crafting recipe. recommended to enable fans if miners are enabled.
 -- 	   alternatively change the crafting recipe manually in crafting.lua
 
@@ -16,7 +13,8 @@ factory.minerDigLimit = 512
 
 -- Fuel types for the generator
 --generatorFuel = {{name = "factory:tree_sap", value = 20}}
--- obviously something was planned here dunno what it is though (has nothing to do with my generator)
+-- obviously something was planned here
+-- dunno what it is though (has nothing to do with my generator)
 
 --TODO: turn into registrations
 -- Sapling IO for the Sapling Treatment Plant

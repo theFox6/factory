@@ -1,6 +1,8 @@
+--FIXME: actually don't overwrite minetest.translate
+
 if not minetest.translate then
 	if minetest.get_translator then
-		minetest.log("warning","minetest.translate not found, this is really strange...")
+		factory.log.warning("minetest.translate not found, this is really strange...")
 	end
 	rawset(minetest,"translate",function(_, str, ...)
 		local arg = {n=select('#', ...), ...}
@@ -16,7 +18,7 @@ if not minetest.translate then
 end
 
 if not minetest.get_translator then
-	minetest.log("warning","Minetest translator not found!")
+	factory.log.warning("Minetest translator not found!")
 	rawset(minetest,"get_translator",function(textdomain)
 		return function(str,...) return minetest.translate(textdomain or "", str, ...) end
 	end)

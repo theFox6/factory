@@ -44,7 +44,7 @@ local function register_recipe(typename, data)
 	if not recipe.time then recipe.time = 1 end
 	local index = get_recipe_index(data.input)
 	if not index then
-		print("[Factory] ignored registration of garbage recipe!")
+		factory.log.warning("ignored registration of garbage recipe!")
 		return
 	end
 	for _, stack in ipairs(data.input) do
@@ -83,7 +83,7 @@ function factory.get_recipe(typename, items)
 	end
 	local index = get_recipe_index(items)
 	if not index then
-		print("[Factory] ignored registration of garbage recipe!")
+		factory.log.warning("ignored registered garbage recipe!")
 		return
 	end
 	local recipe = factory.recipes[typename].recipes[index]

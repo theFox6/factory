@@ -260,7 +260,7 @@ minetest.register_abm({
 					-- take stuff from "src" list
 					inv:set_stack("src", 1, aftercooked.items[1])
 				else
-					print("Could not insert '"..cooked.item:to_string().."'")
+					factory.log.info("Could not insert '"..cooked.item:to_string().."'")
 				end
 				meta:set_string("src_time", 0)
 			end

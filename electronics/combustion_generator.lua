@@ -93,7 +93,7 @@ minetest.register_abm({
 		if fuellist then
 			fuel, afterfuel = minetest.get_craft_result({method = "fuel", width = 1, items = fuellist})
 		else
-			minetest.log("warning","invetory not found for combustion gen at:"..minetest.pos_to_string(pos))
+			factory.log.warning("invetory not found for combustion gen at:%s",minetest.pos_to_string(pos))
 		end
 
 		if not fuel or fuel.time <= 0 then

@@ -95,16 +95,15 @@ minetest.register_node("factory:queuedarm",{
 		return inv:is_empty("main")
 	end,
 	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
-		minetest.log("action", string.format("%s moves stuff in queued mover at %s",
-			player:get_player_name(),minetest.pos_to_string(pos)))
+		factory.log.action("%s moves stuff in queued mover at %s",
+			player:get_player_name(),minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_put = function(pos, _, _, _, player)
-		minetest.log("action", string.format("%s moves stuff to queued mover at %s",
-			player:get_player_name(),minetest.pos_to_string(pos)))
+		factory.log.action("%s moves stuff to queued mover at %s",
+			player:get_player_name(),minetest.pos_to_string(pos))
 	end,
     on_metadata_inventory_take = function(pos, _, _, _, player)
-		minetest.log("action",
-			string.format("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos)))
+		factory.log.action("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos))
 	end,
 })
 

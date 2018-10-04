@@ -10,7 +10,7 @@ if not minetest.translate then
 				return matched
 			end
 		end)
-	end)
+	end
 	if minetest.get_translator then
 		factory.log.warning("minetest.translate not found, this is really strange...")
 		factory.S = minetest.get_translator("factory")

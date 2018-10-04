@@ -40,6 +40,8 @@ function oarm_handle (a, b, target, stack, obj)
 	end
 	if factory.has_fuel_input(target) then
 		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
+			local meta = minetest.env:get_meta(b)
+			local inv = meta:get_inventory()
 			-- back, fuel
 			local inv_index = count_index(inv:get_list("fuel"))
 

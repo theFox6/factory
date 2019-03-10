@@ -3,6 +3,8 @@ minetest.register_node("factory:cable", {
 	drawtype = "nodebox",
 	tiles = {"factory_belt_bottom_clean.png"},
 	groups = {factory_electronic = 1, snappy = 1},
+	paramtype = "light",
+  sunlight_propagates = true,
 	is_ground_content = false,
 	node_box = {
 		type = "connected",
@@ -27,7 +29,7 @@ minetest.register_node("factory:cable", {
 		local meta = minetest.get_meta(pos)
 		if meta:get_int("distribution_heat") == 0 then
 			meta:set_int("distribution_heat",1)
-			local remain = factory.electronics.device.distribute(pos,energy)
+			local remain = factory.electronics.device.distribute(pos,energy,100)
 			meta:set_int("distribution_heat",0)
 			return remain
 		else
@@ -44,12 +46,12 @@ minetest.register_craft({
 })
 
 minetest.register_lbm({
-        label = "cooldown cables",
-        name = "factory:cooldown_cables",
-        nodenames = {"factory:cable"},
-        run_at_every_load = true,
-        action = function(pos)
-		local meta = minetest.get_meta(pos)
+  label = "cooldown cables",
+  name = "factory:cooldown_cables",
+  nodenames = {"factory:cable"},
+  run_at_every_load = true,
+  action = function(pos)
+    local meta = minetest.get_meta(pos)
 		meta:set_int("distribution_heat",0)
 	end,
 })

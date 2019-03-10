@@ -125,8 +125,8 @@ minetest.register_abm({
 minetest.register_craft({
 	output = "factory:combustion_generator",
 	recipe = {
-		{"default:steel_ingot", "factory:electric_engine", "default:steel_ingot"},
-		{"default:steel_ingot", "bucket:bucket_water", "factory:battery_item"},
+		{"default:steel_ingot", "factory:copper_wire", "default:steel_ingot"},
+		{"bucket:bucket_water", "factory:small_steel_gear", "factory:battery_item"},
 		{"default:steel_ingot", "default:furnace", "default:steel_ingot"},
 	},
 })

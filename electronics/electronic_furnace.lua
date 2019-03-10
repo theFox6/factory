@@ -1,6 +1,14 @@
+-- local reference to the translator
 local S = factory.S
+-- #device local reference to the device type
 local device = factory.electronics.device
 
+---
+-- creates the formspec for an electronic furnace
+--
+-- @function [parent=#forms] electronic_furnace
+-- @param item_percent the percentage of the cooking process
+-- @return #string the formspec for the electronic furnace
 function factory.forms.electronic_furnace(item_percent)
 	--TODO: fix positions
     local formspec =
@@ -21,6 +29,8 @@ function factory.forms.electronic_furnace(item_percent)
     return formspec
 end
 
+---
+-- registration for the electronic furnace
 minetest.register_node("factory:electronic_furnace", {
 	description = S("Electronic Furnace"),
 	--TODO: more recognizable texture
@@ -71,6 +81,8 @@ minetest.register_node("factory:electronic_furnace", {
 	end
 })
 
+---
+-- abm registration for the electronic_furnace
 minetest.register_abm({
 	nodenames = {"factory:electronic_furnace"},
 	interval = 1.0,
@@ -117,6 +129,8 @@ minetest.register_abm({
 	end
 })
 
+---
+-- crafting recipe for electronic furnace
 minetest.register_craft({
 	output = "factory:electronic_furnace",
 	recipe = {

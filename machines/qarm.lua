@@ -115,7 +115,7 @@ minetest.register_abm({
 	action = function(pos)
 		local mmeta = minetest.env:get_meta(pos)
 		local minv = mmeta:get_inventory()
-		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
+		local all_objects = minetest.get_objects_inside_radius(pos, 0.5)
 		local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)
 		local b = {x = pos.x + a.x, y = pos.y + a.y, z = pos.z + a.z,}
 		local target = minetest.get_node(b)

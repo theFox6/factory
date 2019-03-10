@@ -104,8 +104,10 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 
 	minetest.register_craftitem("factory:storage_tank_" .. name .. "_inventory", {
 		description = S("Storage Tank (@1)",S(name)),
-		--TODO: make inventorycube from lowerpart of the plaintile and storage tank tiles
-		inventory_image = plaintile .. "^factory_storage_tank.png",
+		inventory_image = "[inventorycube{"--TODO: perhaps take the lowpart of the plaintile
+			..plaintile.."&factory_steel_frame.png&factory_glass.png&factory_port.png{"
+			..plaintile.."&factory_steel_frame.png&factory_glass.png&factory_measure.png{"
+			..plaintile.."&factory_steel_frame.png&factory_glass.png",
 		wield_image = "factory_storage_tank.png",
 		groups = {not_in_creative_inventory = 1},
 		stack_max = 1,

@@ -36,7 +36,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos)
 		local insert = factory.insert_object_item
-		local all_objects = minetest.get_objects_inside_radius(pos, 0.8)
+		local all_objects = minetest.get_objects_inside_radius(pos, 0.5)
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity()
 			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then

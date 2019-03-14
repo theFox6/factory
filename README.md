@@ -5,4 +5,5 @@ It adds machines like conveyor belts and an industrial furnace.
 
 ## License
 * original factory made by Lemmy is under the WTFPL
+* zinc is taken of technic which is under LGPL, V2 or later
 * parts of factory made by theFox6 are under the MIT License

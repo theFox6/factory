@@ -89,7 +89,7 @@ if not minetest.get_modpath("technic_worldgen") then
 	})
 end
 
-if not minetest.get_modpath("extranodes") then
+if minetest.get_modpath("moreblocks") and not minetest.get_modpath("extranodes") then
 	stairsplus:register_all("technic", "zinc_block", "technic:zinc_block", {
 		description=S("Zinc Block"),
 		groups={cracky=1, not_in_creative_inventory=1},

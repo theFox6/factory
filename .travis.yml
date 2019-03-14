@@ -7,8 +7,8 @@ addons:
 before_install:
   - luarocks install --local luacheck
 env:
+  - CONFIG=.luacheck_health
   - CONFIG=.luacheckrc
-  - CONFIG=.luacheck_tidy
 matrix:
   allow_failures:
   - name: "beauty check"

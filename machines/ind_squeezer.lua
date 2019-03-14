@@ -233,7 +233,9 @@ minetest.register_abm({
 		end
 
 		if not factory.smoke_on_tube(pos, node.name == "factory:ind_squeezer_active") then
-			meta:set_string("infotext",S("@1 has no smoke tube", S("Industrial Squeezer")))
+			factory.swap_node(pos,"factory:ind_squeezer")
+      meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
+      meta:set_string("infotext",S("@1 has no smoke tube", S("Industrial Squeezer")))
 			return
 		end
 

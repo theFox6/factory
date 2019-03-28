@@ -1,3 +1,4 @@
+--the time when this mod started loading
 local init = os.clock()
 if minetest.settings:get_bool("log_mods") then
   minetest.log("action", "[MOD] "..minetest.get_current_modname()..": loading")
@@ -22,7 +23,7 @@ dofile(factory.modpath.."/items/init.lua")
 dofile(factory.modpath.."/decor/init.lua")
 dofile(factory.modpath.."/electronics/init.lua")
 
---ready
+--the time needed for loading
 local time_to_load= os.clock() - init
 if minetest.settings:get_bool("log_mods") then
   minetest.log("action", string.format(

@@ -1,6 +1,16 @@
+--- the modpath of unified inventoy or nil
 local have_ui = minetest.get_modpath("unified_inventory")
 
+--- the recipe table containing all factory recipes
 factory.recipes = { cooking = { input_size = 1, output_size = 1 } }
+
+---
+--Register a new recipe.
+--Adds a category to the factory recipe table
+--
+--@function [parent=#factory] register_recipe_type
+--@param #string typename the name of the recipe category to be added
+--@param #table origdata the definition of this recipe type
 function factory.register_recipe_type(typename, origdata)
 	local data = {}
 	for k, v in pairs(origdata) do data[k] = v end
@@ -13,7 +23,7 @@ function factory.register_recipe_type(typename, origdata)
 			height = 1,
 		})
 	end
-	data.recipes = {}
+	data.recipes = data.recipes or {}
 	factory.recipes[typename] = data
 end
 
@@ -77,8 +87,8 @@ function factory.get_recipe(typename, items)
 			return nil
 		else
 			return {time = result.time,
-			        new_input = new_input.items,
-			        output = result.item}
+							new_input = new_input.items,
+							output = result.item}
 		end
 	end
 	local index = get_recipe_index(items)
@@ -98,8 +108,8 @@ function factory.get_recipe(typename, items)
 			end
 		end
 		return {time = recipe.time,
-		        new_input = new_input,
-		        output = recipe.output}
+						new_input = new_input,
+						output = recipe.output}
 	else
 		return nil
 	end

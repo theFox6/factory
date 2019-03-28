@@ -1,6 +1,20 @@
+-- local reference to the translator
 local S = factory.S
 
-factory.stp_formspec =
+-- Sapling IO for the Sapling Treatment Plant
+factory.stpIO = {}
+
+function factory.registerSapling(sapling,wood,minHeight,maxHeight)
+  table.insert(factory.stpIO, {input = sapling, output = wood, min = minHeight, max = maxHeight})
+end
+
+--register the default saplings
+--TODO: there are more
+factory.registerSapling("default:sapling","default:tree",4,7)
+factory.registerSapling("default:junglesapling","default:jungletree",8,12)
+factory.registerSapling("default:aspen_sapling","default:aspen_tree",7,11)
+
+factory.forms.stp_formspec =
 	"size[8,8.5]"..
 	factory_gui_bg..
 	factory_gui_bg_img_2..
@@ -132,7 +146,7 @@ minetest.register_abm({
 		if inv:contains_item("fuel", ItemStack("factory:sapling_fertilizer 1")) then
 			for _,v in ipairs(factory.stpIO) do
 				local rand = math.random(v.min, v.max)
-				local rands = math.random(0, math.floor((v.min/2)+0.5))
+				local rands = math.random(0, math.floor(math.sqrt(v.min)))
 				if inv:contains_item("src", ItemStack({name = v.input})) and
 					inv:room_for_item("dst", {name = v.output, count = rand}) and
 					inv:room_for_item("dst", {name = v.input, count = rands}) then

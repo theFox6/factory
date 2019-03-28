@@ -89,6 +89,10 @@ if not minetest.get_modpath("technic_worldgen") then
 	})
 end
 
+minetest.register_alias("factory:zinc_lump",  "technic:zinc_lump")
+minetest.register_alias("factory:zinc_ingot", "technic:zinc_ingot")
+minetest.register_alias("factory:zinc_block", "technic:zinc_block")
+
 if minetest.get_modpath("moreblocks") and not minetest.get_modpath("extranodes") then
 	stairsplus:register_all("technic", "zinc_block", "technic:zinc_block", {
 		description=S("Zinc Block"),
@@ -96,7 +100,3 @@ if minetest.get_modpath("moreblocks") and not minetest.get_modpath("extranodes")
 		tiles={"technic_zinc_block.png"},
 	})
 end
-
-minetest.register_alias("technic:zinc_lump", "factory:zinc_lump")
-minetest.register_alias("technic:zinc_ingot", "factory:zinc_ingot")
-minetest.register_alias("technic:zinc_block", "factory:zinc_block")

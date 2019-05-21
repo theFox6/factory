@@ -66,7 +66,7 @@ minetest.register_node("factory:overflowarm",{
 	tiles = {"factory_steel_noise.png"},
 	paramtype = "light",
 	description = S("Overflowing Pneumatic Mover"),
-	groups = {cracky=3},
+	groups = {cracky=3, factory_mover=1},
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
 	node_box = {

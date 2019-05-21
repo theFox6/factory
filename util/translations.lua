@@ -1,6 +1,9 @@
+local log = factory.require("util/log")
+local S
+
 if not minetest.translate then
-	factory.log.warning("Minetest translator not found!")
-	function factory.translate(_, str, ...)
+	log.warning("Minetest translator not found!")
+	local function translate(_, str, ...)
 		local arg = {n=select('#', ...), ...}
 		return str:gsub("@(.)", function (matched)
 			local c = string.byte(matched)
@@ -12,26 +15,29 @@ if not minetest.translate then
 		end)
 	end
 	if minetest.get_translator then
-		factory.log.warning("minetest.translate not found, this is really strange...")
-		factory.S = minetest.get_translator("factory")
+		log.warning("minetest.translate not found, this is really strange...")
+		S = minetest.get_translator("factory")
 	else
-		function factory.get_translator(textdomain)
+		local function get_translator(textdomain)
 			return function(str,...)
-				return factory.translate(textdomain or "", str, ...)
+				return translate(textdomain or "", str, ...)
 			end
 		end
-		factory.S = factory.get_translator("factory")
+		S = get_translator("factory")
 	end
 else
 	if not minetest.get_translator then
-		factory.log.warning("minetest.get_translator not found, this is really strange...")
-		function factory.get_translator(textdomain)
+		log.warning("minetest.get_translator not found, this is really strange...")
+		local function get_translator(textdomain)
 			return function(str,...)
 				return minetest.translate(textdomain or "", str, ...)
 			end
 		end
-		factory.S = factory.get_translator("factory")
+		S = get_translator("factory")
 	else
-		factory.S = minetest.get_translator("factory")
+		S = minetest.get_translator("factory")
 	end
 end
+
+factory.S = S
+return S

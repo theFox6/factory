@@ -90,6 +90,7 @@ minetest.register_node("factory:wire_drawer", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
@@ -175,6 +176,7 @@ minetest.register_node("factory:wire_drawer_active", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then

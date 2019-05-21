@@ -59,6 +59,16 @@ function factory.has_fuel_input(node)
 	return false
 end
 
+function factory.has_main_inv(node)
+  local nname = factory.get_node_name(node)
+  if minetest.get_item_group(nname, "factory_main_inv") > 0 then
+    return true
+  elseif nname == "default:chest" or nname == "default:chest_locked" then
+    return true
+  end
+  return false
+end
+
 function factory.has_dst_output(node)
 	local nname = factory.get_node_name(node)
 	if minetest.get_item_group(nname, "factory_dst_output") > 0 then

@@ -48,6 +48,7 @@ minetest.register_node("factory:combustion_generator", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(_, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		if listname == "src" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				return stack:get_count()

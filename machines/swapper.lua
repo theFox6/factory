@@ -15,7 +15,17 @@ factory.swapper_formspec =
 	"list[current_player;main;0,5.5;8,1;]"..
 	"list[current_player;main;0,6.75;8,3;8]"..
 	"listring[current_player;main]"..
-	"listring[current_name;src]"
+	"listring[current_name;src]"..
+	"listring[current_player;main]"..
+  "listring[current_name;left]"..
+  "listring[current_player;main]"..
+  "listring[current_name;right]"..
+  "listring[current_player;main]"..
+  "listring[current_name;overflow]"..
+  "listring[current_player;main]"..
+  "listring[current_name;loverflow]"..
+  "listring[current_player;main]"..
+  "listring[current_name;roverflow]"
 
 minetest.register_node("factory:swapper", {
 	description = factory.S("Swapper"),
@@ -57,6 +67,7 @@ minetest.register_node("factory:swapper", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack)
+	  -- args: pos, listname, index, stack, player
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "left" or listname == "right" then
 			stack:set_count(1)

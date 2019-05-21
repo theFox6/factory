@@ -62,6 +62,7 @@ minetest.register_node("factory:electronic_furnace", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(_, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		if listname == "src" then
 			return stack:get_count()
 		elseif listname == "dst" then

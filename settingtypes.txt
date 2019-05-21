@@ -1,0 +1,23 @@
+#Enable the registration of miners.
+#Miners require fans in the crafting recipe. It is recommended to enable fans if miners are enabled.
+factory_enableMiner (Enable miner) bool true
+
+#Enable the registration of fans.
+#Miners require fans in the crafting recipe. It is recommended to enable fans if miners are enabled.
+factory_enableFan (Enable fan) bool true
+
+#Enable the registration of vaccums.
+#Vacuums pull in items from distance.
+factory_enableVacuum (Enable vaccum) bool true
+
+#Enable the registration and utilities of electronics.
+#Electronic components help against having to distribute fuels to every machine.
+factory_enableElectronics (Enable electronics) bool true
+
+#Enable the spawning of droppings.
+#Fertilizer can be harvested directly. It is used to fertilize saplings in the STP.
+factory_fertilizerGeneration (Enable fertilizer generation) bool true
+
+#Limit the digging depth of the miners.
+#The upgraded miners will only dig to the given depth. Normal miners dig to half this depth.
+factory_minerDigLimit (Miner dig limit) int 512 0

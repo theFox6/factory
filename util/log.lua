@@ -1,11 +1,14 @@
-factory.log = {}
-
-function factory.log.make_logger(level)
+local function make_logger(level)
 	return function(text, ...)
 		minetest.log(level, "[factory] "..text:format(...))
 	end
 end
 
-factory.log.warning = factory.log.make_logger("warning")
-factory.log.action = factory.log.make_logger("action")
-factory.log.info = factory.log.make_logger("info")
+local log = {
+	warning = make_logger("warning"),
+	action = make_logger("action"),
+	info = make_logger("info")
+}
+
+factory.log = log
+return log

@@ -45,7 +45,7 @@ minetest.register_abm({
 				local target = minetest.get_node(b)
 				local stack = ItemStack(obj:get_luaentity().itemstring)
 
-				if target.name == "default:chest" or target.name == "default:chest_locked" then
+				if factory.has_main_inv(target) then
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"main", stack, obj) then

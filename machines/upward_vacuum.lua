@@ -23,6 +23,7 @@ minetest.register_node("factory:upward_vacuum_on", {
 	legacy_facedir_simple = true,
 	is_ground_content = false,
 	allow_metadata_inventory_put = function(pos, listname, index, stack)
+	  -- args: pos, listname, index, stack, player
 		local inv = minetest.get_meta(pos):get_inventory()
 		stack:set_count(1)
 		inv:set_stack(listname, index, stack)
@@ -55,6 +56,7 @@ minetest.register_node("factory:upward_vacuum_off", {
 		inv:set_size("sort", 1)
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack)
+	  -- args: pos, listname, index, stack, player
 		local inv = minetest.get_meta(pos):get_inventory()
 		stack:set_count(1)
 		inv:set_stack(listname, index, stack)

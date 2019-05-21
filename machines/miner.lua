@@ -1,8 +1,10 @@
+-- local reference to the translator
 local S = factory.S
+local dig_limit = minetest.settings:get("factory_minerDigLimit") or 512
 
 factory.miner = {}
 function factory.miner.afterdig(pos)
-	for i = 1, factory.minerDigLimit do
+	for i = 1, dig_limit do
 		local node = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 		if node.name == "ignore" then
 			minetest.get_voxel_manip():read_from_map({x = pos.x, y = pos.y-i, z = pos.z}, {x = pos.x, y = pos.y-i-2, z = pos.z})
@@ -59,6 +61,12 @@ minetest.register_node("factory:miner_off", {
 			minetest.swap_node(pos, {name = "factory:miner_on", param2 = node.param2})
 		end
 	}},
+	on_rightclick = function(pos, node)
+	 local meta = minetest.get_meta(pos)
+   meta:set_string("infotext",S("Industrial Miner"))
+   meta:set_int("last_depth", 1)
+   minetest.swap_node(pos, {name = "factory:miner_on", param2 = node.param2})
+	end,
 	after_place_node = function(pos)
 		-- not supposed to be placed. switch to factory:miner_on
 		local node = minetest.get_node(pos)
@@ -92,7 +100,7 @@ minetest.register_abm({
 		if meta:get_int("last_depth") < 1 then
 			meta:set_int("last_depth", 1)
 		end
-		for i = meta:get_int("last_depth"), math.floor(factory.minerDigLimit/2) do
+		for i = meta:get_int("last_depth"), math.floor(dig_limit/2) do
 			local dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[dnode.name]
 			if dnode.name == "ignore" then
@@ -183,6 +191,12 @@ minetest.register_node("factory:miner_upgraded_off", {
 			minetest.swap_node(pos, {name = "factory:miner_upgraded_on", param2 = node.param2})
 		end
 	}},
+	on_rightclick = function(pos, node)
+	 local meta = minetest.get_meta(pos)
+    meta:set_string("infotext",S("Upgraded Miner"))
+    meta:set_int("last_depth", 1)
+    minetest.swap_node(pos, {name = "factory:miner_upgraded_on", param2 = node.param2})
+	end,
 	after_place_node = function(pos)
 		-- not supposed to be placed. switch to factory:miner_on
 		local node = minetest.get_node(pos)
@@ -201,7 +215,7 @@ minetest.register_abm({
 		if meta:get_int("last_depth") < 1 then
 			meta:set_int("last_depth", 1)
 		end
-		for i = meta:get_int("last_depth"), factory.minerDigLimit do
+		for i = meta:get_int("last_depth"), dig_limit do
 			local dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
 			local registered = minetest.registered_nodes[dnode.name]
 			if dnode.name == "ignore" then

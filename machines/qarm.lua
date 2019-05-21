@@ -3,17 +3,11 @@ local insert = factory.insert_object_item
 
 function qarm_handle (a, b, target, stack, minv, obj)
 	local found = false
-	if target.name:find("default:chest") then
+	if factory.has_main_inv(target) then
 		local meta = minetest.env:get_meta(b)
 		local inv = meta:get_inventory()
 
 		if insert(inv,"main", stack, obj) then found = true end
-	end
-	if target.name == "factory:swapper" then
-		local meta = minetest.env:get_meta(b)
-		local inv = meta:get_inventory()
-
-		if insert(inv,"input", stack, obj) then found = true end
 	end
 	if factory.has_fuel_input(target) then
 		local meta = minetest.env:get_meta(b)

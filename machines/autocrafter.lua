@@ -120,7 +120,7 @@ local function update_meta(meta)
 	end
 
 	local description, name = get_item_info(output)
-	local infotext = S("'%s' Autocrafter (%s)"):format(description, name)
+	local infotext = S("'@1' Autocrafter (@2)",description, name)
 
 	meta:set_string("infotext", infotext)
 	return true
@@ -152,6 +152,7 @@ minetest.register_node("factory:autocrafter", {
 		autocrafterCache[minetest.hash_node_position(pos)] = nil
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack)
+	  -- args: pos, listname, index, stack, player
 		local inv = minetest.get_meta(pos):get_inventory()
 		if listname == "recipe" then
 			stack:set_count(1)

@@ -104,7 +104,7 @@ function factory.register_taker(prefix, suffix, speed, name, ctiles)
 			local dir = minetest.facedir_to_dir(facedir)
 			local src = vector.add(pos,dir)
 			local target = minetest.get_node(src)
-			if target.name == "default:chest" or target.name == "default:chest_locked" then
+			if factory.has_main_inv(target) then
 				factory.taker.take(pos,dir,"main")
 			end
 			if target.name == "factory:swapper" then

@@ -92,6 +92,7 @@ minetest.register_node("factory:ind_squeezer", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
@@ -176,7 +177,8 @@ minetest.register_node("factory:ind_squeezer_active", {
 		end
 		return true
 	end,
-	allow_metadata_inventory_put = function(pos, listname, stack)
+	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then

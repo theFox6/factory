@@ -1,3 +1,4 @@
+-- local reference to the translator
 local S = factory.S
 
 function factory.ind_furnace_active(percent, item_percent)
@@ -92,6 +93,7 @@ minetest.register_node("factory:ind_furnace", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
@@ -178,12 +180,13 @@ minetest.register_node("factory:ind_furnace_active", {
 		return true
 	end,
 	allow_metadata_inventory_put = function(pos, listname, _, stack)
+	  -- args: pos, listname, index, stack, player
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 		if listname == "fuel" then
 			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
 				if inv:is_empty("src") then
-					meta:set_string("infotext",S("@1 is empty"),S("Industrial Furnace"))
+					meta:set_string("infotext",S("@1 is empty",S("Industrial Furnace")))
 				end
 				return stack:get_count()
 			else

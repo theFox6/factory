@@ -15,13 +15,27 @@ factory={
 	forms={},
 }
 
-dofile(factory.modpath.."/settings.lua")
+local modules = {}
 
-dofile(factory.modpath.."/util/init.lua")
-dofile(factory.modpath.."/machines/init.lua")
-dofile(factory.modpath.."/items/init.lua")
-dofile(factory.modpath.."/decor/init.lua")
-dofile(factory.modpath.."/electronics/init.lua")
+function factory.require(module)
+  if not modules[module] then
+    modules[module] = dofile(factory.modpath.."/"..module..".lua") or true
+  end
+  return modules[module]
+end
+
+function factory.setting_enabled(name)
+	return minetest.settings:get_bool("factory_enable"..name) or true
+end
+
+factory.require("util/init")
+factory.require("machines/init")
+factory.require("items/init")
+factory.require("decor/init")
+
+if factory.setting_enabled("Electronics") then
+  factory.require("electronics/init")
+end
 
 --the time needed for loading
 local time_to_load= os.clock() - init

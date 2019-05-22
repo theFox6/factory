@@ -39,7 +39,7 @@ if not minetest.get_modpath("technic_worldgen") then
 		tiles = { "default_stone.png^technic_mineral_zinc.png" },
 		is_ground_content = true,
 		groups = {cracky=3},
-		sounds = default.node_sound_stone_defaults(),
+		--sounds = default.node_sound_stone_defaults(),
 		drop = "technic:zinc_lump",
 	})
 
@@ -48,7 +48,7 @@ if not minetest.get_modpath("technic_worldgen") then
 		tiles = { "technic_zinc_block.png" },
 		is_ground_content = true,
 		groups = {cracky=1, level=2},
-		sounds = default.node_sound_stone_defaults()
+		--sounds = default.node_sound_stone_defaults()
 	})
 
 	local zinc_params = {

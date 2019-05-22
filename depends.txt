@@ -1,5 +1,3 @@
-default
-moreores
 moreblocks?
 technic_worldgen?
 unified_inventory?

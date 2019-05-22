@@ -7,6 +7,11 @@ For production there are industrial furnaces, auto crafters and also many more.
 There are also a few sorting devices.
 And to stop the coal distribution madness there are electronic devices too.
 
+## Dependencies
+you can add moreblocks to make the factory blocks cuttable
+you can add unified_inventory for crafting help
+you probably need moreores to craft batteries
+
 ## License
 * original factory made by Lemmy is under the WTFPL
 * zinc is taken of technic which is under LGPL, V2 or later

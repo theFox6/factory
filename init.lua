@@ -29,8 +29,9 @@ function factory.setting_enabled(name)
 end
 
 factory.require("util/init")
-factory.require("machines/init")
+factory.require("ores/init")
 factory.require("items/init")
+factory.require("machines/init")
 factory.require("decor/init")
 
 if factory.setting_enabled("Electronics") then

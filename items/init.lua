@@ -1,4 +1,3 @@
-dofile(factory.modpath.."/items/zinc.lua")
 dofile(factory.modpath.."/items/crafting.lua")
 dofile(factory.modpath.."/items/craftitems.lua")
 dofile(factory.modpath.."/items/gears.lua")

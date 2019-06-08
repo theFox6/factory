@@ -102,10 +102,10 @@ local function update_meta(meta)
 			"list[context;output;3,1;1,1;]"..
 			"list[context;src;0,4.5;8,3;]"..
 			"list[context;dst;4,0;4,3;]"..
-			default.gui_bg..
-			default.gui_bg_img..
-			default.gui_slots..
-			default.get_hotbar_bg(0,8) ..
+			factory_gui_bg..
+			factory_gui_bg_img..
+			factory_gui_slots..
+			factory.get_hotbar_bg(0,8)..
 			"list[current_player;main;0,8;8,4;]" ..
 			"listring[current_player;main]"..
 			"listring[context;src]" ..

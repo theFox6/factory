@@ -15,7 +15,11 @@ factory={
 	forms={},
 }
 
-local modules = {}
+local modules = {
+	init = factory,
+	log = modutil.require("log").make_loggers(),
+	translation = modutil.require("translations")("factory")
+}
 
 function factory.require(module)
   if not modules[module] then

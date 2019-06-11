@@ -1,4 +1,4 @@
-dofile(factory.modpath.."/decor/crafting.lua")
-dofile(factory.modpath.."/decor/smoketube.lua")
-dofile(factory.modpath.."/decor/factorybrick.lua")
-dofile(factory.modpath.."/decor/itemsieve.lua")
+factory.require("decor/crafting")
+factory.require("decor/smoketube")
+factory.require("decor/factorybrick")
+factory.require("decor/itemsieve")

@@ -1,7 +1,7 @@
 --factory's utilities
 
-factory.require("util/log")
-factory.require("util/translations")
+factory.log = factory.require("log")
+factory.S = factory.require("translation")
 factory.require("util/craftingutil")
 factory.require("util/gui")
 factory.require("util/invutil")

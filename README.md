@@ -8,6 +8,7 @@ There are also a few sorting devices.
 And to stop the coal distribution madness there are electronic devices too.
 
 ## Dependencies
+factory needs modutil to load utilities
 you can add moreblocks to make the factory blocks cuttable
 you can add unified_inventory for crafting help
 you may want to have default because it is used for most crafting recipes

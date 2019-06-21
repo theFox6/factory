@@ -4,6 +4,7 @@ read_globals = {
 	"default",
 	"dump",
 	"ItemStack",
+	"modutil",
 	"PseudoRandom",
 	"stairsplus",
 	"intllib",

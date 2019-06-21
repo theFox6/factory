@@ -10,16 +10,16 @@ local device = factory.electronics.device
 -- @param item_percent the percentage of the cooking process
 -- @return #string the formspec for the electronic furnace
 function factory.forms.electronic_furnace(item_percent)
-	--TODO: fix positions
+	--perhaps this should be smaller
     local formspec =
 	"size[8,8.5]"
 	..factory_gui_bg
 	..factory_gui_bg_img
 	..factory_gui_slots
-	.."list[current_name;src;2.75,2.5;1,1;]"
-	.."image[3.75,1.5;1,1;gui_ind_furnace_arrow_bg.png^[lowpart:"
+	.."list[current_name;src;2,1.5;1,1;]"
+	.."image[3,1.5;1,1;gui_ind_furnace_arrow_bg.png^[lowpart:"
 	        ..(item_percent*100)..":gui_ind_furnace_arrow_fg.png^[transformR270]"
-	.."list[current_name;dst;4.75,0.5;2,2;]"
+	.."list[current_name;dst;4,1;2,2;]"
 	.."list[current_player;main;0,4.25;8,1;]"
 	.."list[current_player;main;0,5.5;8,3;8]"
 	..factory.get_hotbar_bg(0,4.25)

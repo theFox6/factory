@@ -1,19 +1,23 @@
 factory.swapper_formspec =
-	"size[8,9.5]"..
+	"size[8,10.5]"..
 	factory_gui_bg..
 	factory_gui_bg_img_2..
 	factory_gui_slots..
-	"list[current_name;left;0,1.25;2,4;]"..
-	"list[current_name;right;6,1.25;2,4;]"..
+	"list[current_name;left;0,2;2,4;]"..
+	"list[current_name;right;6,2;2,4;]"..
 	"list[current_name;loverflow;0,0;3,1;]"..
 	"list[current_name;roverflow;5,0;3,1;]"..
-	"list[current_name;overflow;3,1.25;2,1;]"..
-	"list[current_name;src;3,3.25;2,2;]"..
-	"image[3.5,0;1,1;factory_square_white.png]"..
-	"image[2,1.25;1,1;factory_square_yellow.png]"..
-	"image[5,1.25;1,1;factory_square_blue.png]"..
-	"list[current_player;main;0,5.5;8,1;]"..
-	"list[current_player;main;0,6.75;8,3;8]"..
+	"list[current_name;overflow;3,1;2,1;]"..
+	"list[current_name;src;3,3;2,2;]"..
+	"image[3.75,2;1,1;gui_ind_furnace_arrow_bg.png]"..
+	"label[3.6,0;output]"..
+	"image[3.5,0.25;1,1;factory_square_white.png]"..
+	"image[0.5,1;1,1;factory_square_yellow.png]"..
+	"image[6.5,1;1,1;factory_square_blue.png]"..
+	"label[3.66,5;input]"..
+	"image[3.5,5.25;1,1;factory_square_red.png]"..
+	"list[current_player;main;0,6.5;8,1;]"..
+	"list[current_player;main;0,7.75;8,3;8]"..
 	"listring[current_player;main]"..
 	"listring[current_name;src]"..
 	"listring[current_player;main]"..
@@ -114,6 +118,7 @@ minetest.register_abm({
 			for i,item in ipairs(inv:get_list("src")) do
 				if not item:is_empty() and item:get_name() ~= "" then
 					local item_to_move = item:peek_item()
+					--TODO: perhaps switch between left and right priority
 					for _,litem in ipairs(inv:get_list("left")) do
 						if litem:get_name() == item:get_name() and inv:room_for_item("loverflow", item_to_move) then
 							item:take_item()

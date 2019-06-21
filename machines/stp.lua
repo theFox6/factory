@@ -4,15 +4,30 @@ local S = factory.S
 -- Sapling IO for the Sapling Treatment Plant
 factory.stpIO = {}
 
-function factory.registerSapling(sapling,wood,minHeight,maxHeight)
-  table.insert(factory.stpIO, {input = sapling, output = wood, min = minHeight, max = maxHeight})
+function factory.registerSapling(sapling,wood,minWood,maxWood,leaves,minLeaves,maxLeaves)
+  local defType = type(sapling)
+  if defType == "table" and wood == nil then
+    table.insert(factory.stpIO, sapling)
+  elseif defType == "string" then
+    table.insert(factory.stpIO, {
+	sapling = sapling,
+	wood = wood,
+	minWood = minWood,
+	maxWood = maxWood,
+	leaves = leaves,
+	minLeaves = minLeaves,
+	maxLeaves = maxLeaves})
+  else
+    factory.log.warning("invalid sapling definition type: "..defType)
+  end
 end
 
 --register the default saplings
---TODO: there are more
-factory.registerSapling("default:sapling","default:tree",4,7)
-factory.registerSapling("default:junglesapling","default:jungletree",8,12)
-factory.registerSapling("default:aspen_sapling","default:aspen_tree",7,11)
+factory.registerSapling("default:sapling","default:tree",4,10,"default:leaves",65,70)
+factory.registerSapling("default:junglesapling","default:jungletree",12,30,"default:jungleleaves",65,90)
+factory.registerSapling("default:pine_sapling","default:pine_tree",6,10,"default:pine_needles",55,80)
+factory.registerSapling("default:acacia_sapling","default:acacia_tree",12,12,"default:acacia_leaves",71,71)
+factory.registerSapling("default:aspen_sapling","default:aspen_tree",7,11,"default:aspen_leaves",80,90)
 
 factory.forms.stp_formspec =
 	"size[8,8.5]"..
@@ -146,19 +161,24 @@ minetest.register_abm({
 
 		if inv:contains_item("fuel", ItemStack("factory:sapling_fertilizer 1")) then
 			for _,v in ipairs(factory.stpIO) do
-				local rand = math.random(v.min, v.max)
-				local rands = math.random(0, math.floor(math.sqrt(v.min)))
-				if inv:contains_item("src", ItemStack({name = v.input})) and
-					inv:room_for_item("dst", {name = v.output, count = rand}) and
-					inv:room_for_item("dst", {name = v.input, count = rands}) then
+				if inv:contains_item("src", ItemStack({name = v.sapling})) then
+					local randWood = math.random(v.minWood, v.maxWood)
+					local randLeaves = math.random(v.minLeaves, v.maxLeaves)
+					local randSaplings = math.random(v.minLeaves/20, v.maxLeaves/20)
+					randLeaves = randLeaves - randSaplings
+					if inv:room_for_item("dst", {name = v.wood, count = randWood}) and
+					   inv:room_for_item("dst", {name = v.sapling, count = randSaplings}) and
+					   inv:room_for_item("dst", {name = v.leaves, count = randLeaves}) then
 
-					factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),0.35,1)
+						factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),0.35,1)
 
-					inv:add_item("dst", ItemStack({name = v.output, count = rand}))
-					inv:add_item("dst", ItemStack({name = v.input, count = rands}))
+						inv:add_item("dst", ItemStack({name = v.wood, count = randWood}))
+						inv:add_item("dst", ItemStack({name = v.sapling, count = randSaplings}))
+						inv:add_item("dst", ItemStack({name = v.leaves, count = randLeaves}))
 
-					inv:remove_item("src", ItemStack({name = v.input, count = 1}))
-					inv:remove_item("fuel", ItemStack({name = inv:get_stack("fuel", 1):get_name(), count = 1}))
+						inv:remove_item("src", ItemStack({name = v.sapling, count = 1}))
+						inv:remove_item("fuel", ItemStack({name = inv:get_stack("fuel", 1):get_name(), count = 1}))
+					end
 				end
 			end
 		end

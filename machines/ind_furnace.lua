@@ -80,6 +80,9 @@ minetest.register_node("factory:ind_furnace", {
 		inv:set_size("src", 1)
 		inv:set_size("dst", 4)
 	end,
+	on_destruct = function(pos)
+	 factory.smoke_on_tube(pos, false)
+	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()
@@ -167,6 +170,9 @@ minetest.register_node("factory:ind_furnace_active", {
 		inv:set_size("src", 1)
 		inv:set_size("dst", 4)
 	end,
+	on_destruct = function(pos)
+   factory.smoke_on_tube(pos, false)
+  end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
 		local inv = meta:get_inventory()

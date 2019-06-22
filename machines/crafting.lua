@@ -159,3 +159,12 @@ minetest.register_craft({
 		{"factory:scanner_chip", 	"factory:vacuum_on", 		"factory:scanner_chip"}
 	}
 })
+
+minetest.register_craft({
+	output = "factory:stp",
+	recipe = {
+		{ "factory:factory_brick", "factory:small_diamond_gear", "factory:factory_brick" },
+		{ "default:glass",         "default:dirt",               "factory:factory_brick" },
+		{ "factory:factory_brick", "default:steel_ingot",        "factory:factory_brick" }
+	}
+})

@@ -5,10 +5,10 @@
 Factory Brick=Fabrik Backstein
 
 ### decor/itemsieve.lua ###
-stack sieve=haufen sieb
-half stack sieve=halbes haufen sieb
-item sieve=gegenstandssieb
-half item sieve=halbes gegenstandssieb
+stack sieve=Haufen Sieb
+half stack sieve=halbes Haufen Sieb
+item sieve=Gegenstandssieb
+half item sieve=halbes Gegenstandssieb
 
 ### decor/smoketube.lua ###
 Smoke Tube=Schornstein

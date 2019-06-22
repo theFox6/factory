@@ -9,6 +9,8 @@ a node that is an electronic device has to follow the following node definitions
 
 ##device util
 
+10 units of power equal 1 second of fuel.
+
 factory.electronics.device.set_infotext(meta)
 * set the infotext for a device
 * show name, status (optional) and charge

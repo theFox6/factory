@@ -2,7 +2,7 @@ local S = factory.S
 local insert = factory.insert_object_item
 local count_index = factory.count_index
 
-function oarm_handle (a, b, target, stack, obj)
+local function oarm_handle (a, b, target, stack, obj)
 	--throws anything that is already in the inventory (more than one stack) out
 	if factory.has_main_inv(target) then
 		local meta = minetest.env:get_meta(b)

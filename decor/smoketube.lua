@@ -31,7 +31,7 @@ minetest.register_node("factory:smoke_tube", {
 
 factory.smoke_spawners = {}
 
-function get_smoke_spawner_at(pos)
+local function get_smoke_spawner_at(pos)
 	for _,sp in pairs(factory.smoke_spawners) do
 		if vector.equals(sp.pos,pos) then
 			return sp

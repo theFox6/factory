@@ -1,5 +1,6 @@
 --- the modpath of unified inventoy or nil
 local have_ui = minetest.get_modpath("unified_inventory")
+local have_nei = minetest.get_modpath("nei")
 
 --- the recipe table containing all factory recipes
 factory.recipes = { cooking = { input_size = 1, output_size = 1 } }
@@ -69,6 +70,10 @@ local function register_recipe(typename, data)
 			items = data.input,
 			width = 0,
 		})
+	end
+	if have_nei then
+		-- quite inefficient because table is processed again to get 3 tables instead of 1 (the NEI recipe form)
+		factory.register_nei_recipe(typename, index)
 	end
 end
 

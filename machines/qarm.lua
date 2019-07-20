@@ -1,7 +1,7 @@
 local S = factory.S
 local insert = factory.insert_object_item
 
-function qarm_handle (a, b, target, stack, minv, obj)
+local function qarm_handle (a, b, target, stack, minv, obj)
 	local found = false
 	if factory.has_main_inv(target) then
 		local meta = minetest.env:get_meta(b)

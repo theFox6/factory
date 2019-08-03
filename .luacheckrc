@@ -11,9 +11,6 @@ read_globals = {
 	math = { fields = {"sign"} }
 }
 
-globals = {
-	"factory", "factory_gui_bg", "factory_gui_bg_img", "factory_gui_bg_img_2",
-	"factory_gui_slots"
-}
+globals = {"factory"}
 
 files["util/compat_nei.lua"].read_globals = {"api"}

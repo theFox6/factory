@@ -112,9 +112,9 @@ minetest.register_entity("factory:moving_item", {
 		elseif napos.name == "factory:belt_center" then
 			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
 			if dir.x == 0 then
-				dir.x = (math.floor(pos.x + 0.5) - pos.x) * 2
+				dir.x = (apos.x - pos.x) * 2
 			elseif dir.z == 0 then
-				dir.z = (math.floor(pos.z + 0.5) - pos.z) * 2
+				dir.z = (apos.z - pos.z) * 2
 			end
 			self.object:setvelocity(vector.divide(dir,speed))
 		elseif minetest.get_item_group(napos.name, "factory_mover") > 0 then

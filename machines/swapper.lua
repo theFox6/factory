@@ -9,7 +9,7 @@ factory.swapper_formspec =
 	"list[current_name;roverflow;5,0;3,1;]"..
 	"list[current_name;overflow;3,1;2,1;]"..
 	"list[current_name;src;3,3;2,2;]"..
-	"image[3.75,2;1,1;gui_ind_furnace_arrow_bg.png]"..
+	"image[3.5,2;1,1;gui_ind_furnace_arrow_bg.png]"..
 	"label[3.6,0;output]"..
 	"image[3.5,0.25;1,1;factory_square_white.png]"..
 	"image[0.5,1;1,1;factory_square_yellow.png]"..

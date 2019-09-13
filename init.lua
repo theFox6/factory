@@ -28,8 +28,15 @@ function factory.require(module)
   return modules[module]
 end
 
-function factory.setting_enabled(name)
-	return minetest.settings:get_bool("factory_enable"..name) or true
+function factory.setting_enabled(name, default)
+	local b = minetest.settings:get_bool("factory_enable"..name)
+	if b == nil then
+		if default == nil then
+			return true
+		end
+		return default
+	end
+	return b
 end
 
 factory.require("util/init")

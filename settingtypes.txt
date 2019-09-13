@@ -21,3 +21,11 @@ factory_fertilizerGeneration (Enable fertilizer generation) bool true
 #Limit the digging depth of the miners.
 #The upgraded miners will only dig to the given depth. Normal miners dig to half this depth.
 factory_minerDigLimit (Miner dig limit) int 512 0
+
+#Enable belts moving players.
+#Conveyor belts will move players if this option is enabled.
+factory_enableBeltvelocity (Enable belt velocity) bool true
+
+#Enable fans moving players.
+#Fans will move players if this option is enabled.
+factory_enableFanmove (Enable fan move) bool false

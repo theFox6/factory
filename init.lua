@@ -15,6 +15,10 @@ factory={
 	forms={},
 }
 
+if not modutil then
+    dofile(factory.modpath.."/modutil/portable.lua")
+end
+
 local modules = {
 	init = factory,
 	log = modutil.require("log").make_loggers(),

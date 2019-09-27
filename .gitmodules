@@ -1,0 +1,3 @@
+[submodule "modutil"]
+	path = modutil
+	url = https://github.com/theFox6/modutil.git

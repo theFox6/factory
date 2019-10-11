@@ -14,7 +14,7 @@ you can add unified_inventory for crafting help
 you may want to have default because it is used for most crafting recipes  
 
 ## missing modutil
-If you clone the mod you either need to install and activate the modutil mod or you need to [clone it recursively](#cloning).  
+If you clone the mod you either need to **install and activate the modutil mod** or you need to **[clone it recursively](#cloning)**.  
 If modutil is not present you will get the following error:
 `.minetest/mods/factory/modutil/portable.lua: No such file or directory`
 

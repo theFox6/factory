@@ -21,7 +21,7 @@ If modutil is not present you will get the following error:
 ## cloning
 When cloning first add "--recursive" option to clone including all submodules:
 ```
-git clone --recursive https://github.com/Gerold55/WasteLands_Survival.git
+git clone --recursive https://github.com/theFox6/factory.git
 ```
 else the submodule folders will be empty.
 

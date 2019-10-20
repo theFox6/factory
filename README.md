@@ -7,11 +7,27 @@ For production there are industrial furnaces, auto crafters and also many more.
 There are also a few sorting devices.
 And to stop the coal distribution madness there are electronic devices too.
 
+## Submodules
+Currently factory only has the modutil portable submodule.
+It is needed to be able to run without the modutil mod.  
+This means you can either download the modutil mod and enable it or get the submodule:
+
+When cloning add "--recursive" option to clone including all submodules:
+```
+git clone --recursive https://github.com/theFox6/factory.git
+```
+
+If one of the submodule folders is empty use:
+```
+git submodule update --init
+```
+This will clone all missing submodules.
+
 ## Dependencies
-factory needs modutil to load utilities
-you can add moreblocks to make the factory blocks cuttable
-you can add unified_inventory for crafting help
-you may want to have default because it is used for most crafting recipes
+factory needs modutil to load utilities it can also use modutil portable though  
+you can add moreblocks to make the factory blocks cuttable  
+you can add unified_inventory for crafting help  
+you may want to have default because it is used for most crafting recipes  
 
 ## License
 * original factory made by Lemmy is under the WTFPL

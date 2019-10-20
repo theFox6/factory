@@ -7,6 +7,12 @@ function factory.swap_node(pos,name)
 	minetest.swap_node(pos,node)
 end
 
+function factory.is_within_area(pos, min, max)
+  return pos.x > min.x and pos.x < max.x and
+      pos.y > min.y and pos.y < max.y and
+      pos.z > min.z and pos.z < max.z
+end
+
 function factory.get_objects_with_square_radius(pos, rad)
   rad = rad + .5;
   local objs = {}

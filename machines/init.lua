@@ -11,9 +11,10 @@ dofile(factory.modpath.."/machines/qarm.lua")
 dofile(factory.modpath.."/machines/oarm.lua")
 dofile(factory.modpath.."/machines/autocrafter.lua")
 
-if factory.setting_enabled("Fan") then dofile(factory.modpath.."/machines/fan.lua") end
 if factory.setting_enabled("Vacuum") then
 	dofile(factory.modpath.."/machines/vacuum.lua")
 	dofile(factory.modpath.."/machines/upward_vacuum.lua")
 end
 if factory.setting_enabled("Miner") then dofile(factory.modpath.."/machines/miner.lua") end
+
+factory.require("machines/register")

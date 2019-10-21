@@ -15,3 +15,6 @@ read_globals = {
 globals = {"factory"}
 
 files["util/compat_nei.lua"].read_globals = {"api"}
+files["modutil/strings.lua"].globals = { string = {
+		fields = {"starts_with","ends_with"}
+}}

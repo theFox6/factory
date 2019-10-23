@@ -153,3 +153,19 @@ function factory.do_moving_item(pos, item)
 	obj:get_luaentity():set_item(stack:to_string())
 	return obj
 end
+
+local belts = factory.require "machines/belt"
+
+if factory.setting_enabled("stepBeltvelocity") then
+	minetest.register_globalstep(function(dtime)
+		for name,player in pairs(minetest.get_connected_players()) do
+			local bpos = vector.round(player:get_pos())
+			local napos = minetest.get_node(bpos)
+			if napos.name == "factory:belt"
+					or napos.name == "factory:belt_center" then
+				local speed = math.min(dtime * 30, 3)
+				belts.move_player(player,bpos,speed,napos)
+			end
+		end
+	end)
+end

@@ -22,9 +22,15 @@ factory_fertilizerGeneration (Enable fertilizer generation) bool true
 #The upgraded miners will only dig to the given depth. Normal miners dig to half this depth.
 factory_minerDigLimit (Miner dig limit) int 512 0
 
-#Enable belts moving players.
+#Enable belts moving players using their abm's.
 #Conveyor belts will move players if this option is enabled.
-factory_enableBeltvelocity (Enable belt velocity) bool true
+#The abm's will be used to apply velocity to the players resulting in a staggering movement.
+factory_enableabmBeltvelocity (Enable abm belt velocity) bool true
+
+#Enable belts moving players using globalsteps.
+#Conveyor belts will move players if this option is enabled.
+#A globalstep registration will be used to apply velocity to the players this is smooth but may cost performance.
+factory_enablestepBeltvelocity (Enable step belt velocity) bool true
 
 #Enable fans moving players.
 #Fans will move players if this option is enabled.

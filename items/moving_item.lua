@@ -158,7 +158,7 @@ local belts = factory.require "machines/belt"
 
 if factory.setting_enabled("stepBeltvelocity") then
 	minetest.register_globalstep(function(dtime)
-		for name,player in pairs(minetest.get_connected_players()) do
+		for _,player in pairs(minetest.get_connected_players()) do
 			local bpos = vector.round(player:get_pos())
 			local napos = minetest.get_node(bpos)
 			if napos.name == "factory:belt"

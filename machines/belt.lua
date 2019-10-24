@@ -1,4 +1,6 @@
 local S = factory.S
+local belts = {}
+
 minetest.register_node("factory:belt_center", {
 	description = S("centering Conveyor Belt"),
 	tiles = {{name="factory_belt_top_animation.png",
@@ -35,7 +37,29 @@ minetest.register_node("factory:belt", {
 
 minetest.register_alias("factory:belt_straight","factory:belt")
 
-local move_player = factory.setting_enabled("Beltvelocity")
+local abm_move_player = factory.setting_enabled("abmBeltvelocity")
+		and not factory.setting_enabled("stepBeltvelocity")
+
+--perhaps move this function to moving item
+function belts.move_player(player,bpos,speed,belt_node)
+	local node = belt_node or minetest.get_node(bpos)
+	local dir = vector.new(minetest.facedir_to_dir(node.param2))
+	local ppos = player:get_pos()
+	if node.name == "factory:belt_center" then
+		if dir.x == 0 then
+			dir.x = (bpos.x - ppos.x) * 2
+		elseif dir.z == 0 then
+			dir.z = (bpos.z - ppos.z) * 2
+		end
+	end
+	-- reduce speed by portion of player velocity
+	-- fast players receive less velocity
+	local pv = player:get_player_velocity()
+	for c,v in pairs(dir) do
+		dir[c] = v*2 - math.sign(v) * math.sqrt(math.abs(pv[c]))
+	end
+	player:add_player_velocity(vector.multiply(dir,speed))
+end
 
 minetest.register_abm({
 	nodenames = {"factory:belt_center", "factory:belt"},
@@ -45,18 +69,11 @@ minetest.register_abm({
 	action = function(pos,node)
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
 		for _,obj in ipairs(all_objects) do
-			if move_player and obj:is_player() then
-				local speed = 0.2
-				local dir = vector.new(minetest.facedir_to_dir(node.param2))
-				if node.name == "factory:belt_center" then
-					local ppos = obj:getpos()
-					if dir.x == 0 then
-						dir.x = (pos.x - ppos.x) * 2
-					elseif dir.z == 0 then
-						dir.z = (pos.z - ppos.z) * 2
-					end
+			if abm_move_player and obj:is_player() then
+				local ppos = obj:get_pos()
+				if math.abs(pos.z-ppos.z)<0.5 and math.abs(pos.x - ppos.x)<0.5 then
+					belts.move_player(obj,pos,1.8,node)
 				end
-				obj:add_player_velocity(vector.divide(dir,speed))
 			elseif obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
 				factory.do_moving_item({x = pos.x, y = pos.y + 0.15, z = pos.z}, obj:get_luaentity().itemstring)
 				obj:get_luaentity().itemstring = ""
@@ -65,3 +82,5 @@ minetest.register_abm({
 		end
 	end,
 })
+
+return belts

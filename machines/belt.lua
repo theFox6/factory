@@ -41,6 +41,7 @@ local abm_move_player = factory.setting_enabled("abmBeltvelocity")
 		and not factory.setting_enabled("stepBeltvelocity")
 
 --perhaps move this function to moving item
+--FIXME: check if minetest version used supports it
 function belts.move_player(player,bpos,speed,belt_node)
 	local node = belt_node or minetest.get_node(bpos)
 	local dir = vector.new(minetest.facedir_to_dir(node.param2))

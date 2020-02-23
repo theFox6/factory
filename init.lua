@@ -21,16 +21,11 @@ end
 
 local modules = {
 	init = factory,
-	log = modutil.require("log").make_loggers(),
-	translation = modutil.require("translations")("factory")
+	log = modutil.require("logging").make_loggers(),
+	translation = modutil.require("translations","venus")("factory")
 }
 
-function factory.require(module)
-  if not modules[module] then
-    modules[module] = dofile(factory.modpath.."/"..module..".lua") or true
-  end
-  return modules[module]
-end
+modutil.require("local_require")(factory,modules)
 
 function factory.setting_enabled(name, default)
 	local b = minetest.settings:get_bool("factory_enable"..name)
@@ -61,3 +56,5 @@ if minetest.settings:get_bool("log_mods") then
 else
   print(string.format("[MOD] %s: loaded in %.4f s",minetest.get_current_modname(), time_to_load))
 end
+
+return factory

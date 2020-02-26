@@ -1,5 +1,5 @@
 # factory
-luacheck: [![luacheck status](https://travis-ci.org/theFox6/factory.svg?branch=master)](https://travis-ci.org/theFox6/factory)  
+[![luacheck][luacheck badge]][luacheck workflow]  
 A new version of LemonLake's factory mod for minetest.  
 It adds machines for your factory.
 For transportation there are vacuums, conveyor belts, fans and many more.
@@ -57,3 +57,6 @@ git pull --recurse-submodules
 * zinc is taken of technic which is under LGPL, V2 or later
 * silver is taken of moreores which is under zlib license
 * parts of factory made by theFox6 are under the MIT License
+
+[luacheck badge]: https://github.com/theFox6/factory/workflows/luacheck/badge.svg
+[luacheck workflow]: https://github.com/theFox6/factory/actions?query=workflow%3Aluacheck

@@ -1,5 +1,4 @@
 language: generic
-sudo: false
 addons:
   apt:
     packages:
@@ -9,7 +8,7 @@ before_install:
 env:
   - CONFIG=.luacheck_health
   - CONFIG=.luacheckrc
-matrix:
+jobs:
   allow_failures:
   - name: "beauty check"
     env: CONFIG=.luacheckrc

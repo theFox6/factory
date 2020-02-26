@@ -30,6 +30,8 @@ files["modutil/strings.lua"].globals = { string = {
 		fields = {"starts_with","ends_with"}
 }}
 
+exclude_files={"modutil/VenusParser/testout/"}
+
 ignore = {
 	"211",
 	"212",

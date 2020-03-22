@@ -239,7 +239,11 @@ minetest.register_abm({
 		end
 
 		if not factory.smoke_on_tube(pos, node.name == "factory:wire_drawer_active") then
-		  factory.swap_node(pos,"factory:wire_drawer")
+		  -- reset fuel
+      meta:set_float("fuel_time", meta:get_float("fuel_totaltime"))
+      
+      -- deactivate
+      factory.swap_node(pos,"factory:wire_drawer")
       meta:set_string("formspec", factory.wire_drawer_inactive_formspec)
 			meta:set_string("infotext",S("@1 has no smoke tube",S("Wire Drawer")))
 			return

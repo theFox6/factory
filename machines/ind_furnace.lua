@@ -241,15 +241,21 @@ minetest.register_abm({
 				meta:set_float(name, 0.0)
 			end
 		end
+		
+		local inv = meta:get_inventory()
 
 		if not factory.smoke_on_tube(pos, node.name == "factory:ind_furnace_active") then
-		  factory.swap_node(pos,"factory:ind_furnace")
+		  -- reset cooking
+      meta:set_float("fuel_time", meta:get_float("fuel_totaltime"))
+      meta:set_float("src_time", 0)
+      
+      -- deactivate
+      factory.swap_node(pos,"factory:ind_furnace")
       meta:set_string("formspec", factory.ind_furnace_inactive_formspec)
-			meta:set_string("infotext",S("@1 has no smoke tube",S("Industrial Furnace")))
-			return
+      meta:set_string("infotext",S("@1 has no smoke tube",S("Industrial Furnace")))
+      
+      return
 		end
-
-		local inv = meta:get_inventory()
 
 		local srclist = inv:get_list("src")
 		local cooked = nil
@@ -288,8 +294,7 @@ minetest.register_abm({
 			return
 		end
 
-		local fuel = nil
-		local afterfuel
+		local fuel, afterfuel
 		cooked = nil
 		local fuellist = inv:get_list("fuel")
 		srclist = inv:get_list("src")

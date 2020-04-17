@@ -1,5 +1,8 @@
+--- local reference to the translator
+local S = factory.S
+
 minetest.register_node("factory:cable", {
-	description = "cable",
+	description = S("cable"),
 	drawtype = "nodebox",
 	tiles = {"factory_belt_bottom_clean.png"},
 	groups = {factory_electronic = 1, snappy = 1},

@@ -1,6 +1,6 @@
 local S = factory.S
 
-function factory.wire_drawer_active(_, percent, item_percent)
+function factory.wire_drawer_active(percent, item_percent)
     local formspec =
 	"size[8,8.5]"..
 	factory_gui_bg..
@@ -28,7 +28,7 @@ function factory.wire_drawer_active(_, percent, item_percent)
 function factory.wire_drawer_active_formspec(pos, percent)
 	local meta = minetest.get_meta(pos)local inv = meta:get_inventory()
 	local srclist = inv:get_list("src")
-	local result = nil
+	local result
 	if srclist then
 		result = factory.get_recipe("wire_drawer",srclist)
 	end
@@ -37,7 +37,7 @@ function factory.wire_drawer_active_formspec(pos, percent)
 		item_percent = meta:get_float("src_time")/result.time
 	end
 
-        return factory.wire_drawer_active(pos, percent, item_percent)
+  return factory.wire_drawer_active(percent, item_percent)
 end
 
 factory.wire_drawer_inactive_formspec =
@@ -241,7 +241,7 @@ minetest.register_abm({
 		if not factory.smoke_on_tube(pos, node.name == "factory:wire_drawer_active") then
 		  -- reset fuel
       meta:set_float("fuel_time", meta:get_float("fuel_totaltime"))
-      
+
       -- deactivate
       factory.swap_node(pos,"factory:wire_drawer")
       meta:set_string("formspec", factory.wire_drawer_inactive_formspec)

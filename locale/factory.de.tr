@@ -1,5 +1,5 @@
 # textdomain: factory
-# Translation by theFox
+# Translation by theFox6
 
 ### decor/factorybrick.lua ###
 Factory Brick=Fabrik Backstein
@@ -19,7 +19,14 @@ no smoke tube=kein Schornschtein
 active=aktiv
 fully charged=aufgeladen
 
+### electronics/battery.lua ###
+battery pack=Akku-Pack
+
+### electronics/cable.lua ###
+cable=Kabel
+
 ### electronics/device.lua ###
+@1status: @2=@1Status: @2
 @1charge: @2=@1Ladung: @2
 empty=leer
 unpowered=kein Strom
@@ -115,7 +122,7 @@ Sapling Treatment Plant=Setzling Verarbeiter
 Swapper=Sortierer
 
 ### machines/taker.lua ###
-Pneumatic Taker=Pneumatischer Nehmer
+Pneumatic Taker Mk I=Pneumatischer Nehmer v1
 Pneumatic Taker Mk II=Pneumatischer Nehmer v2
 Pneumatic Taker Mk III=Pneumatischer Nehmer v3
 
@@ -129,3 +136,10 @@ Vacuum Sorter=Saugender Sortierer
 Wire Drawer=Drahtschneider
 Wire Drawer (working)=Drahtschneider (schneidet)
 Wire Drawer is working, fuel current used: @1%=Drahtschneider schneidet, Brennstoff verbraucht: @1%
+
+### ores/silver.lua ###
+silver=Silber
+
+### ores/zinc.lua ###
+Zinc=Zink
+@1 block=@1 Block

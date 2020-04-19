@@ -12,7 +12,7 @@ if not minetest.get_modpath("technic_worldgen") then
   local zinc_threshold = 0.5
 
   factory.register_metal("technic","zinc",{
-    description = S("Zinc"),
+    description = S("zinc"),
     oredef = {
       clust_scarcity = 8*8*8,
       clust_num_ores = 5,
@@ -45,7 +45,7 @@ minetest.register_alias("factory:zinc_block", "technic:zinc_block")
 
 if minetest.get_modpath("moreblocks") and not minetest.get_modpath("extranodes") then
 	stairsplus:register_all("technic", "zinc_block", "technic:zinc_block", {
-		description=S("@1 Block", S("Zinc")),
+		description=S("@1 block", S("zinc")),
 		groups={cracky=1, not_in_creative_inventory=1},
 		tiles={"technic_zinc_block.png"},
 	})

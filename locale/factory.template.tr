@@ -19,7 +19,14 @@ no smoke tube=
 active=
 fully charged=
 
+### electronics/battery.lua ###
+battery pack=
+
+### electronics/cable.lua ###
+cable=
+
 ### electronics/device.lua ###
+@1status: @2=
 @1charge: @2=
 empty=
 unpowered=
@@ -115,7 +122,7 @@ Sapling Treatment Plant=
 Swapper=
 
 ### machines/taker.lua ###
-Pneumatic Taker=
+Pneumatic Taker Mk I=
 Pneumatic Taker Mk II=
 Pneumatic Taker Mk III=
 
@@ -129,3 +136,10 @@ Vacuum Sorter=
 Wire Drawer=
 Wire Drawer (working)=
 Wire Drawer is working, fuel current used: @1%=
+
+### ores/silver.lua ###
+silver=
+
+### ores/zinc.lua ###
+zinc=
+@1 block=

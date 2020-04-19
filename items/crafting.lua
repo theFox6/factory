@@ -30,9 +30,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "factory:scanner_chip",
 	recipe = {
-		{"default:steel_ingot", "factory:copper_wire", "default:mese_crystal"},
+		{"default:steel_ingot", "factory:copper_wire", "default:mese_crystal_fragment"},
 		{"", "factory:tree_sap", ""},
-		{"default:mese_crystal", "", "default:steel_ingot"}
+		{"default:mese_crystal_fragment", "", "default:steel_ingot"}
 	}
 })
 

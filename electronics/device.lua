@@ -27,7 +27,7 @@ function device.set_infotext(meta)
 	local desc = meta:get_string("factory_description")
 	local status = meta:get_string("factory_status")
 	if status ~= "" then
-		desc = desc .. "\nstatus: " .. status
+		desc = S("@1status: @2",desc.."\n",status)
 	end
 	local charge = meta:get_int("factory_energy") .. "/" .. meta:get_int("factory_max_charge")
 	meta:set_string("infotext", S("@1charge: @2", desc.."\n", charge))

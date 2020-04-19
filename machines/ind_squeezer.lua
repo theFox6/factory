@@ -31,7 +31,7 @@ function factory.ind_squeezer_active_formspec(pos, percent)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	local srclist = inv:get_list("src")
-	local result = nil
+	local result
 	if srclist then
 		result = factory.get_recipe("ind_squeezer",srclist)
 	end
@@ -40,7 +40,7 @@ function factory.ind_squeezer_active_formspec(pos, percent)
 		item_percent = meta:get_float("src_time")/result.time
 	end
 
-        return factory.ind_squeezer_active(percent, item_percent)
+  return factory.ind_squeezer_active(percent, item_percent)
 end
 
 factory.ind_squeezer_inactive_formspec =
@@ -242,6 +242,11 @@ minetest.register_abm({
 		end
 
 		if not factory.smoke_on_tube(pos, node.name == "factory:ind_squeezer_active") then
+		  -- reset squeezing
+      meta:set_float("fuel_time", meta:get_float("fuel_totaltime"))
+      meta:set_float("src_time", 0)
+
+      -- deactivate
 			factory.swap_node(pos,"factory:ind_squeezer")
       meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
       meta:set_string("infotext",S("@1 has no smoke tube", S("Industrial Squeezer")))

@@ -2,7 +2,7 @@ local S = factory.S
 
 if not minetest.get_modpath("moreores") then
   factory.register_metal("moreores","silver",{
-    description = S("Silver"),
+    description = S("silver"),
     oredef = {
       clust_scarcity = 11 * 11 * 11,
       clust_num_ores = 4,

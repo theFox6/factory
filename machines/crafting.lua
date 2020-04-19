@@ -27,14 +27,14 @@ minetest.register_craft({
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "farming:hoe_steel"},
 		{"default:steel_ingot", "factory:small_steel_gear", "factory:small_steel_gear"},
-		{"default:steel_ingot", "default:steelblock", "default:steel_ingot"}
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
 })
 
 minetest.register_craft({
 	output = "factory:ind_furnace",
 	recipe = {
-		{"factory:small_steel_gear", "default:steel_ingot", "factory:small_steel_gear"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
 		{"default:steel_ingot", "default:furnace", "default:steel_ingot"},
 		{"default:stonebrick", "default:obsidian", "default:stonebrick"}
 	}
@@ -54,7 +54,7 @@ minetest.register_craft({
 	recipe = {
 		{"default:shovel_steel", "default:steel_ingot", "default:steel_ingot"},
 		{"factory:small_steel_gear", "factory:small_steel_gear", "default:steel_ingot"},
-		{"default:steel_ingot", "default:steelblock", "default:steel_ingot"}
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}
 	}
 })
 
@@ -86,7 +86,7 @@ minetest.register_craft({
 	output = "factory:ind_squeezer",
 	recipe = {
 		{"default:glass", "default:stick", "default:glass"},
-		{"default:glass", "default:steelblock", "default:glass"},
+		{"default:glass", "default:steel_ingot", "default:glass"},
 		{"factory:small_gold_gear", "factory:ind_furnace", "factory:small_gold_gear"}
 	}
 })
@@ -103,9 +103,9 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "factory:swapper",
 	recipe = {
-		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"factory:arm", "factory:scanner_chip", "factory:arm"},
-		{"default:mese_crystal", "", "default:mese_crystal"}
+		{   "default:steel_ingot",   "default:steel_ingot",    "default:steel_ingot"},
+		{            "",                "default:chest",                ""},
+		{"factory:small_steel_gear", "factory:scanner_chip", "factory:small_steel_gear"}
 	}
 })
 

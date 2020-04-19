@@ -6,7 +6,7 @@ local S = factory.S
 local device = factory.electronics.device
 
 minetest.register_node("factory:battery_pack", {
-  description = "battery pack",
+  description = S("battery pack"),
   tiles = {"factory_steel_noise.png", "factory_machine_steel_dark.png",
     "factory_steel_noise.png", "factory_steel_noise.png",
     "factory_steel_noise.png^factory_battery.png", "factory_steel_noise.png^factory_battery.png"},

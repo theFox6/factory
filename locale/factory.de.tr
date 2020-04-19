@@ -37,6 +37,9 @@ Combustion Generator=Verbrennungs Generator
 ### electronics/electronic_furnace.lua ###
 Electronic Furnace=Elektro-Ofen
 
+### items/battery_item.lua ###
+battery=batterie
+
 ### items/crafting.lua ###
 squeezing=pressen
 drawing wire=drahtschneiden
@@ -136,6 +139,12 @@ Vacuum Sorter=Saugender Sortierer
 Wire Drawer=Drahtschneider
 Wire Drawer (working)=Drahtschneider (schneidet)
 Wire Drawer is working, fuel current used: @1%=Drahtschneider schneidet, Brennstoff verbraucht: @1%
+
+### ores/register.lua ###
+@1 Lump=@1klumpen
+@1 Ingot=@1barren
+@1 Block=@1block
+@1 Ore=@1erz
 
 ### ores/silver.lua ###
 silver=Silber

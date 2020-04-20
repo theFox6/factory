@@ -38,7 +38,7 @@ Combustion Generator=Verbrennungs Generator
 Electronic Furnace=Elektro-Ofen
 
 ### items/battery_item.lua ###
-battery=batterie
+battery=Batterie
 
 ### items/crafting.lua ###
 squeezing=pressen

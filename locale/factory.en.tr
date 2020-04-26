@@ -37,6 +37,9 @@ Combustion Generator=Combustion Generator
 ### electronics/electronic_furnace.lua ###
 Electronic Furnace=Electronic Furnace
 
+### items/battery_item.lua ###
+battery=battery
+
 ### items/crafting.lua ###
 squeezing=squeezing
 drawing wire=drawing wire
@@ -136,6 +139,12 @@ Vacuum Sorter=Vacuum Sorter
 Wire Drawer=Wire Drawer
 Wire Drawer (working)=Wire Drawer (working)
 Wire Drawer is working, fuel current used: @1%=Wire Drawer is working, fuel current used: @1%
+
+### ores/register.lua ###
+@1 Lump=@1 Lump
+@1 Ingot=@1 Ingot
+@1 Block=@1 Block
+@1 Ore=@1 Ore
 
 ### ores/silver.lua ###
 silver=silver

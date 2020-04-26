@@ -95,7 +95,8 @@ local function on_output_change(pos, inventory, stack)
 	after_recipe_change(pos, inventory)
 end
 
-local function update_meta(meta)
+local function update_meta(pos)
+  local meta = minetest.get_meta(pos)
 	local fs = 	"size[8,12]"..
 			"list[context;recipe;0,0;3,3;]"..
 			"image[3,1;1,1;gui_hb_bg.png^[colorize:#141318:255]"..
@@ -126,85 +127,74 @@ local function update_meta(meta)
 	return true
 end
 
-minetest.register_node("factory:autocrafter", {
-	description = S("Autocrafter"),
-	drawtype = "normal",
-	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png",
-		"factory_machine_side_1.png", "factory_machine_side_1.png",
-		"factory_machine_side_1.png", "factory_machine_brick_1.png^factory_small_diamond_gear.png"},
-	groups = {cracky = 3, factory_src_input = 1, factory_dst_output = 1},
-	paramtype2 = "facedir",
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		inv:set_size("src", 3*8)
-		inv:set_size("recipe", 3*3)
-		inv:set_size("dst", 4*3)
-		inv:set_size("output", 1)
-		update_meta(meta)
-	end,
-	can_dig = function(pos)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		return (inv:is_empty("src") and inv:is_empty("dst"))
-	end,
-	on_destruct = function(pos)
-		autocrafterCache[minetest.hash_node_position(pos)] = nil
-	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack)
-	  -- args: pos, listname, index, stack, player
-		local inv = minetest.get_meta(pos):get_inventory()
-		if listname == "recipe" then
-			stack:set_count(1)
-			inv:set_stack(listname, index, stack)
-			after_recipe_change(pos, inv)
-			return 0
-		elseif listname == "output" then
-			on_output_change(pos, inv, stack)
-			return 0
-		end
-		return stack:get_count()
-	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack)
-		local inv = minetest.get_meta(pos):get_inventory()
-		if listname == "recipe" then
-			inv:set_stack(listname, index, ItemStack(""))
-			after_recipe_change(pos, inv)
-			return 0
-		elseif listname == "output" then
-			on_output_change(pos, inv, nil)
-			return 0
-		end
-		return stack:get_count()
-	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count)
-		local inv = minetest.get_meta(pos):get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
+factory.register_machine("factory:autocrafter", {
+  description = S("Autocrafter"),
+  inv_lists = {src = 3*8, dst = 4*3,
+    recipe = {size = 3*3, volatile = true}, output = {size = 1, volatile = true}},
+  groups = {cracky = 3},
+  on_construct = update_meta,
+}, {
+  drawtype = "normal",
+  tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png",
+    "factory_machine_side_1.png", "factory_machine_side_1.png",
+    "factory_machine_side_1.png", "factory_machine_brick_1.png^factory_small_diamond_gear.png"},
+  on_destruct = function(pos)
+    autocrafterCache[minetest.hash_node_position(pos)] = nil
+  end,
+  allow_metadata_inventory_put = function(pos, listname, index, stack)
+    -- args: pos, listname, index, stack, player
+    local inv = minetest.get_meta(pos):get_inventory()
+    if listname == "recipe" then
+      stack:set_count(1)
+      inv:set_stack(listname, index, stack)
+      after_recipe_change(pos, inv)
+      return 0
+    elseif listname == "output" then
+      on_output_change(pos, inv, stack)
+      return 0
+    end
+    return stack:get_count()
+  end,
+  allow_metadata_inventory_take = function(pos, listname, index, stack)
+    local inv = minetest.get_meta(pos):get_inventory()
+    if listname == "recipe" then
+      inv:set_stack(listname, index, ItemStack(""))
+      after_recipe_change(pos, inv)
+      return 0
+    elseif listname == "output" then
+      on_output_change(pos, inv, nil)
+      return 0
+    end
+    return stack:get_count()
+  end,
+  allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count)
+    local inv = minetest.get_meta(pos):get_inventory()
+    local stack = inv:get_stack(from_list, from_index)
 
-		if to_list == "output" then
-			on_output_change(pos, inv, stack)
-			return 0
-		elseif from_list == "output" then
-			on_output_change(pos, inv, nil)
-			if to_list ~= "recipe" then
-				return 0
-			end -- else fall through to recipe list handling
-		end
+    if to_list == "output" then
+      on_output_change(pos, inv, stack)
+      return 0
+    elseif from_list == "output" then
+      on_output_change(pos, inv, nil)
+      if to_list ~= "recipe" then
+        return 0
+      end -- else fall through to recipe list handling
+    end
 
-		if from_list == "recipe" or to_list == "recipe" then
-			if from_list == "recipe" then
-				inv:set_stack(from_list, from_index, ItemStack(""))
-			end
-			if to_list == "recipe" then
-				stack:set_count(1)
-				inv:set_stack(to_list, to_index, stack)
-			end
-			after_recipe_change(pos, inv)
-			return 0
-		end
+    if from_list == "recipe" or to_list == "recipe" then
+      if from_list == "recipe" then
+        inv:set_stack(from_list, from_index, ItemStack(""))
+      end
+      if to_list == "recipe" then
+        stack:set_count(1)
+        inv:set_stack(to_list, to_index, stack)
+      end
+      after_recipe_change(pos, inv)
+      return 0
+    end
 
-		return count
-	end,
+    return count
+  end,
 })
 
 minetest.register_abm({

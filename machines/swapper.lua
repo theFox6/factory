@@ -31,79 +31,54 @@ factory.swapper_formspec =
   "listring[current_player;main]"..
   "listring[current_name;roverflow]"
 
-minetest.register_node("factory:swapper", {
-	description = factory.S("Swapper"),
-	tiles = {"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
-		"factory_machine_steel_dark.png^factory_square_blue.png", "factory_machine_steel_dark.png^factory_square_yellow.png",
-		"factory_machine_steel_dark.png^factory_square_white.png", "factory_machine_steel_dark.png^factory_square_red.png"},
-	paramtype2 = "facedir",
-	groups = {cracky=3,factory_src_input=1},
-	legacy_facedir_simple = true,
-	is_ground_content = false,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", factory.swapper_formspec)
-		meta:set_string("infotext", factory.S("Swapper"))
-		local inv = meta:get_inventory()
-		inv:set_size("left", 8)
-		inv:set_size("right", 8)
-		inv:set_size("loverflow", 3)
-		inv:set_size("roverflow", 3)
-		inv:set_size("overflow", 2)
-		inv:set_size("src", 4)
-	end,
-	can_dig = function(pos)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("left") then
-			return false
-		elseif not inv:is_empty("right") then
-			return false
-		elseif not inv:is_empty("loverflow") then
-			return false
-		elseif not inv:is_empty("roverflow") then
-			return false
-		elseif not inv:is_empty("overflow") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		end
-		return true
-	end,
-	allow_metadata_inventory_put = function(pos, listname, index, stack)
-	  -- args: pos, listname, index, stack, player
-		local inv = minetest.get_meta(pos):get_inventory()
-		if listname == "left" or listname == "right" then
-			stack:set_count(1)
-			inv:set_stack(listname, index, stack)
-			return 0
-		end
-		return stack:get_count()
-	end,
-	allow_metadata_inventory_take = function(pos, listname, index, stack)
-		local inv = minetest.get_meta(pos):get_inventory()
-		if listname == "left" or listname == "right" then
-			inv:set_stack(listname, index, ItemStack(""))
-			return 0
-		end
-		return stack:get_count()
-	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count)
-		local inv = minetest.get_meta(pos):get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
+factory.register_machine("factory:swapper", {
+  description = factory.S("Swapper"),
+  inv_lists = {src = 4, overflow = 2, roverflow = 3, loverflow = 3,
+    right = {size = 8, volatile = true}, left = {size = 8, volatile = true}},
+  groups = {cracky=3},
+  on_construct = function(pos)
+    local meta = minetest.get_meta(pos)
+    meta:set_string("formspec", factory.swapper_formspec)
+  end,
+}, {
+  tiles = {"factory_machine_steel_dark.png", "factory_machine_steel_dark.png",
+    "factory_machine_steel_dark.png^factory_square_blue.png", "factory_machine_steel_dark.png^factory_square_yellow.png",
+    "factory_machine_steel_dark.png^factory_square_white.png", "factory_machine_steel_dark.png^factory_square_red.png"},
+  legacy_facedir_simple = true,
+  allow_metadata_inventory_put = function(pos, listname, index, stack)
+    -- args: pos, listname, index, stack, player
+    local inv = minetest.get_meta(pos):get_inventory()
+    if listname == "left" or listname == "right" then
+      stack:set_count(1)
+      inv:set_stack(listname, index, stack)
+      return 0
+    end
+    return stack:get_count()
+  end,
+  allow_metadata_inventory_take = function(pos, listname, index, stack)
+    local inv = minetest.get_meta(pos):get_inventory()
+    if listname == "left" or listname == "right" then
+      inv:set_stack(listname, index, ItemStack(""))
+      return 0
+    end
+    return stack:get_count()
+  end,
+  allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count)
+    local inv = minetest.get_meta(pos):get_inventory()
+    local stack = inv:get_stack(from_list, from_index)
 
-		if from_list == "left" or from_list == "right" then
-			inv:set_stack(from_list, from_index, ItemStack(""))
-			return 0
-		end
-		if to_list == "left" or to_list == "right" then
-			stack:set_count(1)
-			inv:set_stack(to_list, to_index, stack)
-			return 0
-		end
+    if from_list == "left" or from_list == "right" then
+      inv:set_stack(from_list, from_index, ItemStack(""))
+      return 0
+    end
+    if to_list == "left" or to_list == "right" then
+      stack:set_count(1)
+      inv:set_stack(to_list, to_index, stack)
+      return 0
+    end
 
-		return count
-	end,
+    return count
+  end,
 })
 
 minetest.register_abm({

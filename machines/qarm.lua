@@ -44,61 +44,54 @@ factory.qformspec =
 	"listring[current_player;main]"..
 	"listring[current_name;main]"
 
-minetest.register_node("factory:queuedarm",{
-	drawtype = "nodebox",
-	tiles = {"factory_steel_noise.png"},
-	paramtype = "light",
-	description = S("Queued Pneumatic Mover"),
-	groups = {cracky=3, factory_mover=1},
-	paramtype2 = "facedir",
-	legacy_facedir_simple = true,
-	node_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.5,0.5,-0.4375,0.5}, --base1
-			{-0.125,-0.5,-0.375,0.125,0.0625,0.375}, --base2
-			{-0.125,0.25,-0.5,0.125,0.3125,0.375}, --tube
-			{-0.375,-0.5,-0.1875,0.375,0.0625,0.0625}, --base3
-			{-0.125,-0.125,0.375,0.125,0.125,0.5}, --tube2
-			{-0.125,0.0625,0.3125,0.125,0.25,0.375}, --nodebox6
-			{-0.125,0.0625,-0.5,-0.0625,0.25,0.3125}, --nodebox7
-			{0.0625,0.0625,-0.5,0.125,0.25,0.3125}, --nodebox8
-			{-0.0625,0.0625,-0.5,0.0625,0.125,0.3125}, --nodebox9
-			{-0.25,0.3125,-0.125,0.25,0.8,0.375}, --NodeBox10
-			{-0.1875,0.1875,-0.5,-0.125,0.3125,0.375}, --NodeBox11
-			{0.125,0.1875,-0.5,0.1875,0.3125,0.375}, --NodeBox12
-			{-0.125,0.3125,-0.4375,0.125,0.5,-0.125}, --NodeBox13
-		}
-	},
-	selection_box = {
-		type = "fixed",
-		fixed = {
-			{-0.5,-0.5,-0.5,0.5,0.8,0.5},
-		}
-	},
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec",factory.qformspec)
-		meta:set_string("infotext", S("Queued Pneumatic Mover"))
-		local inv = meta:get_inventory()
-		inv:set_size("main", 8*3)
-	end,
-	can_dig = function(pos)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
-		return inv:is_empty("main")
-	end,
-	on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
-		factory.log.action("%s moves stuff in queued mover at %s",
-			player:get_player_name(),minetest.pos_to_string(pos))
-	end,
+factory.register_machine("factory:queuedarm",{
+  description = S("Queued Pneumatic Mover"),
+  inv_lists = {main = 8*3},
+  on_construct = function(pos)
+    local meta = minetest.get_meta(pos)
+    meta:set_string("formspec",factory.qformspec)
+  end,
+}, {
+  drawtype = "nodebox",
+  tiles = {"factory_steel_noise.png"},
+  groups = {cracky=3, factory_mover=1},
+  paramtype = "light",
+  legacy_facedir_simple = true,
+  node_box = {
+    type = "fixed",
+    fixed = {
+      {-0.5,-0.5,-0.5,0.5,-0.4375,0.5}, --base1
+      {-0.125,-0.5,-0.375,0.125,0.0625,0.375}, --base2
+      {-0.125,0.25,-0.5,0.125,0.3125,0.375}, --tube
+      {-0.375,-0.5,-0.1875,0.375,0.0625,0.0625}, --base3
+      {-0.125,-0.125,0.375,0.125,0.125,0.5}, --tube2
+      {-0.125,0.0625,0.3125,0.125,0.25,0.375}, --nodebox6
+      {-0.125,0.0625,-0.5,-0.0625,0.25,0.3125}, --nodebox7
+      {0.0625,0.0625,-0.5,0.125,0.25,0.3125}, --nodebox8
+      {-0.0625,0.0625,-0.5,0.0625,0.125,0.3125}, --nodebox9
+      {-0.25,0.3125,-0.125,0.25,0.8,0.375}, --NodeBox10
+      {-0.1875,0.1875,-0.5,-0.125,0.3125,0.375}, --NodeBox11
+      {0.125,0.1875,-0.5,0.1875,0.3125,0.375}, --NodeBox12
+      {-0.125,0.3125,-0.4375,0.125,0.5,-0.125}, --NodeBox13
+    }
+  },
+  selection_box = {
+    type = "fixed",
+    fixed = {
+      {-0.5,-0.5,-0.5,0.5,0.8,0.5},
+    }
+  },
+  on_metadata_inventory_move = function(pos, _, _, _, _, _, player)
+    factory.log.action("%s moves stuff in queued mover at %s",
+      player:get_player_name(),minetest.pos_to_string(pos))
+  end,
     on_metadata_inventory_put = function(pos, _, _, _, player)
-		factory.log.action("%s moves stuff to queued mover at %s",
-			player:get_player_name(),minetest.pos_to_string(pos))
-	end,
+    factory.log.action("%s moves stuff to queued mover at %s",
+      player:get_player_name(),minetest.pos_to_string(pos))
+  end,
     on_metadata_inventory_take = function(pos, _, _, _, player)
-		factory.log.action("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos))
-	end,
+    factory.log.action("%s takes stuff from queued mover at %s",player:get_player_name(),minetest.pos_to_string(pos))
+  end,
 })
 
 minetest.register_abm({

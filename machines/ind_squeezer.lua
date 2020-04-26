@@ -63,165 +63,131 @@ factory.ind_squeezer_inactive_formspec =
 	"listring[current_player;main]"..
 	"listring[current_name;dst]"
 
-minetest.register_node("factory:ind_squeezer", {
-	description = S("Industrial Squeezer"),
-	tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
-		"factory_machine_side_1.png", "factory_machine_side_1.png", "factory_compressor_front.png"},
-	paramtype2 = "facedir",
-	groups = {cracky=3,factory_src_input=1,factory_fuel_input=1,factory_dst_output=1},
-	legacy_facedir_simple = true,
-	is_ground_content = false,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
-		meta:set_string("infotext", S("Industrial Squeezer"))
-		local inv = meta:get_inventory()
-		inv:set_size("fuel", 1)
-		inv:set_size("src", 1)
-		inv:set_size("dst", 4)
-	end,
-	on_destruct = function(pos)
+factory.register_machine("factory:ind_squeezer", {
+  description = S("Industrial Squeezer"),
+  inv_lists = {src = 1, fuel = 1, dst = 4},
+  groups = {cracky=3},
+  on_construct = function(pos)
+    local meta = minetest.get_meta(pos)
+    meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
+  end,
+}, {
+  tiles = {"factory_machine_brick_1.png", "factory_machine_brick_2.png", "factory_machine_side_1.png",
+    "factory_machine_side_1.png", "factory_machine_side_1.png", "factory_compressor_front.png"},
+  legacy_facedir_simple = true,
+  on_destruct = function(pos)
    factory.smoke_on_tube(pos, false)
   end,
-	can_dig = function(pos)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("fuel") then
-			return false
-		elseif not inv:is_empty("dst") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		end
-		return true
-	end,
-	allow_metadata_inventory_put = function(pos, listname, _, stack)
-	  -- args: pos, listname, index, stack, player
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		if listname == "fuel" then
-			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
-				if inv:is_empty("src") then
-					meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
-				end
-				return stack:get_count()
-			else
-				return 0
-			end
-		elseif listname == "src" then
-			return stack:get_count()
-		elseif listname == "dst" then
-			return 0
-		end
-	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
-		if to_list == "fuel" then
-			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
-				if inv:is_empty("src") then
-					meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
-				end
-				return count
-			else
-				return 0
-			end
-		elseif to_list == "src" then
-			return count
-		elseif to_list == "dst" then
-			return 0
-		end
-	end,
+  allow_metadata_inventory_put = function(pos, listname, _, stack)
+    -- args: pos, listname, index, stack, player
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    if listname == "fuel" then
+      if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
+        if inv:is_empty("src") then
+          meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
+        end
+        return stack:get_count()
+      else
+        return 0
+      end
+    elseif listname == "src" then
+      return stack:get_count()
+    elseif listname == "dst" then
+      return 0
+    end
+  end,
+  allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local stack = inv:get_stack(from_list, from_index)
+    if to_list == "fuel" then
+      if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
+        if inv:is_empty("src") then
+          meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
+        end
+        return count
+      else
+        return 0
+      end
+    elseif to_list == "src" then
+      return count
+    elseif to_list == "dst" then
+      return 0
+    end
+  end,
 })
 
-minetest.register_node("factory:ind_squeezer_active", {
-	description = "Industrial Squeezer",
-	tiles = {
-		"factory_machine_brick_1.png",
-		"factory_machine_brick_2.png",
-		"factory_machine_side_1.png",
-		"factory_machine_side_1.png",
-		"factory_machine_side_1.png",
-		{
-			image = "factory_compressor_front_active.png",
-			backface_culling = false,
-			animation = {
-				type = "vertical_frames",
-				aspect_w = 32,
-				aspect_h = 32,
-				length = 4
-			},
-		}
-	},
-	paramtype2 = "facedir",
-	light_source = 2,
-	drop = "factory:ind_squeezer",
-	groups = {cracky=3, not_in_creative_inventory=1,hot=1,factory_src_input=1,factory_fuel_input=1,factory_dst_output=1},
-	legacy_facedir_simple = true,
-	is_ground_content = false,
-	on_construct = function(pos)
-		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
-		meta:set_string("infotext", S("Industrial Squeezer (working)"));
-		local inv = meta:get_inventory()
-		inv:set_size("fuel", 1)
-		inv:set_size("src", 1)
-		inv:set_size("dst", 4)
-	end,
-	on_destruct = function(pos)
+factory.register_machine("factory:ind_squeezer_active", {
+  description = S("Industrial Squeezer (working)"),
+  inv_lists = {src = 1, fuel = 1, dst = 4},
+  groups = {cracky=3,not_in_creative_inventory=1,hot=1},
+  on_construct = function(pos)
+    local meta = minetest.get_meta(pos)
+    meta:set_string("formspec", factory.ind_squeezer_inactive_formspec)
+  end,
+}, {
+  tiles = {
+    "factory_machine_brick_1.png",
+    "factory_machine_brick_2.png",
+    "factory_machine_side_1.png",
+    "factory_machine_side_1.png",
+    "factory_machine_side_1.png",
+    {
+      image = "factory_compressor_front_active.png",
+      backface_culling = false,
+      animation = {
+        type = "vertical_frames",
+        aspect_w = 32,
+        aspect_h = 32,
+        length = 4
+      },
+    }
+  },
+  light_source = 2,
+  drop = "factory:ind_squeezer",
+  legacy_facedir_simple = true,
+  on_destruct = function(pos)
    factory.smoke_on_tube(pos, false)
   end,
-	can_dig = function(pos)
-		local meta = minetest.get_meta(pos);
-		local inv = meta:get_inventory()
-		if not inv:is_empty("fuel") then
-			return false
-		elseif not inv:is_empty("dst") then
-			return false
-		elseif not inv:is_empty("src") then
-			return false
-		end
-		return true
-	end,
-	allow_metadata_inventory_put = function(pos, listname, _, stack)
-	  -- args: pos, listname, index, stack, player
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		if listname == "fuel" then
-			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
-				if inv:is_empty("src") then
-					meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
-				end
-				return stack:get_count()
-			else
-				return 0
-			end
-		elseif listname == "src" then
-			return stack:get_count()
-		elseif listname == "dst" then
-			return 0
-		end
-	end,
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
-		local meta = minetest.get_meta(pos)
-		local inv = meta:get_inventory()
-		local stack = inv:get_stack(from_list, from_index)
-		if to_list == "fuel" then
-			if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
-				if inv:is_empty("src") then
-					meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
-				end
-				return count
-			else
-				return 0
-			end
-		elseif to_list == "src" then
-			return count
-		elseif to_list == "dst" then
-			return 0
-		end
-	end,
+  allow_metadata_inventory_put = function(pos, listname, _, stack)
+    -- args: pos, listname, index, stack, player
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    if listname == "fuel" then
+      if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
+        if inv:is_empty("src") then
+          meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
+        end
+        return stack:get_count()
+      else
+        return 0
+      end
+    elseif listname == "src" then
+      return stack:get_count()
+    elseif listname == "dst" then
+      return 0
+    end
+  end,
+  allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, _, count)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local stack = inv:get_stack(from_list, from_index)
+    if to_list == "fuel" then
+      if minetest.get_craft_result({method="fuel",width=1,items={stack}}).time ~= 0 then
+        if inv:is_empty("src") then
+          meta:set_string("infotext",S("@1 is empty", S("Industrial Squeezer")))
+        end
+        return count
+      else
+        return 0
+      end
+    elseif to_list == "src" then
+      return count
+    elseif to_list == "dst" then
+      return 0
+    end
+  end,
 })
 
 minetest.register_abm({

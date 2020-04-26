@@ -27,26 +27,37 @@ local function set_defaults(t,d)
 end
 
 local function machine_construct(mSpec)
-  return function(pos)
-    local meta = minetest.get_meta(pos)
-    meta:set_string("infotext", mSpec.description)
-    local inv = meta:get_inventory()
-    for n,s in pairs(mSpec.inv_lists) do
-      inv:set_size(n, s)
+  if mSpec.inv_lists then
+    return function(pos)
+      local meta = minetest.get_meta(pos)
+      meta:set_string("infotext", mSpec.description)
+      local inv = meta:get_inventory()
+      for n,l in pairs(mSpec.inv_lists) do
+        inv:set_size(n, l.size)
+      end
+    end
+  else
+    return function(pos)
+      local meta = minetest.get_meta(pos)
+      meta:set_string("infotext", mSpec.description)
     end
   end
 end
 
 local function machine_can_dig(mSpec)
-  return function(pos)
-    local meta = minetest.get_meta(pos);
-    local inv = meta:get_inventory()
-    for n in pairs(mSpec.inv_lists) do
-      if not inv:is_empty(n) then
-        return false
+  if mSpec.inv_lists then
+    return function(pos)
+      local meta = minetest.get_meta(pos);
+      local inv = meta:get_inventory()
+      for n,l in pairs(mSpec.inv_lists) do
+        if not l.volatile then
+          if not inv:is_empty(n) then
+            return false
+          end
+        end
       end
+      return true
     end
-    return true
   end
 end
 
@@ -54,7 +65,7 @@ local function match_inv_list(lists,groups,listname,groupname,default_size)
   if lists[listname] then
     set_default(groups,groupname,1,false)
     return true
-  elseif groups[groupname] > 0 then
+  elseif groups[groupname] and groups[groupname] > 0 then
     set_default(lists,listname,default_size,false)
     return true
   end
@@ -65,7 +76,6 @@ function factory.register_machine(itemstring,machine_specs,node_def)
 
   local mSpec = machine_specs or {}
   set_default(mSpec,"description",node_def,true)
-  set_default(mSpec,"inv_lists",{},false)
 
   local nDef = node_def or {}
   if nDef.groups then
@@ -73,19 +83,22 @@ function factory.register_machine(itemstring,machine_specs,node_def)
   else
     nDef.groups = mSpec.groups
   end
-  local found_inv_list = false
-  if match_inv_list(mSpec.inv_lists,nDef.groups,"src","factory_src_input",1) then
-    found_inv_list = true
-  end
-  if match_inv_list(mSpec.inv_lists,nDef.groups,"fuel","factory_fuel_input",1) then
-    found_inv_list = true
-  end
-  if match_inv_list(mSpec.inv_lists,nDef.groups,"dst","factory_dst_output",4) then
-    found_inv_list = true
-  end
-  if not found_inv_list then
-    set_defaults(mSpec.inv_lists,{src=1,dst=4})
+  
+  if mSpec.inv_lists == true then
+    mSpec.inv_lists = {src=1,dst=4}
     set_defaults(nDef.groups, {factory_src_input=1,factory_dst_output=1})
+  elseif type(mSpec.inv_lists) == "table" then
+    match_inv_list(mSpec.inv_lists,nDef.groups,"src","factory_src_input",1)
+    match_inv_list(mSpec.inv_lists,nDef.groups,"fuel","factory_fuel_input",1)
+    match_inv_list(mSpec.inv_lists,nDef.groups,"dst","factory_dst_output",4)
+  end
+  
+  if mSpec.inv_lists then
+    for n,l in pairs(mSpec.inv_lists) do
+      if type(l) == "number" then
+        mSpec.inv_lists[n] = {size = l}
+      end
+    end
   end
 
   registered_machines[nID] = mSpec
@@ -95,8 +108,9 @@ function factory.register_machine(itemstring,machine_specs,node_def)
 
   if not nDef.on_construct then
     if mSpec.on_construct then
+      local mConst = machine_construct(mSpec)
       nDef.on_construct = function(...)
-        machine_construct(mSpec)(...)
+        mConst(...)
         mSpec.on_construct(...)
       end
     else
@@ -105,10 +119,15 @@ function factory.register_machine(itemstring,machine_specs,node_def)
   end
   if not nDef.can_dig then
     if mSpec.can_dig then
-      nDef.can_dig = function(...)
-        local ret1 = machine_can_dig(mSpec)(...)
-        local ret2 = mSpec.can_dig(...)
-        return ret1 and ret2
+      local mCanDig = machine_can_dig(mSpec)
+      if mCanDig then
+        nDef.can_dig = function(...)
+          local ret1 = mCanDig(...)
+          local ret2 = mSpec.can_dig(...)
+          return ret1 and ret2
+        end
+      else
+        nDef.can_dig = mSpec.can_dig
       end
     else
       nDef.can_dig = machine_can_dig(mSpec)
@@ -121,3 +140,10 @@ end
 factory.registered_machines = registered_machines
 factory.set_default = set_default
 factory.set_defaults = set_defaults
+
+return {
+  regsiter_machine = factory.register_machine,
+  registered_machines = registered_machines,
+  set_default = set_default,
+  set_defaults = set_defaults,
+}

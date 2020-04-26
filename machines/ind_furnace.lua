@@ -118,13 +118,12 @@ factory.register_machine("factory:ind_furnace",{
 })
 
 factory.register_machine("factory:ind_furnace_active",{
-  description = S("Industrial Furnace"),
+  description = S("Industrial Furnace (burning)"),
   inv_lists = {src = 1, fuel = 1, dst = 4},
   groups = {cracky=3, not_in_creative_inventory=1, hot=1},
   on_construct = function(pos)
     local meta = minetest.get_meta(pos)
     meta:set_string("formspec", factory.ind_furnace_inactive_formspec)
-    meta:set_string("infotext", S("Industrial Furnace (burning)"));
   end,
 },{
   tiles = {

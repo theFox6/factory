@@ -37,7 +37,7 @@ factory.forms.stp_formspec =
 	"list[current_name;src;2.75,0.5;1,1;]"..
 	"list[current_name;fuel;2.75,2.5;1,1;]"..
 	"image[3.75,1.5;1,1;gui_ind_furnace_arrow_bg.png^[transformR270]"..
-	"list[current_name;dst;4.75,0.5;2,2;]"..
+	"list[current_name;dst;4.75,0.5;2,3;]"..
 	"list[current_player;main;0,4.25;8,1;]"..
 	"list[current_player;main;0,5.5;8,3;8]"..
 	factory.get_hotbar_bg(0,4.25)..
@@ -107,12 +107,12 @@ minetest.register_node("factory:stp", {
 	is_ground_content = false,
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("formspec", factory.ind_furnace_inactive_formspec)
+		meta:set_string("formspec", factory.forms.stp_formspec)
 		meta:set_string("infotext", S("Sapling Treatment Plant"))
 		local inv = meta:get_inventory()
 		inv:set_size("fuel", 1)
 		inv:set_size("src", 1)
-		inv:set_size("dst", 4)
+		inv:set_size("dst", 6)
 	end,
 	can_dig = function(pos)
 		local meta = minetest.get_meta(pos);
@@ -153,7 +153,7 @@ minetest.register_node("factory:stp", {
 
 minetest.register_abm({
 	nodenames = {"factory:stp"},
-	interval = 2.5,
+	interval = 25,
 	chance = 1,
 	action = function(pos)
 		local meta = minetest.get_meta(pos)

@@ -61,13 +61,13 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "factory:taker_gold",
-	recipe = {"factory:taker", "default:goldblock", "factory:small_gold_gear"}
+	recipe = {"factory:taker", "factory:small_gold_gear"} --"default:goldblock"
 })
 
 minetest.register_craft({
 	type = "shapeless",
 	output = "factory:taker_diamond",
-	recipe = {"factory:taker_gold", "default:diamondblock", "factory:small_diamond_gear"}
+	recipe = {"factory:taker_gold", "factory:small_diamond_gear"}  --"default:diamondblock"
 })
 
 minetest.register_craft({
@@ -160,6 +160,7 @@ minetest.register_craft({
 	}
 })
 
+--TODO: add an option to enable this craft recipe
 minetest.register_craft({
 	output = "factory:stp",
 	recipe = {

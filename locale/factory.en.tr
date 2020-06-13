@@ -51,6 +51,9 @@ Factory Lump=Factory Lump
 Item Scanning Microchip=Item Scanning Microchip
 Small Fanblade=Small Fanblade
 
+### items/grinding.lua ###
+grinding=grinding
+
 ### items/gears.lua ###
 Small Steel Gear=Small Steel Gear
 Small Gold Gear=Small Gold Gear
@@ -92,6 +95,11 @@ Conveyor Belt=Conveyor Belt
 ### machines/fan.lua ###
 Fan=Fan
 Wall Fan=Wall Fan
+
+### machines/grinder.lua ###
+grinder=grinder
+grinder (grinding)=grinder (grinding)
+grinder is grinding, fuel current used: @1%=grinder is grinding, fuel current used: @1%
 
 ### machines/ind_furnace.lua ###
 Industrial Furnace=Industrial Furnace

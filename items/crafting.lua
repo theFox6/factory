@@ -88,11 +88,12 @@ factory.register_recipe("ind_squeezer",{
 	input = {"default:clay_lump"}
 })
 
-
+--[[
 factory.register_recipe("ind_squeezer",{
 	output = "default:sandstone",
-	input = {"default:sand"}
+	input = {"default:sand 4"}
 })
+--]]
 
 minetest.register_craft({
 	type = "cooking",

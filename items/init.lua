@@ -1,5 +1,6 @@
 dofile(factory.modpath.."/items/crafting.lua")
 dofile(factory.modpath.."/items/craftitems.lua")
+dofile(factory.modpath.."/items/grinding.lua")
 dofile(factory.modpath.."/items/gears.lua")
 dofile(factory.modpath.."/items/moving_item.lua")
 dofile(factory.modpath.."/items/battery_item.lua")

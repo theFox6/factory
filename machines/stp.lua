@@ -170,7 +170,7 @@ minetest.register_abm({
 					   inv:room_for_item("dst", {name = v.sapling, count = randSaplings}) and
 					   inv:room_for_item("dst", {name = v.leaves, count = randLeaves}) then
 
-						factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),0.35,1)
+						factory.start_smoke(vector.add(pos,{x=0,y=-1,z=0}),0.35,5)
 
 						inv:add_item("dst", ItemStack({name = v.wood, count = randWood}))
 						inv:add_item("dst", ItemStack({name = v.sapling, count = randSaplings}))

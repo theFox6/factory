@@ -51,6 +51,9 @@ Factory Lump=Fabrik Klumpen
 Item Scanning Microchip=Gegenstand erkennender Mikrochip
 Small Fanblade=Kleiner Ventilatorfluegel
 
+### items/grinding.lua ###
+grinding=Mahlen
+
 ### items/gears.lua ###
 Small Steel Gear=Kleines Stahl Zahnrad
 Small Gold Gear=Kleines Gold Zahnrad
@@ -92,6 +95,11 @@ Conveyor Belt=Laufband
 ### machines/fan.lua ###
 Fan=Ventilator
 Wall Fan=Wand Ventilator
+
+### machines/grinder.lua ###
+grinder=Mühle
+grinder (grinding)=Mühle (mahlt)
+grinder is grinding, fuel current used: @1%=Mühle mahlt, Brennstoff verbraucht: @1%
 
 ### machines/ind_furnace.lua ###
 Industrial Furnace=industrieller Ofen

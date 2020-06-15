@@ -39,11 +39,11 @@ local function get_smoke_spawner_at(pos)
 	end
 end
 
-function factory.start_smoke(pos,pressure,time)
+function factory.start_smoke(pos,pressure,time,amount)
 	if get_smoke_spawner_at(pos) then return false end
 	local yv = pressure or 1
 	local id = minetest.add_particlespawner({
-		amount = 4,
+		amount = amount or 4,
 		time = time or 0,
 		minpos = {x = pos.x - 0.2, y = pos.y + 0.3, z = pos.z - 0.2},
 		maxpos = {x = pos.x + 0.2, y = pos.y + 0.6, z = pos.z + 0.2},

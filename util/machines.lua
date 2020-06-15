@@ -83,7 +83,7 @@ function factory.register_machine(itemstring,machine_specs,node_def)
   else
     nDef.groups = mSpec.groups
   end
-  
+
   if mSpec.inv_lists == true then
     mSpec.inv_lists = {src=1,dst=4}
     set_defaults(nDef.groups, {factory_src_input=1,factory_dst_output=1})
@@ -92,7 +92,7 @@ function factory.register_machine(itemstring,machine_specs,node_def)
     match_inv_list(mSpec.inv_lists,nDef.groups,"fuel","factory_fuel_input",1)
     match_inv_list(mSpec.inv_lists,nDef.groups,"dst","factory_dst_output",4)
   end
-  
+
   if mSpec.inv_lists then
     for n,l in pairs(mSpec.inv_lists) do
       if type(l) == "number" then

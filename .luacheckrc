@@ -1,4 +1,4 @@
-allow_defined_top = true
+max_line_length = false
 
 read_globals = {
 	"default",
@@ -7,7 +7,6 @@ read_globals = {
 	"ItemStack",
 	math = { fields = {"sign"} },
 	"minetest",
-	"modutil",
 	"PseudoRandom",
 	"stairsplus",
 	table = { fields = {"copy"} },
@@ -19,10 +18,14 @@ read_globals = {
 
 globals = {
 	"factory",
+	--these should probably be moved to the factory global
 	"factory_gui_bg",
 	"factory_gui_bg_img",
 	"factory_gui_bg_img_2",
-	"factory_gui_slots"
+	"factory_gui_slots",
+	--from modutil
+	"modutil",
+	"LuaVenusCompiler",
 }
 
 files["util/compat_nei.lua"].read_globals = {"api"}
@@ -30,7 +33,7 @@ files["modutil/strings.lua"].globals = { string = {
 		fields = {"starts_with","ends_with"}
 }}
 
-exclude_files={"modutil/VenusParser/testout/"}
+exclude_files={"modutil/LuaVenusCompiler/testout/"}
 
 ignore = {
 	"211",

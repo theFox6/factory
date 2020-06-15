@@ -1,9 +1,10 @@
-allow_defined_top = true
+max_line_length = 240
+
+globals = {"factory","modutil","LuaVenusCompiler"}
 
 read_globals = {
 	"minetest", "default",
 	"dump", "vector",
-	"modutil",
 	"VoxelManip", "VoxelArea",
 	"ItemStack", "PseudoRandom",
 	"stairsplus", "intllib",
@@ -12,11 +13,17 @@ read_globals = {
 	table = { fields = {"copy"} }
 }
 
-globals = {"factory"}
+globals = {
+	"factory",
+	--from modutil
+	"modutil",
+	"LuaVenusCompiler",
+
+}
 
 files["util/compat_nei.lua"].read_globals = {"api"}
 files["modutil/strings.lua"].globals = { string = {
 		fields = {"starts_with","ends_with"}
 }}
 
-exclude_files={"modutil/VenusParser/testout/"}
+exclude_files={"modutil/LuaVenusCompiler/testout/"}

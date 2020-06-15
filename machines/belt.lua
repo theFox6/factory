@@ -57,7 +57,11 @@ function belts.move_player(player,bpos,speed,belt_node)
 	-- fast players receive less velocity
 	local pv = player:get_player_velocity()
 	for c,v in pairs(dir) do
-		dir[c] = v*2 - math.sign(v) * math.sqrt(math.abs(pv[c]))
+		dir[c] = v*2
+		--don't increase speed when already fast
+		if math.sign(v) == math.sign(pv[c]) then
+		  dir[c] = dir[c] - math.sign(v) * math.sqrt(math.abs(pv[c]))
+		end
 	end
 	player:add_player_velocity(vector.multiply(dir,speed))
 end

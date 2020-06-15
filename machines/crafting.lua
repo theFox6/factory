@@ -101,6 +101,15 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+  output = "factory:grinder",
+  recipe = {
+    {"default:stonebrick",  "default:stonebrick", "default:stonebrick"},
+    {"factory:small_diamond_gear", "",    "factory:small_diamond_gear"},
+    {"default:stonebrick",  "default:furnace",    "default:stonebrick"}
+  }
+})
+
+minetest.register_craft({
 	output = "factory:swapper",
 	recipe = {
 		{   "default:steel_ingot",   "default:steel_ingot",    "default:steel_ingot"},

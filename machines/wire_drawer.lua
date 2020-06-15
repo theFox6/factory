@@ -117,6 +117,7 @@ factory.register_machine("factory:wire_drawer", {
 
 factory.register_machine("factory:wire_drawer_active", {
   description = S("Wire Drawer (working)"),
+  inv_lists = {src = 1, fuel = 1, dst = 4},
   groups = {cracky=3,not_in_creative_inventory=1,hot=1},
   on_construct = function(pos)
     local meta = minetest.get_meta(pos)

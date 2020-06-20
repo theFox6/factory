@@ -37,6 +37,10 @@ Combustion Generator=Combustion Generator
 ### electronics/electronic_furnace.lua ###
 Electronic Furnace=Electronic Furnace
 
+### electronics/electronic_grinder.lua ###
+electronic grinder=Electronic Grinder
+electronic grinder (grinding)=Electronic Grinder (grinding)
+
 ### items/battery_item.lua ###
 battery=battery
 

@@ -1,7 +1,6 @@
-factory.electronics = {}
-
-dofile(factory.modpath.."/electronics/device.lua")
-dofile(factory.modpath.."/electronics/cable.lua")
-dofile(factory.modpath.."/electronics/combustion_generator.lua")
-dofile(factory.modpath.."/electronics/electronic_furnace.lua")
-dofile(factory.modpath.."/electronics/battery.lua")
+factory.require("electronics/cable")
+factory.require("electronics/device")
+factory.require("electronics/combustion_generator")
+factory.require("electronics/electronic_furnace")
+factory.require("electronics/battery")
+factory.require("electronics/electronic_grinder")

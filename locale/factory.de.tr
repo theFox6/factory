@@ -37,6 +37,10 @@ Combustion Generator=Verbrennungs Generator
 ### electronics/electronic_furnace.lua ###
 Electronic Furnace=Elektro-Ofen
 
+### electronics/electronic_grinder.lua ###
+electronic grinder=Elektrisches Mahlwerk
+electronic grinder (grinding)=Elektrisches Mahlwerk (mahlt)
+
 ### items/battery_item.lua ###
 battery=Batterie
 

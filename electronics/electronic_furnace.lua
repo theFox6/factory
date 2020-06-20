@@ -33,7 +33,8 @@ end
 -- registration for the electronic furnace
 minetest.register_node("factory:electronic_furnace", {
 	description = S("Electronic Furnace"),
-	--TODO: more recognizable texture
+	-- TODO: make the sides look more like a furnace
+	-- perhaps more furnace like symbols on the outside
 	tiles = {"factory_steel_noise.png^factory_vent_slates.png", "factory_machine_steel_dark.png",
 		"factory_steel_noise.png", "factory_steel_noise.png",
 		"factory_steel_noise.png^factory_lightning.png", "factory_steel_noise.png^factory_lightning.png"},
@@ -124,7 +125,16 @@ minetest.register_abm({
 				meta:set_string("formspec", factory.forms.electronic_furnace(0))
 			end
 		else
-			meta:set_float("src_time", 0)
+			local time = meta:get_float("src_time")
+			-- The slow cooldown does not fit for all recipes
+			-- Baking bread would usually stay at the same level of progress
+			if time > 0.5 then
+				meta:set_float("src_time", time - 0.5)
+			else
+				meta:set_float("src_time", 0)
+			end
+			local item_percent = meta:get_float("src_time")/cooked.time
+			meta:set_string("formspec", factory.forms.electronic_furnace(item_percent))
 			device.set_status(meta,S("unpowered"))
 		end
 	end

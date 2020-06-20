@@ -1,6 +1,7 @@
 -- local reference to the translator
 local S = factory.S
 local dig_limit = minetest.settings:get("factory_minerDigLimit") or 512
+local forceload_limit = 1
 
 factory.miner = {}
 function factory.miner.afterdig(pos)
@@ -65,6 +66,7 @@ minetest.register_node("factory:miner_off", {
 	 local meta = minetest.get_meta(pos)
    meta:set_string("infotext",S("Industrial Miner"))
    meta:set_int("last_depth", 1)
+   meta:set_int("forceload_tries",0)
    minetest.swap_node(pos, {name = "factory:miner_on", param2 = node.param2})
 	end,
 	after_place_node = function(pos)
@@ -108,6 +110,19 @@ minetest.register_abm({
 				--minetest.forceload_block({x = pos.x, y = pos.y-i, z = pos.z})
 				--minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
 				dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
+				if dnode.name == "ignore" then
+					local tries = meta:get_int("forceload_tries")
+					print(("forceload failed %i times"):format(tries))
+					if tries < forceload_limit then
+						meta:set_string("infotext",S("@1 forceloading block",S("Industrial Miner")))
+						meta:set_int("forceload_tries",tries + 1)
+						return
+					end
+				else
+					registered = minetest.registered_nodes[dnode.name]
+				end
+			elseif meta:get_int("forceload_tries") > 0 then
+				meta:set_int("forceload_tries",0)
 			end
 			if dnode.name ~= "factory:miner_drillbit" then
 				meta:set_int("last_depth",i)
@@ -123,7 +138,6 @@ minetest.register_abm({
 					return
 				end
 				if dnode.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					if node.name == "ignore" then return end
 					meta:set_string("infotext",S("@1 hit undiggable block",S("Industrial Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_off", param2 = node.param2})
 					return
@@ -182,7 +196,7 @@ minetest.register_node("factory:miner_upgraded_off", {
 	paramtype2 = "facedir",
 	is_ground_content = true,
 	legacy_facedir_simple = true,
-	drop="factory:miner_on",
+	drop="factory:miner_upgraded_on",
 	mesecons = {effector = {
 		action_off = function(pos, node)
 			local meta = minetest.get_meta(pos)
@@ -195,6 +209,7 @@ minetest.register_node("factory:miner_upgraded_off", {
 	 local meta = minetest.get_meta(pos)
     meta:set_string("infotext",S("Upgraded Miner"))
     meta:set_int("last_depth", 1)
+    meta:set_int("forceload_tries",0)
     minetest.swap_node(pos, {name = "factory:miner_upgraded_on", param2 = node.param2})
 	end,
 	after_place_node = function(pos)
@@ -222,6 +237,18 @@ minetest.register_abm({
 				minetest.get_voxel_manip():read_from_map({x = pos.x, y = pos.y-i, z = pos.z}, {x = pos.x, y = pos.y-i-2, z = pos.z})
 				--minetest.forceload_block({x = pos.x, y = pos.y-i-2, z = pos.z})
 				dnode = minetest.get_node({x = pos.x, y = pos.y-i, z = pos.z})
+				if dnode.name == "ignore" then
+					local tries = meta:get_int("forceload_tries")
+					if tries < forceload_limit then
+						meta:set_int("forceload_tries",tries + 1)
+						meta:set_string("infotext",S("@1 forceloading block",S("Upgraded Miner")))
+						return
+					end
+				else
+					registered = minetest.registered_nodes[dnode.name]
+				end
+			elseif meta:get_int("forceload_tries") > 0 then
+				meta:set_int("forceload_tries",0)
 			end
 			if dnode.name ~= "factory:miner_drillbit" then
 				meta:set_int("last_depth", i)
@@ -236,8 +263,8 @@ minetest.register_abm({
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return
 				end
-				if dnode.name ~= "air" and registered.diggable ~= nil and not registered.diggable then
-					if dnode.name == "ignore" then return end
+				if dnode.name ~= "air" and registered.diggable == false then
+					print("undiggable " .. dnode.name)
 					meta:set_string("infotext",S("@1 hit undiggable block",S("Upgraded Miner")))
 					minetest.swap_node(pos, {name = "factory:miner_upgraded_off", param2 = node.param2})
 					return

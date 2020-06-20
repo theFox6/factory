@@ -71,7 +71,8 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos,node)
+	action = function(pos,node,active_object_count)
+		if active_object_count == 0 then return end
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
 		for _,obj in ipairs(all_objects) do
 			if abm_move_player and obj:is_player() then

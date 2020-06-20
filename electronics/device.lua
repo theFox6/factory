@@ -5,7 +5,10 @@ local S = factory.S
 -- the base for electronic devices
 -- @type device
 local device = {}
-factory.electronics.device = device
+
+factory.electronics = {
+  device = device
+}
 
 --- #list<#table> facedir table for iterating
 local facedir_to_dir = {
@@ -190,3 +193,5 @@ function device.distribute(pos,energy_amount, max_amount)
 	end
 	return remain
 end
+
+return device

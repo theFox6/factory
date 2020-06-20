@@ -1,20 +1,24 @@
-dofile(factory.modpath.."/machines/crafting.lua")
-dofile(factory.modpath.."/machines/belt.lua")
-dofile(factory.modpath.."/machines/ind_furnace.lua")
-dofile(factory.modpath.."/machines/ind_squeezer.lua")
-dofile(factory.modpath.."/machines/wire_drawer.lua")
-dofile(factory.modpath.."/machines/grinder.lua")
-dofile(factory.modpath.."/machines/stp.lua")
-dofile(factory.modpath.."/machines/swapper.lua")
-dofile(factory.modpath.."/machines/arm.lua")
-dofile(factory.modpath.."/machines/taker.lua")
-dofile(factory.modpath.."/machines/qarm.lua")
-dofile(factory.modpath.."/machines/oarm.lua")
-dofile(factory.modpath.."/machines/autocrafter.lua")
+factory.require("machines/crafting")
+factory.require("machines/belt")
+factory.require("machines/ind_furnace")
+factory.require("machines/ind_squeezer")
+factory.require("machines/wire_drawer")
+factory.require("machines/grinder")
+factory.require("machines/stp")
+factory.require("machines/swapper")
+factory.require("machines/arm")
+factory.require("machines/taker")
+factory.require("machines/qarm")
+factory.require("machines/oarm")
+factory.require("machines/autocrafter")
 
-if factory.setting_enabled("Fan") then dofile(factory.modpath.."/machines/fan.lua") end
-if factory.setting_enabled("Vacuum") then
-	dofile(factory.modpath.."/machines/vacuum.lua")
-	dofile(factory.modpath.."/machines/upward_vacuum.lua")
+if factory.setting_enabled("Fan") then
+  factory.require("machines/fan")
 end
-if factory.setting_enabled("Miner") then dofile(factory.modpath.."/machines/miner.lua") end
+if factory.setting_enabled("Vacuum") then
+	factory.require("machines/vacuum")
+	factory.require("machines/upward_vacuum")
+end
+if factory.setting_enabled("Miner") then
+  factory.require("machines/miner")
+end

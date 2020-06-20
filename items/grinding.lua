@@ -1,4 +1,5 @@
 local S = factory.require("translation")
+local egrinder = factory.require("electronics/electronic_grinder")
 
 factory.register_recipe_type("grinding", {
   description = S("grinding"),
@@ -15,6 +16,13 @@ if minetest.get_modpath("farming") then
     time = 1,
   })
 end
+egrinder.register_fallthrough("farming:flour")
+
+factory.register_recipe("grinding",{
+  input = {"default:stone"},
+  output = "default:cobble",
+  time = 3,
+})
 
 factory.register_recipe("grinding",{
   input = {"default:cobble"},
@@ -39,8 +47,26 @@ factory.register_recipe("grinding",{
   output = "default:sand",
   time = 2,
 })
+egrinder.register_fallthrough("group:sand")
 
---[[ default registered normal craft recipes
+--are registered as single registrations, but there are no differences in the wood output
+factory.register_recipe("grinding",{
+  input = {"group:tree"},
+  output = "default:stick 16",
+  time = 2,
+})
+
+----
+-- default registered normal craft recipes
+----
+
+factory.register_recipe("grinding",{
+  input = {"group:wood"},
+  output = "default:stick 4",
+  time = 2,
+})
+
+--[[ sandstone
 factory.register_recipe("grinding",{
   input={"default:sandstone"},
   output="default:sand 4",

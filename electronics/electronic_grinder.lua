@@ -139,8 +139,7 @@ function electronic_grinder.grind_one(ent,obj,pos)
       end
       local xv = math.sqrt(math.abs(dir.x)) * math.sign(dir.x) * -3
       local zv = math.sqrt(math.abs(dir.z)) * math.sign(dir.z) * -3
-      local yv = math.sqrt(math.random()+0.5) * 5
-      obj:add_velocity({x = xv, y = yv, z = zv})
+      obj:add_velocity({x = xv, y = 6.5, z = zv})
       return false
     end
   end
@@ -150,8 +149,8 @@ minetest.register_abm({
   nodenames = {"factory:electronic_grinder","factory:electronic_grinder_active"},
   interval = 1.0,
   chance = 1,
-  action = function(pos, node, active_object_count)
-    if active_object_count == 0 then return end
+  action = function(pos, node, _, aocw)
+    if aocw == 0 then return end
     local meta = minetest.get_meta(pos)
 
     --TODO: get blocked when too many items are below

@@ -39,9 +39,10 @@ minetest.register_alias("factory:belt_straight","factory:belt")
 
 local abm_move_player = factory.setting_enabled("abmBeltvelocity")
 		and not factory.setting_enabled("stepBeltvelocity")
+local belt_move_player = factory.setting_enabled("abmBeltvelocity")
+    or factory.setting_enabled("stepBeltvelocity")
 
 --perhaps move this function to moving item
---FIXME: check if minetest version used supports it
 function belts.move_player(player,bpos,speed,belt_node)
 	local node = belt_node or minetest.get_node(bpos)
 	local dir = vector.new(minetest.facedir_to_dir(node.param2))
@@ -63,6 +64,12 @@ function belts.move_player(player,bpos,speed,belt_node)
 		  dir[c] = dir[c] - math.sign(v) * math.sqrt(math.abs(pv[c]))
 		end
 	end
+	if belt_move_player and not player.add_player_velocity then
+	  abm_move_player = false
+	  minetest.settings:set_bool("factory_enableabmBeltvelocity",false)
+	  minetest.settings:set_bool("factory_enablestepBeltvelocity",false)
+	  belt_move_player = false
+	end
 	player:add_player_velocity(vector.multiply(dir,speed))
 end
 
@@ -71,8 +78,8 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos,node,active_object_count)
-		if active_object_count == 0 then return end
+	action = function(pos,node,_,aocw)
+		if aocw == 0 then return end
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.75)
 		for _,obj in ipairs(all_objects) do
 			if abm_move_player and obj:is_player() then

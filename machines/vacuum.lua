@@ -99,8 +99,8 @@ minetest.register_abm({
 	neighbors = nil,
 	interval = 1,
 	chance = 1,
-	action = function(pos,node,active_object_count)
-		if active_object_count == 0 then return end
+	action = function(pos, node, _, aocw)
+		if aocw == 0 then return end
 		local all_objects = factory.get_objects_with_square_radius({x = pos.x, y = pos.y + 3, z = pos.z}, 2)
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity()

@@ -69,6 +69,7 @@ function belts.move_player(player,bpos,speed,belt_node)
 	  minetest.settings:set_bool("factory_enableabmBeltvelocity",false)
 	  minetest.settings:set_bool("factory_enablestepBeltvelocity",false)
 	  belt_move_player = false
+          return
 	end
 	player:add_player_velocity(vector.multiply(dir,speed))
 end

@@ -1,4 +1,5 @@
-local recipes = api and api.recipes or nil -- when NEI mod is not loaded, it's nil
+--TODO: check for trinium_api's modpath instead of the global
+local recipes = minetest.global_exists("api") and api.recipes or nil -- when NEI mod is not loaded, it's nil
 local S = factory.S
 
 function factory.register_nei_recipe(typename, index) -- adds "Fake" recipe
@@ -26,7 +27,7 @@ end
 -- Will rewrite this so it's automatic when the API stabilizes (when args in crafting.lua will be the same as in the
 -- factory.register_craft_type)
 local function register_1x1_method(name, desc, machine)
-	if not api then return end
+	if not minetest.global_exists("api") then return end
 	recipes.add_method(name, {
 		input_amount = 1,
 		output_amount = 1,

@@ -124,7 +124,7 @@ minetest.register_abm({
 			elseif meta:get_int("forceload_tries") > 0 then
 				meta:set_int("forceload_tries",0)
 			end
-			if dnode.name ~= "factory:miner_drillbit" then
+			if dnode.name ~= "factory:miner_drillbit" and ((not registered.liquidtype) or registered.liquidtype == "none") then
 				meta:set_int("last_depth",i)
 				if meta:get_string("owner") ~= nil
 				and minetest.is_protected({x = pos.x, y = pos.y-i, z = pos.z}, meta:get_string("owner")) then
@@ -250,7 +250,7 @@ minetest.register_abm({
 			elseif meta:get_int("forceload_tries") > 0 then
 				meta:set_int("forceload_tries",0)
 			end
-			if dnode.name ~= "factory:miner_drillbit" then
+			if dnode.name ~= "factory:miner_drillbit" and ((not registered.liquidtype) or registered.liquidtype == "none") then
 				meta:set_int("last_depth", i)
 				if meta:get_string("owner") ~= nil
 					and minetest.is_protected({x = pos.x, y = pos.y-i, z = pos.z}, meta:get_string("owner")) then

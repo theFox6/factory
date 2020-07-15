@@ -169,12 +169,13 @@ minetest.register_craft({
 	}
 })
 
---TODO: add an option to enable this craft recipe
-minetest.register_craft({
-	output = "factory:stp",
-	recipe = {
-		{ "factory:factory_brick", "factory:small_diamond_gear", "factory:factory_brick" },
-		{ "default:glass",         "default:dirt",               "factory:factory_brick" },
-		{ "factory:factory_brick", "default:steel_ingot",        "factory:factory_brick" }
-	}
-})
+if factory.setting_enabled("StpCraft") then
+  minetest.register_craft({
+  	output = "factory:stp",
+  	recipe = {
+  		{ "factory:factory_brick", "factory:small_diamond_gear", "factory:factory_brick" },
+  		{ "default:glass",         "default:dirt",               "factory:factory_brick" },
+  		{ "factory:factory_brick", "default:mese_crystal",        "factory:factory_brick" }
+  	}
+  })
+end

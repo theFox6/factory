@@ -18,6 +18,11 @@ factory_enableElectronics (Enable electronics) bool true
 #Fertilizer can be harvested directly. It is used to fertilize saplings in the STP.
 factory_fertilizerGeneration (Enable fertilizer generation) bool true
 
+#Eanble the crafting recipe for the Sapling Treatment Plant.
+#The Sapling Treatment Plant uses saplings and fertilizer to produce wood, leaves and new saplings.
+#This unbalances the game because it provides trees quickly without having to grow and chop them.
+factory_enableStpCraft (Enable STP craft recipe) bool true
+
 #Limit the digging depth of the miners.
 #The upgraded miners will only dig to the given depth. Normal miners dig to half this depth.
 factory_minerDigLimit (Miner dig limit) int 512 0

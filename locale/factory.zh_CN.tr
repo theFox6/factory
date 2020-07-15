@@ -37,6 +37,10 @@ Combustion Generator=火力发电机
 ### electronics/electronic_furnace.lua ###
 Electronic Furnace=电热炉
 
+### electronics/electronic_grinder.lua ###
+electronic grinder=电动研磨机
+electronic grinder (grinding)=电动研磨机 (研磨中) 
+
 ### items/battery_item.lua ###
 battery=电池
 
@@ -50,6 +54,11 @@ Compressed Clay=致密粘土块
 Factory Lump=工业料块
 Item Scanning Microchip=物品扫描芯片
 Small Fanblade=小型扇叶
+
+### items/grinding.lua ###
+grinding=研磨中
+grinder (grinding)=研磨机 (研磨中) 
+grinder is grinding, fuel current used: @1%=研磨机研磨中，已使用燃料：@1%
 
 ### items/gears.lua ###
 Small Steel Gear=小型钢制齿轮
@@ -92,6 +101,9 @@ Conveyor Belt=传送带
 ### machines/fan.lua ###
 Fan=风扇
 Wall Fan=立式风扇
+
+### machines/grinder.lua ###
+grinder=研磨机
 
 ### machines/ind_furnace.lua ###
 Industrial Furnace=工业熔炉

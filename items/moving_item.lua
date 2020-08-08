@@ -66,7 +66,7 @@ minetest.register_entity("factory:moving_item", {
 	end,
 
 	on_step = function(self)
-		local pos = self.object:getpos()
+		local pos = self.object:get_pos()
 		local speed = 0.8
 		local apos = vector.round(pos)
 		apos.y=apos.y+1

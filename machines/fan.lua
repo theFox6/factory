@@ -57,11 +57,11 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y, z = pos.z}, 1)
 		for _,obj in ipairs(all_objects) do
 			if move_player and obj:is_player() then
-				obj:moveto({x = obj:getpos().x, y = obj:getpos().y + 3, z = obj:getpos().z})
+				obj:moveto({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
 			else
 				local ent = obj:get_luaentity()
 				if ent and (ent.name == "__builtin:item" or ent.name == "factory:moving_item") then
-					obj:moveto({x = obj:getpos().x, y = obj:getpos().y + 3, z = obj:getpos().z})
+					obj:moveto({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
 				end
 			end
 		end
@@ -135,11 +135,11 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x - a.x/2, y = pos.y, z = pos.z - a.z/2}, 1)
 		for _,obj in ipairs(all_objects) do
 			if move_player and obj:is_player() then
-				obj:move_to({x = obj:getpos().x - a.x*2.0, y = obj:getpos().y, z = obj:getpos().z - a.z*2.0})
+				obj:move_to({x = obj:get_pos().x - a.x*2.0, y = obj:get_pos().y, z = obj:get_pos().z - a.z*2.0})
 			else
 				local ent = obj:get_luaentity()
 				if ent and (ent.name == "__builtin:item" or ent.name == "factory:moving_item") then
-					obj:move_to({x = obj:getpos().x - a.x*2.0, y = obj:getpos().y, z = obj:getpos().z - a.z*2.0})
+					obj:move_to({x = obj:get_pos().x - a.x*2.0, y = obj:get_pos().y, z = obj:get_pos().z - a.z*2.0})
 				end
 			end
 		end

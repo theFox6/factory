@@ -22,7 +22,7 @@ minetest.register_node("factory:storage_tank", {
 				if inv:room_for_item("main", {name=d.bucket_empty}) then
 					inv:add_item("main", d.bucket_empty)
 				else
-					local ppos = clicker:getpos()
+					local ppos = clicker:get_pos()
 					ppos.y = math.floor(ppos.y + 0.5)
 					minetest.add_item(ppos, d.bucket_empty)
 				end
@@ -92,7 +92,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				if inv:room_for_item("main", {name=bucket_full}) then
 					inv:add_item("main", bucket_full)
 				else
-					local ppos = clicker:getpos()
+					local ppos = clicker:get_pos()
 					ppos.y = math.floor(ppos.y + 0.5)
 					minetest.add_item(ppos, bucket_full)
 				end

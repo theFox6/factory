@@ -11,7 +11,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 			local x1 = minp.x + math.floor((divx+1)*divlen)
 			local z1 = minp.z + math.floor((divz+1)*divlen)
 
-			local grass_amount = math.floor(perlin1:get2d({x=x0, y=z0}) ^ 2)
+			local grass_amount = math.floor(perlin1:get_2d({x=x0, y=z0}) ^ 2)
 
 			local pr = PseudoRandom(seed+249)
 			for _=0,grass_amount do

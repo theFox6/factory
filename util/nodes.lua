@@ -20,7 +20,7 @@ function factory.get_objects_with_square_radius(pos, rad)
     if not object:is_player()
     and object:get_luaentity()
     and (object:get_luaentity().name == "__builtin:item" or object:get_luaentity().name == "factory:moving_item") then
-      local opos = object:getpos()
+      local opos = object:get_pos()
       if pos.x - rad <= opos.x and opos.x <= pos.x + rad
       and pos.y - rad <= opos.y and opos.y <= pos.y + rad
       and pos.z - rad <= opos.z and opos.z <= pos.z + rad then

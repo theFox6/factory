@@ -81,7 +81,7 @@ minetest.register_abm({
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity() and obj:get_luaentity().name == "__builtin:item" then
 				if ItemStack(obj:get_luaentity().itemstring):get_name() == inv:get_list("sort")[1]:get_name() then
-					factory.do_moving_item(obj:getpos(), obj:get_luaentity().itemstring)
+					factory.do_moving_item(obj:get_pos(), obj:get_luaentity().itemstring)
 					obj:get_luaentity().itemstring = ""
 					obj:remove()
 				end

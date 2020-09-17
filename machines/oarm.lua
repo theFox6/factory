@@ -12,12 +12,12 @@ local function oarm_handle (a, b, target, stack, obj)
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
 			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-			obj:moveto(vector.add(pos,dir_right), false)
+			obj:move_to(vector.add(pos,dir_right), false)
 		else
 			if not insert(inv,"main", stack, obj) then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			end
 		end
 	end
@@ -31,12 +31,12 @@ local function oarm_handle (a, b, target, stack, obj)
 			if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			else
 				if not insert(inv,"fuel", stack, obj) then
 					local pos = vector.subtract(b, a)
 					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-					obj:moveto(vector.add(pos,dir_right), false)
+					obj:move_to(vector.add(pos,dir_right), false)
 				end
 			end
 			return
@@ -50,12 +50,12 @@ local function oarm_handle (a, b, target, stack, obj)
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
 			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-			obj:moveto(vector.add(pos,dir_right), false)
+			obj:move_to(vector.add(pos,dir_right), false)
 		else
 			if not insert(inv,"src", stack, obj) then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			end
 		end
 	end

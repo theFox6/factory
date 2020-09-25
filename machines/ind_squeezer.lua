@@ -1,13 +1,14 @@
 local S = factory.S
+local gui = factory.gui
 minetest.register_alias("factory:compressor", "factory:ind_squeezer")
 --perhaps make another texture for other materials
 
 function factory.ind_squeezer_active(percent, item_percent)
     local formspec =
 	"size[8,8.5]"..
-	factory_gui_bg..
-	factory_gui_bg_img..
-	factory_gui_slots..
+	gui.bg_color..
+	gui.bg_img..
+	gui.slot_colors..
 	"list[current_name;src;2.75,0.5;1,1;]"..
 	"list[current_name;fuel;2.75,2.5;1,1;]"..
 	"image[2.75,1.5;1,1;factory_compressor_drop_bg.png^[lowpart:"..
@@ -45,9 +46,9 @@ end
 
 factory.ind_squeezer_inactive_formspec =
 	"size[8,8.5]"..
-	factory_gui_bg..
-	factory_gui_bg_img..
-	factory_gui_slots..
+	gui.bg_color..
+	gui.bg_img..
+	gui.slot_colors..
 	"list[current_name;src;2.75,0.5;1,1;]"..
 	"list[current_name;fuel;2.75,2.5;1,1;]"..
 	"image[2.75,1.5;1,1;factory_compressor_drop_bg.png]"..

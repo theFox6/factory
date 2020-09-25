@@ -1,8 +1,9 @@
+local gui = factory.gui
 factory.swapper_formspec =
 	"size[8,10.5]"..
-	factory_gui_bg..
-	factory_gui_bg_img_2..
-	factory_gui_slots..
+	gui.bg_color..
+	gui.bg_img_2..
+	gui.slot_colors..
 	"list[current_name;left;0,2;2,4;]"..
 	"list[current_name;right;6,2;2,4;]"..
 	"list[current_name;loverflow;0,0;3,1;]"..

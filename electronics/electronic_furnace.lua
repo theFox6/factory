@@ -3,6 +3,8 @@ local S = factory.S
 -- #device local reference to the device type
 local device = factory.electronics.device
 
+local gui = factory.gui
+
 ---
 -- creates the formspec for an electronic furnace
 --
@@ -13,9 +15,9 @@ function factory.forms.electronic_furnace(item_percent)
 	--perhaps this should be smaller
     local formspec =
 	"size[8,8.5]"
-	..factory_gui_bg
-	..factory_gui_bg_img
-	..factory_gui_slots
+	..gui.bg_color
+	..gui.bg_img
+	..gui.slot_colors
 	.."list[current_name;src;2,1.5;1,1;]"
 	.."image[3,1.5;1,1;gui_ind_furnace_arrow_bg.png^[lowpart:"
 	        ..(item_percent*100)..":gui_ind_furnace_arrow_fg.png^[transformR270]"

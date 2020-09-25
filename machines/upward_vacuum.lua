@@ -1,9 +1,10 @@
 local S = factory.S
+local gui = factory.gui
 factory.vac_sorter_formspec =
 	"size[8,5.5]"..
-	factory_gui_bg..
-	factory_gui_bg_img_2..
-	factory_gui_slots..
+	gui.bg_color..
+	gui.bg_img_2..
+	gui.slot_colors..
 	"list[current_name;sort;3.5,0;1,1;]"..
 	"list[current_player;main;0,1.5;8,1;]"..
 	"list[current_player;main;0,2.75;8,3;8]"..

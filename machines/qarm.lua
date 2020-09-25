@@ -1,4 +1,5 @@
 local S = factory.S
+local gui = factory.gui
 local insert = factory.insert_object_item
 
 local function qarm_handle (a, b, target, stack, minv, obj)
@@ -34,9 +35,9 @@ end
 
 factory.qformspec =
 	"size[8,8.5]"..
-	factory_gui_bg..
-	factory_gui_bg_img..
-	factory_gui_slots..
+	gui.bg_color..
+	gui.bg_img..
+	gui.slot_colors..
 	"list[current_name;main;0,0.3;8,3;]"..
 	"list[current_player;main;0,4.25;8,1;]"..
 	"list[current_player;main;0,5.5;8,3;8]"..

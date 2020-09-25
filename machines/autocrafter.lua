@@ -95,6 +95,8 @@ local function on_output_change(pos, inventory, stack)
 	after_recipe_change(pos, inventory)
 end
 
+local gui = factory.gui
+
 local function update_meta(pos)
   local meta = minetest.get_meta(pos)
 	local fs = 	"size[8,12]"..
@@ -103,9 +105,9 @@ local function update_meta(pos)
 			"list[context;output;3,1;1,1;]"..
 			"list[context;src;0,4.5;8,3;]"..
 			"list[context;dst;4,0;4,3;]"..
-			factory_gui_bg..
-			factory_gui_bg_img..
-			factory_gui_slots..
+			gui.bg_color..
+			gui.bg_img..
+			gui.slot_colors..
 			factory.get_hotbar_bg(0,8)..
 			"list[current_player;main;0,8;8,4;]" ..
 			"listring[current_player;main]"..

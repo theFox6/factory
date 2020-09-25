@@ -18,11 +18,6 @@ read_globals = {
 
 globals = {
 	"factory",
-	--these should probably be moved to the factory global
-	"factory_gui_bg",
-	"factory_gui_bg_img",
-	"factory_gui_bg_img_2",
-	"factory_gui_slots",
 	--from modutil
 	"modutil",
 	"LuaVenusCompiler",

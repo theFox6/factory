@@ -8,7 +8,7 @@ minetest.register_node("factory:storage_tank", {
 	tiles = {"factory_steel_noise.png","factory_glass.png^factory_measure.png",
 		"factory_glass.png^factory_port.png", "factory_steel_noise.png"},
 	inventory_image = "factory_storage_tank.png",
-	use_texture_alpha = true,
+	use_texture_alpha = "blend",
 	paramtype = "light",
 	sunlight_propagates = true,
 	groups = {oddly_breakable_by_hand = 2},

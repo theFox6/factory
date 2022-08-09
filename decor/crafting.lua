@@ -1,9 +1,9 @@
 minetest.register_craft({
 	output = "factory:smoke_tube",
 	recipe = {
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"}
+		{"default:steel_ingot",              "", "default:steel_ingot"},
+		{"default:steel_ingot",              "", "default:steel_ingot"},
+		{"default:steel_ingot", "default:stick", "default:steel_ingot"}
 	}
 })
 

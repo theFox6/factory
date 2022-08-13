@@ -5,13 +5,13 @@ local insert = factory.insert_object_item
 local function qarm_handle (a, b, target, stack, minv, obj)
 	local found = false
 	if factory.has_main_inv(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 
 		if insert(inv,"main", stack, obj) then found = true end
 	end
 	if factory.has_fuel_input(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 
 		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
@@ -20,7 +20,7 @@ local function qarm_handle (a, b, target, stack, minv, obj)
 		end
 	end
 	if factory.has_src_input(target) and not found then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 
 		if insert(inv,"src", stack, obj) then found = true end
@@ -101,7 +101,7 @@ minetest.register_abm({
 	interval = 1,
 	chance = 1,
 	action = function(pos)
-		local mmeta = minetest.env:get_meta(pos)
+		local mmeta = minetest.get_meta(pos)
 		local minv = mmeta:get_inventory()
 		local all_objects = minetest.get_objects_inside_radius(pos, 0.5)
 		local a = minetest.facedir_to_dir(minetest.get_node(pos).param2)

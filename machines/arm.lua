@@ -46,7 +46,7 @@ minetest.register_abm({
 				local stack = ItemStack(obj:get_luaentity().itemstring)
 
 				if factory.has_main_inv(target) then
-					local meta = minetest.env:get_meta(b)
+					local meta = minetest.get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"main", stack, obj) then
 						obj:set_velocity({x=0,y=0,z=0})
@@ -55,7 +55,7 @@ minetest.register_abm({
 				end
 				if factory.has_fuel_input(target) then
 					if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-						local meta = minetest.env:get_meta(b)
+						local meta = minetest.get_meta(b)
 						local inv = meta:get_inventory()
 
 						-- back, fuel
@@ -68,7 +68,7 @@ minetest.register_abm({
 				end
 
 				if factory.has_src_input(target) then
-					local meta = minetest.env:get_meta(b)
+					local meta = minetest.get_meta(b)
 					local inv = meta:get_inventory()
 
 					if not insert(inv,"src", stack, obj) then

@@ -16,7 +16,7 @@ end
 function factory.get_objects_with_square_radius(pos, rad)
   rad = rad + .5;
   local objs = {}
-  for _,object in ipairs(minetest.env:get_objects_inside_radius(pos, math.sqrt(3)*rad)) do
+  for _,object in ipairs(minetest.get_objects_inside_radius(pos, math.sqrt(3)*rad)) do
     if not object:is_player()
     and object:get_luaentity()
     and (object:get_luaentity().name == "__builtin:item" or object:get_luaentity().name == "factory:moving_item") then

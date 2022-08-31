@@ -56,7 +56,9 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			local inv = digger:get_inventory()
 			local meta = minetest.get_meta(pos)
 			local stored = meta:get_int("stored")
-			local stack = ItemStack({name="factory:storage_tank_" .. name .. "_inventory", count=1, metadata=stored})
+			local stack = ItemStack("factory:storage_tank_" .. name .. "_inventory")
+			stack:get_meta():set_int("stored", stored)
+
 			if inv:room_for_item("main", stack) then
 				inv:add_item("main", stack)
 			else

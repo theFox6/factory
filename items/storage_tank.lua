@@ -101,6 +101,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				return stack
 			end
 		end,
+
 	})
 
 	minetest.register_craftitem("factory:storage_tank_" .. name .. "_inventory", {
@@ -113,37 +114,38 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		groups = {not_in_creative_inventory = 1},
 		stack_max = 1,
 		on_place = function(itemstack, placer, pointed_thing)
-			local pt = pointed_thing
-			if not pt then
-				return
-			end
-			if pt.type ~= "node" then
-				return
-			end
-			local under = minetest.get_node(pt.under)
-			local above = minetest.get_node(pt.above)
-			local pos = minetest.pointed_thing_to_face_pos(placer, pointed_thing)
-			local node = minetest.get_node(pos)
-			if not minetest.registered_nodes[under.name] then
-				return
-			end
-			if not minetest.registered_nodes[above.name] then
-				return
-			end
-			if not minetest.registered_nodes[node.name].buildable_to then
+			if not pointed_thing or pointed_thing.type ~= "node" then
 				return
 			end
 
-			local stored = tonumber(itemstack:get_metadata())
+			local under = vector.copy(pointed_thing.above)
+			under.y = under.y - 1
+			local node_under = minetest.get_node(under)
+			local above = minetest.get_node(pointed_thing.above)
 
-			minetest.place_node(pos, {
+			if	not minetest.registered_nodes[above.name].buildable_to or	-- Can we build here
+				not minetest.registered_nodes[node_under.name] or			-- Node under is known
+				minetest.registered_nodes[node_under.name].buildable_to		-- Node under is solid
+			then
+				return
+			end
+
+			-- Place the node
+			minetest.place_node(pointed_thing.above, {
 				name="factory:storage_tank_" .. name,
-				param2 = stored + 64 + 128
+				param2 = 192
 			})
-			local meta = minetest.get_meta(pos)
+
+			-- Update metadata and textures
+			local stored = itemstack:get_meta():get_int("stored")
+			local meta = minetest.get_meta(pointed_thing.above)
 			meta:set_int("stored", stored)
-			meta:set_string("infotext", S("Storage Tank (@1): @2% full",S(name),math.floor((100/63)*stored)))
-			minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
+			meta:set_string("infotext", S("Storage Tank (@1): @2% full",S(name),math.floor((100/64)*stored)))
+			minetest.swap_node(pointed_thing.above, {
+				name="factory:storage_tank_" .. name,
+				param2 = stored + 192
+			})
+
 			return ""
 		end
 	})
@@ -155,3 +157,5 @@ factory.register_storage_tank("water", 4,
 factory.register_storage_tank("lava", 8,
 	{{name="default_lava_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}}},
 	"default_lava.png", 13, "bucket:bucket_lava", "bucket:bucket_empty")
+
+-- vim: sw=2:tw=2:noet:

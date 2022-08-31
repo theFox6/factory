@@ -92,6 +92,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 					minetest.swap_node(pos, {name = "factory:storage_tank"})
 				end
 				local inv = clicker:get_inventory()
+				stack:take_item(1)
 				if inv:room_for_item("main", {name=bucket_full}) then
 					inv:add_item("main", bucket_full)
 				else
@@ -99,7 +100,6 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 					ppos.y = math.floor(ppos.y + 0.5)
 					minetest.add_item(ppos, bucket_full)
 				end
-				stack:take_item(1)
 				return stack
 			end
 		end,

@@ -22,3 +22,4 @@ end
 if factory.setting_enabled("Miner") then
   factory.require("machines/miner")
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

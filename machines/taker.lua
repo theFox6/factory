@@ -144,3 +144,4 @@ end
 factory.register_taker("", "", 2.5, "Pneumatic Taker Mk I", {"factory_steel_noise_red.png"})
 factory.register_taker("", "_gold", 1.8, "Pneumatic Taker Mk II", {"factory_steel_noise_gold.png"})
 factory.register_taker("", "_diamond", 1.2, "Pneumatic Taker Mk III", {"factory_steel_noise_diamond.png"})
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

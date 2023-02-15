@@ -24,3 +24,4 @@ minetest.register_alias("factory:copper_wire", "homedecor:copper_wire")
 minetest.register_alias("factory:steel_wire", "homedecor:steel_wire")
 minetest.register_alias("factory:fiber", "mesecons_materials:fiber")
 --1 ingot = 2 wire spools
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -182,3 +182,4 @@ factory.register_storage_tank("river_water", 4,
 	"default_water.png", 0, "bucket:bucket_river_water", "bucket:bucket_empty")
 
 -- vim: sw=2:tw=2:noet:
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

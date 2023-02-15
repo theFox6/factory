@@ -41,3 +41,4 @@ minetest.register_on_generated(function(minp, maxp, seed)
 		end
 	end
 end)
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

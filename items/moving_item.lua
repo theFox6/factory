@@ -169,3 +169,4 @@ if factory.setting_enabled("stepBeltvelocity") then
 		end
 	end)
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

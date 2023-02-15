@@ -19,3 +19,4 @@ end
 minetest.register_alias("factory:silver_lump",  "moreores:silver_lump")
 minetest.register_alias("factory:silver_ingot", "moreores:silver_ingot")
 minetest.register_alias("factory:silver_block", "moreores:silver_block")
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

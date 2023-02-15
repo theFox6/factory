@@ -45,3 +45,4 @@ local function register_1x1_method(name, desc, machine)
 end
 register_1x1_method("ind_squeezer", S"Industrial Squeezer", "factory:ind_squeezer")
 register_1x1_method("wire_drawer", S"Wire Drawer", "factory:wire_drawer")
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

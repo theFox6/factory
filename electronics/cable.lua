@@ -58,3 +58,4 @@ minetest.register_lbm({
 		meta:set_int("distribution_heat",0)
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -152,3 +152,4 @@ minetest.register_craft({
 		{"default:steel_ingot", "factory:battery_item", "default:steel_ingot"},
 	},
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

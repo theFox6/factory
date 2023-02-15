@@ -14,6 +14,8 @@ read_globals = {
 	"vector",
 	"VoxelArea",
 	"VoxelManip",	
+	"farming",
+	"stairs",
 }
 
 globals = {

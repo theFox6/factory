@@ -1,6 +1,4 @@
 # textdomain: factory
-# Translation by <your name>
-
 Pneumatic Mover=
 unknown item=
 unconfigured Autocrafter=
@@ -14,7 +12,6 @@ Conveyor Belt=
 cable=
 Combustion Generator=
 no smoke tube=
-## devices ###
 no fuel to burn=
 fully charged=
 active=

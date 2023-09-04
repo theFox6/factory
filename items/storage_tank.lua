@@ -22,7 +22,7 @@ minetest.register_node("factory:storage_tank", {
 		local d = factory.registered_storage_tanks[n]
 		minetest.swap_node(pos, {
 			name = "factory:storage_tank_"..n,
-			param2 = d.increment + 64 + 128
+			param2 = d.increment - 1 + 64 + 128
 		})
 		local meta = minetest.get_meta(pos)
 		meta:set_int("stored", d.increment)
@@ -80,8 +80,14 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				if stored < 63 then
 					stored = stored + increment
 					meta:set_int("stored", stored)
-					meta:set_string("infotext", "Storage Tank (" .. name .. "): "..math.floor((100/63)*stored).."% full")
-					minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
+					meta:set_string("infotext",
+						"Storage Tank (" .. name .. "): " ..
+						math.floor((100/64)*stored) .."% full"
+					)
+					minetest.swap_node(pos, {
+						name = "factory:storage_tank_" .. name,
+						param2 = stored - 1 + 64 + 128
+					})
 					return ItemStack(bucket_empty)
 				end
 			end
@@ -91,8 +97,14 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 				if stored > increment then
 					stored = stored - increment
 					meta:set_int("stored", stored)
-					meta:set_string("infotext", "Storage Tank (" .. name .. "): "..math.floor((100/63)*stored).."% full")
-					minetest.swap_node(pos, {name = "factory:storage_tank_" .. name, param2 = stored + 64 + 128})
+					meta:set_string("infotext",
+						"Storage Tank (" .. name .. "): " ..
+						math.floor((100/64)*stored) .. "% full"
+					)
+					minetest.swap_node(pos, {
+					  name = "factory:storage_tank_" .. name,
+						param2 = stored - 1 + 64 + 128
+					})
 				elseif stored <= increment then
 					meta:set_string("infotext", nil)
 					minetest.swap_node(pos, {name = "factory:storage_tank"})
@@ -151,7 +163,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 			meta:set_string("infotext", S("Storage Tank (@1): @2% full",S(name),math.floor((100/64)*stored)))
 			minetest.swap_node(pointed_thing.above, {
 				name="factory:storage_tank_" .. name,
-				param2 = stored + 192
+				param2 = stored - 1 + 64 + 128
 			})
 
 			return ""

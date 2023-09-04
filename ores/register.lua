@@ -70,3 +70,4 @@ end
 
 factory.register_metal = register_metal
 return register_metal
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

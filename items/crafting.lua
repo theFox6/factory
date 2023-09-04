@@ -128,3 +128,4 @@ minetest.register_craft({
 	recipe = "factory:tree_sap",
 	burntime = 20,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

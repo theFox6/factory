@@ -84,3 +84,4 @@ function factory.has_dst_output(node)
 	end
 	return false
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

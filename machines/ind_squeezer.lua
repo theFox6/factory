@@ -307,3 +307,4 @@ minetest.register_abm({
 		inv:set_stack("fuel", 1, afterfuel.items[1])
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -195,3 +195,4 @@ function device.distribute(pos,energy_amount, max_amount)
 end
 
 return device
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

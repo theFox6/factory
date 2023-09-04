@@ -54,3 +54,4 @@ if minetest.get_modpath("moreblocks") and not minetest.get_modpath("extranodes")
 		tiles={"technic_zinc_block.png"},
 	})
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

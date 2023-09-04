@@ -80,3 +80,4 @@ minetest.register_abm({
 		end
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

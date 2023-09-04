@@ -74,3 +74,4 @@ if minetest.get_modpath("tnt") then
 	register_grinding("default:flint", "tnt:gunpowder", 2 )
 	egrinder.register_fallthrough("tnt:gunpowder")
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

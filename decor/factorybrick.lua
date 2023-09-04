@@ -22,3 +22,4 @@ if minetest.get_modpath("moreblocks") then
 		groups = {cracky=3, stone=1},
 	})
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

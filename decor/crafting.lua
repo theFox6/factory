@@ -64,3 +64,4 @@ minetest.register_craft({
 		{'factory:half_sieve_single'},
 	}
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

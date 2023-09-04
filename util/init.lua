@@ -14,3 +14,4 @@ if minetest.settings:get_bool("factory_fertilizerGeneration") or true then
 end
 
 factory.require("util/compat_nei") -- does nothing when there's no NEI
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

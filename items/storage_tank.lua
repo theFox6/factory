@@ -1,6 +1,7 @@
 local S = factory.S
 
 factory.registered_storage_tanks = {}
+factory.buckets_tanks = {}
 
 minetest.register_node("factory:storage_tank", {
 	description = S("Storage Tank"),
@@ -12,25 +13,29 @@ minetest.register_node("factory:storage_tank", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	groups = {oddly_breakable_by_hand = 2},
+
 	on_rightclick = function(pos, _, clicker, itemstack)
 		local stack = ItemStack(itemstack)
-		for n,d in pairs(factory.registered_storage_tanks) do
-			if stack:get_name() == d.bucket_full then
-				minetest.swap_node(pos, {name = "factory:storage_tank_"..n, param2 = d.increment + 64 + 128})
-				local meta = minetest.get_meta(pos)
-				meta:set_int("stored", d.increment)
-				local inv = clicker:get_inventory()
-				if inv:room_for_item("main", {name=d.bucket_empty}) then
-					inv:add_item("main", d.bucket_empty)
-				else
-					local ppos = clicker:get_pos()
-					ppos.y = math.floor(ppos.y + 0.5)
-					minetest.add_item(ppos, d.bucket_empty)
-				end
-				stack:take_item(1)
-				return stack
-			end
+		local n = factory.buckets_tanks[stack:get_name()]
+		if not n then return end
+
+		local d = factory.registered_storage_tanks[n]
+		minetest.swap_node(pos, {
+			name = "factory:storage_tank_"..n,
+			param2 = d.increment + 64 + 128
+		})
+		local meta = minetest.get_meta(pos)
+		meta:set_int("stored", d.increment)
+		local inv = clicker:get_inventory()
+		stack:take_item(1)
+		if inv:room_for_item("main", {name=d.bucket_empty}) then
+			inv:add_item("main", d.bucket_empty)
+		else
+			local ppos = clicker:get_pos()
+			ppos.y = math.floor(ppos.y + 0.5)
+			minetest.add_item(ppos, d.bucket_empty)
 		end
+		return stack
 	end,
 })
 
@@ -40,6 +45,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		bucket_full = bucket_full,
 		bucket_empty = bucket_empty
 	}
+	factory.buckets_tanks[bucket_full] = name -- Revert lookup table
 	--TODO: support bucket tables for multiple vessels or bucket registration
 	minetest.register_node("factory:storage_tank_" .. name, {
 		drawtype = "glasslike_framed",

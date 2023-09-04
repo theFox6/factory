@@ -57,11 +57,11 @@ minetest.register_abm({
 		local all_objects = minetest.get_objects_inside_radius({x = pos.x, y = pos.y, z = pos.z}, 1)
 		for _,obj in ipairs(all_objects) do
 			if move_player and obj:is_player() then
-				obj:moveto({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
+				obj:move_to({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
 			else
 				local ent = obj:get_luaentity()
 				if ent and (ent.name == "__builtin:item" or ent.name == "factory:moving_item") then
-					obj:moveto({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
+					obj:move_to({x = obj:get_pos().x, y = obj:get_pos().y + 3, z = obj:get_pos().z})
 				end
 			end
 		end

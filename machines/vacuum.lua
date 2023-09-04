@@ -105,7 +105,7 @@ minetest.register_abm({
 		for _,obj in ipairs(all_objects) do
 			if not obj:is_player() and obj:get_luaentity()
 			and (obj:get_luaentity().name == "__builtin:item" or obj:get_luaentity().name == "factory:moving_item") then
-				obj:moveto({x = pos.x, y = pos.y - 0.5, z = pos.z})
+				obj:move_to({x = pos.x, y = pos.y - 0.5, z = pos.z})
 			end
 		end
 	end,

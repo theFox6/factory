@@ -28,7 +28,7 @@ local function qarm_handle (a, b, target, stack, minv, obj)
 	if not found then
 		if not insert(minv,"main", stack, obj) then
 			obj:set_velocity({x=0,y=0,z=0})
-			obj:moveto({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
+			obj:move_to({x = b.x + a.x, y = b.y + 0.5, z = b.z + a.z}, false)
 		end
 	end
 end

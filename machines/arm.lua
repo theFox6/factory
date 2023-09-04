@@ -49,7 +49,7 @@ minetest.register_abm({
 					local meta = minetest.env:get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"main", stack, obj) then
-						obj:setvelocity({x=0,y=0,z=0})
+						obj:set_velocity({x=0,y=0,z=0})
 						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
@@ -60,7 +60,7 @@ minetest.register_abm({
 
 						-- back, fuel
 						if not insert(inv,"fuel", stack, obj) then
-							obj:setvelocity({x=0,y=0,z=0})
+							obj:set_velocity({x=0,y=0,z=0})
 							obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 						end
 						return
@@ -72,7 +72,7 @@ minetest.register_abm({
 					local inv = meta:get_inventory()
 
 					if not insert(inv,"src", stack, obj) then
-						obj:setvelocity({x=0,y=0,z=0})
+						obj:set_velocity({x=0,y=0,z=0})
 						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end

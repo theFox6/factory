@@ -1,6 +1,14 @@
 local S = factory.require("translation")
 local egrinder = factory.require("electronics/electronic_grinder")
 
+local register_grinding = function(input, output, time)
+  factory.register_recipe("grinding",{
+    input = { input },
+    output = output,
+    time = time or 1,
+  })
+end
+
 factory.register_recipe_type("grinding", {
   description = S("grinding"),
   icon = "factory_grinder_front.png",
@@ -10,11 +18,7 @@ factory.register_recipe_type("grinding", {
 
 --check is actually not nessecary since it's only a recipe
 if minetest.settings:get_bool("factory_grindSeeds", false) and minetest.get_modpath("farming") then
-  factory.register_recipe("grinding",{
-    input = {"farming:seed_wheat"},
-    output = "farming:flour",
-    time = 1,
-  })
+  register_grinding("farming:seed_wheat", "farming:flour")
   egrinder.register_fallthrough("farming:flour")
   if farming and farming.mod then
     minetest.register_craftitem(":farming:multigrain", {
@@ -29,79 +33,44 @@ if minetest.settings:get_bool("factory_grindSeeds", false) and minetest.get_modp
       recipe = { "farming:seed_wheat", "farming:seed_barley", "farming:seed_oat", "farming:seed_rye" }
     })
 
-    factory.register_recipe("grinding",{input={"farming:multigrain"}, output = "farming:flour_multigrain" , time=1})
-    factory.register_recipe("grinding",{input={"farming:seed_barley"}, output = "farming:flour" , time=1})
-    factory.register_recipe("grinding",{input={"farming:seed_oat"}, output = "farming:flour" , time=1})
-    factory.register_recipe("grinding",{input={"farming:seed_rye"}, output = "farming:flour" , time=1})
-    factory.register_recipe("grinding",{input={"farming:seed_rice"}, output = "farming:rice_flour" , time=1})
-	egrinder.register_fallthrough("farming:flour")
+    register_grinding("farming:multigrain", "farming:flour_multigrain")
+    register_grinding("farming:seed_barley", "farming:flour")
+    register_grinding("farming:seed_oat", "farming:flour")
+    register_grinding("farming:seed_rye", "farming:flour")
+    register_grinding("farming:seed_rice", "farming:rice_flour")
+    egrinder.register_fallthrough("farming:flour")
   end
 end
 
-factory.register_recipe("grinding",{
-  input = {"default:stone"},
-  output = "default:cobble",
-  time = 3,
-})
+register_grinding("default:stone", "default:cobble", 3)
 
-factory.register_recipe("grinding",{
-  input = {"default:cobble"},
-  output = "default:gravel",
-  time = 3,
-})
+egrinder.register_fallthrough("default:cobble")
 
-factory.register_recipe("grinding",{
-  input = {"default:desert_cobble"},
-  output = "default:gravel",
-  time = 3,
-})
+register_grinding("default:cobble", "default:gravel", 3)
 
-factory.register_recipe("grinding",{
-  input = {"default:mossycobble"},
-  output = "default:gravel",
-  time = 3,
-})
+register_grinding("default:desert_cobble", "default:gravel", 3)
 
-factory.register_recipe("grinding",{
-  input = {"default:gravel"},
-  output = "default:sand",
-  time = 2,
-})
+register_grinding("default:mossycobble", "default:gravel", 3)
+
+egrinder.register_fallthrough("default:gravel")
+
+
+
+register_grinding("default:gravel", "default:sand", 2)
+
+register_grinding("default:glass","default:silver_sand",2)
+
+register_grinding("vessels:glass_fragments","default:silver_sand")
+
 egrinder.register_fallthrough("group:sand")
 
 --are registered as single registrations, but there are no differences in the wood output
-factory.register_recipe("grinding",{
-  input = {"group:tree"},
-  output = "default:stick 16",
-  time = 2,
-})
+register_grinding("group:tree", "default:stick 16", 2)
 
-----
--- default registered normal craft recipes
-----
+register_grinding("default:ice", "default:snowblock", 2 )
+egrinder.register_fallthrough("default:snowblock")
 
-factory.register_recipe("grinding",{
-  input = {"group:wood"},
-  output = "default:stick 4",
-  time = 2,
-})
-
---[[ sandstone
-factory.register_recipe("grinding",{
-  input={"default:sandstone"},
-  output="default:sand 4",
-  time = 2,
-})
-
-factory.register_recipe("grinding",{
-  input={"default:desert_sandstone"},
-  output="default:desert_sand 4",
-  time = 2,
-})
-
-factory.register_recipe("grinding",{
-  input={"default:silver_sandstone"},
-  output="default:silver_sand 4",
-  time = 2,
-})
---]]
+if minetest.get_modpath("tnt") then
+	register_grinding("default:flint", "tnt:gunpowder", 2 )
+	egrinder.register_fallthrough("tnt:gunpowder")
+end

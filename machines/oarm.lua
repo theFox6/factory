@@ -5,7 +5,7 @@ local count_index = factory.count_index
 local function oarm_handle (a, b, target, stack, obj)
 	--throws anything that is already in the inventory (more than one stack) out
 	if factory.has_main_inv(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 		local inv_index = count_index(inv:get_list("main"))
 
@@ -23,7 +23,7 @@ local function oarm_handle (a, b, target, stack, obj)
 	end
 	if factory.has_fuel_input(target) then
 		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-			local meta = minetest.env:get_meta(b)
+			local meta = minetest.get_meta(b)
 			local inv = meta:get_inventory()
 			-- back, fuel
 			local inv_index = count_index(inv:get_list("fuel"))
@@ -43,7 +43,7 @@ local function oarm_handle (a, b, target, stack, obj)
 		end
 	end
 	if factory.has_src_input(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 		local inv_index = count_index(inv:get_list("src"))
 

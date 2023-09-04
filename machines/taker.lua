@@ -2,7 +2,7 @@ factory.taker = {}
 
 function factory.taker.take(pos,dir,invlist)
 	local src = vector.add(pos,dir)
-	local meta = minetest.env:get_meta(src)
+	local meta = minetest.get_meta(src)
 	local inv = meta:get_inventory()
 	if not inv:is_empty(invlist) then
 		local list = inv:get_list(invlist)

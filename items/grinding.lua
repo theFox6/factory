@@ -9,14 +9,34 @@ factory.register_recipe_type("grinding", {
 })
 
 --check is actually not nessecary since it's only a recipe
-if minetest.get_modpath("farming") then
+if minetest.settings:get_bool("factory_grindSeeds", false) and minetest.get_modpath("farming") then
   factory.register_recipe("grinding",{
     input = {"farming:seed_wheat"},
     output = "farming:flour",
     time = 1,
   })
+  egrinder.register_fallthrough("farming:flour")
+  if farming and farming.mod then
+    minetest.register_craftitem(":farming:multigrain", {
+      description = "Multigrain",
+      inventory_image = "farming_multigrain.png",
+      groups = {food_wheat = 1, flammable = 4}
+    })
+
+    minetest.register_craft({
+      type = "shapeless",
+      output = "farming:multigrain 4",
+      recipe = { "farming:seed_wheat", "farming:seed_barley", "farming:seed_oat", "farming:seed_rye" }
+    })
+
+    factory.register_recipe("grinding",{input={"farming:multigrain"}, output = "farming:flour_multigrain" , time=1})
+    factory.register_recipe("grinding",{input={"farming:seed_barley"}, output = "farming:flour" , time=1})
+    factory.register_recipe("grinding",{input={"farming:seed_oat"}, output = "farming:flour" , time=1})
+    factory.register_recipe("grinding",{input={"farming:seed_rye"}, output = "farming:flour" , time=1})
+    factory.register_recipe("grinding",{input={"farming:seed_rice"}, output = "farming:rice_flour" , time=1})
+	egrinder.register_fallthrough("farming:flour")
+  end
 end
-egrinder.register_fallthrough("farming:flour")
 
 factory.register_recipe("grinding",{
   input = {"default:stone"},

@@ -37,6 +37,10 @@ if not minetest.get_modpath("technic_worldgen") then
 		noise_params = zinc_params,
 		noise_threshold = zinc_threshold,
 	})
+
+  if minetest.get_modpath("ingots") then
+    ingots.register_ingots("technic:zinc_ingot", "ingot_zinc.png", false, nil, "ingots")
+  end
 end
 
 minetest.register_alias("factory:zinc_lump",  "technic:zinc_lump")

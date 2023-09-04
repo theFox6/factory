@@ -11,6 +11,9 @@ if not minetest.get_modpath("moreores") then
       y_max     = -2,
     }
   })
+  if minetest.get_modpath("ingots") then
+    ingots.register_ingots("moreores:silver_ingot", "ingot_silver.png", false, nil, "ingots")
+  end
 end
 
 minetest.register_alias("factory:silver_lump",  "moreores:silver_lump")

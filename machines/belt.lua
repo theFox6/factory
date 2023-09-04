@@ -66,6 +66,7 @@ function belts.move_player(player,bpos,speed,belt_node)
 		  dir[c] = dir[c] - math.sign(v) * math.sqrt(math.abs(pv[c]))
 		end
 	end
+	-- TODO check for add_velocity at init
 	if belt_move_player and not player.add_velocity then
 	  abm_move_player = false
 	  minetest.settings:set_bool("factory_enableabmBeltvelocity",false)

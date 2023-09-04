@@ -177,5 +177,8 @@ factory.register_storage_tank("water", 4,
 factory.register_storage_tank("lava", 8,
 	{{name="default_lava_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=3.0}}},
 	"default_lava.png", 13, "bucket:bucket_lava", "bucket:bucket_empty")
+factory.register_storage_tank("river_water", 4,
+	{{name="default_river_water_source_animated.png", animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=2.0}}},
+	"default_water.png", 0, "bucket:bucket_river_water", "bucket:bucket_empty")
 
 -- vim: sw=2:tw=2:noet:

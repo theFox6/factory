@@ -65,12 +65,30 @@ function factory.has_fuel_input(node)
 	return false
 end
 
+local known_chests = {}
+if minetest.get_modpath("default") then
+	table.insert(known_chests, "default:chest")
+	table.insert(known_chests, "default:chest_locked")
+end
+if minetest.get_modpath("technic_chests") then
+	local materials = { "iron", "copper", "silver", "gold", "mithril" }
+	for _, material in ipairs(materials) do
+		table.insert(known_chests, "technic:" .. material .. "_chest")
+		table.insert(known_chests, "technic:" .. material .. "_locked_chest")
+		table.insert(known_chests, "technic:" .. material .. "_protected_chest")
+	end
+end
+
 function factory.has_main_inv(node)
   local nname = factory.get_node_name(node)
   if minetest.get_item_group(nname, "factory_main_inv") > 0 then
     return true
-  elseif nname == "default:chest" or nname == "default:chest_locked" then
-    return true
+  else
+    for _, chest in ipairs(known_chests) do
+      if nname == chest then
+        return true
+      end
+    end
   end
   return false
 end

@@ -1,166 +1,102 @@
 # textdomain: factory
 # Translation by tan <i@libcore.org>
 
-### decor/factorybrick.lua ###
-Factory Brick=工业用砖
-
-### decor/itemsieve.lua ###
-stack sieve=成组物品筛
-half stack sieve=半阶成组物品筛
-item sieve=单项物品筛
-half item sieve=半阶单项物品筛
-
-### decor/smoketube.lua ###
-Smoke Tube=烟囱
-
-## devices ###
-no fuel to burn=燃料不足
-no smoke tube=未安装足够高的烟囱
-active=工作中
-fully charged=已充满
-
-### electronics/battery.lua ###
-battery pack=电池箱
-
-### electronics/cable.lua ###
-cable=电缆
-
-### electronics/device.lua ###
-@1status: @2=@1状态：@2
-@1charge: @2=@1电量：@2
-empty=空闲
-unpowered=未供电
-
-### electronics/combustion_generator.lua ###
-Combustion Generator=火力发电机
-
-### electronics/electronic_furnace.lua ###
-Electronic Furnace=电热炉
-
-### electronics/electronic_grinder.lua ###
-electronic grinder=电动研磨机
-electronic grinder (grinding)=电动研磨机 (研磨中) 
-
-### items/battery_item.lua ###
-battery=电池
-
-### items/crafting.lua ###
-squeezing=压榨中
-drawing wire=卷线中
-
-### items/craftitems.lua ###
-Tree Sap=树液
-Compressed Clay=致密粘土块
-Factory Lump=工业料块
-Item Scanning Microchip=物品扫描芯片
-Small Fanblade=小型扇叶
-
-### items/grinding.lua ###
-grinding=研磨中
-grinder (grinding)=研磨机 (研磨中) 
-grinder is grinding, fuel current used: @1%=研磨机研磨中，已使用燃料：@1%
-
-### items/gears.lua ###
-Small Steel Gear=小型钢制齿轮
-Small Gold Gear=小型金制齿轮
-Small Diamond Gear=小型钻石齿轮
-
-### items/storage_tank.lua ###
-Storage Tank=储液罐
-Storage Tank (@1)=储液罐 (@1)
-Storage Tank (@1): @2% full=储液罐 (@1)：已存 @2%
-water=水
-lava=岩浆
-
-### items/wires.lua ###
-spool of @1 wire=@1线卷
-copper=铜
-steel=钢
-Fiber=纤维
-
-### machines ###
-@1 is empty=@1空闲
-@1 has no smoke tube=@1未安装足够高的烟囱
-@1 has no fuel to burn=@1燃料不足
-@1 was switched off=@1已关闭
-
-### machines/arm.lua ###
 Pneumatic Mover=气动取料机
-
-### machines/autocrafter.lua ###
 unknown item=未知物品
 unconfigured Autocrafter=未设置自动组装机
 '@1' Autocrafter (@2)='@1' 自动组装机 (@2) 
 Autocrafter=自动组装机
 unconfigured Autocrafter: unknown recipe=未设置自动组装机：不明工艺
-
-### machines/belt.lua ###
+battery pack=电池箱
+battery=电池
 centering Conveyor Belt=中心传送带
 Conveyor Belt=传送带
-
-### machines/fan.lua ###
+cable=电缆
+Combustion Generator=火力发电机
+no smoke tube=未安装足够高的烟囱
+## devices ###
+no fuel to burn=燃料不足
+fully charged=已充满
+active=工作中
+Time: @1 seconds=
+squeezing=压榨中
+drawing wire=卷线中
+Tree Sap=树液
+Compressed Clay=致密粘土块
+Factory Lump=工业料块
+Item Scanning Microchip=物品扫描芯片
+Small Fanblade=小型扇叶
+@1status: @2=@1状态：@2
+@1charge: @2=@1电量：@2
+Electronic Furnace=电热炉
+empty=空闲
+unpowered=未供电
+electronic grinder=电动研磨机
+electronic grinder (grinding)=电动研磨机 (研磨中) 
+Factory Brick=工业用砖
+@1 Slab=
 Fan=风扇
 Wall Fan=立式风扇
-
-### machines/grinder.lua ###
+Small Steel Gear=小型钢制齿轮
+Small Gold Gear=小型金制齿轮
+Small Diamond Gear=小型钻石齿轮
 grinder=研磨机
-
-### machines/ind_furnace.lua ###
+grinder (grinding)=研磨机 (研磨中) 
+grinder is grinding, fuel current used: @1%=研磨机研磨中，已使用燃料：@1%
+@1 is empty=@1空闲
+@1 has no smoke tube=@1未安装足够高的烟囱
+@1 has no fuel to burn=@1燃料不足
+grinding=研磨中
 Industrial Furnace=工业熔炉
 Industrial Furnace (burning)=工业熔炉 (燃烧中) 
 Industrial Furnace is smelting, fuel current used: @1%=工业熔炉冶炼中，已使用燃料：@1%
-
-### machines/ind_squeezer.lua ###
 Industrial Squeezer=工业压榨机
 Industrial Squeezer (working)=工业压榨机 (工作中) 
 Industrial Squeezer is working, fuel current used: @1%=工业压榨机工作中，已使用燃料：@1%
-
-### machines/miner.lua ###
+: loaded in %.4f s=
+stack sieve=成组物品筛
+half stack sieve=半阶成组物品筛
+item sieve=单项物品筛
+half item sieve=半阶单项物品筛
 Industrial Miner=工业挖矿机
+@1 was switched off=@1已关闭
+@1 forceloading block=
 @1 hit protected block=@1钻头触及受保护区块
 @1 hit lava=@1钻头触及岩浆
 @1 hit undiggable block=@1钻头触及无法挖掘区块
 @1 has reached the maximum length=@1挖至最大深度处
 Upgraded Miner=高级挖矿机
-
-### machines/oarm.lua ###
 Overflowing Pneumatic Mover=溢流气动取料机
-
-### machines/qarm.lua ###
 Queued Pneumatic Mover=列队气动取料机
-
-### machines/stp.lua ###
-Sapling Fertilizer=幼苗肥料
-Sapling Treatment Plant=育苗场
-
-### machines/swapper.lua ###
-Swapper=分拣机
-
-### machines/taker.lua ###
-Pneumatic Taker Mk I=气动取料机 MK I
-Pneumatic Taker Mk II=气动取料机 MK II
-Pneumatic Taker Mk III=气动取料机 MK III
-
-### machines/vacuum.lua ###
-Vacuum=吸取式漏斗
-
-### machines/upward_vacuum.lua ###
-Vacuum Sorter=吸取式分选机
-
-### machines/wire_drawer.lua ###
-Wire Drawer=卷线机
-Wire Drawer (working)=卷线机 (工作中) 
-Wire Drawer is working, fuel current used: @1%=卷线机工作中，已使用燃料：@1%
-
-### ores/register.lua ###
 @1 Lump=@1块
 @1 Ingot=@1锭
 @1 Block=@1方块
 @1 Ore=@1矿石
-
-### ores/silver.lua ###
 silver=银
-
-### ores/zinc.lua ###
+Smoke Tube=烟囱
+Storage Tank=储液罐
+Storage Tank (@1)=储液罐 (@1)
+Storage Tank (@1): @2% full=储液罐 (@1)：已存 @2%
+Sapling Fertilizer=幼苗肥料
+Sapling Treatment Plant=育苗场
+Swapper=分拣机
+Vacuum Sorter=吸取式分选机
+Vacuum=吸取式漏斗
+Wire Drawer=卷线机
+Wire Drawer (working)=卷线机 (工作中) 
+Wire Drawer is working, fuel current used: @1%=卷线机工作中，已使用燃料：@1%
+spool of @1 wire=@1线卷
+Fiber=纤维
 zinc=锌
 @1 block=@1块
+
+
+##### not used anymore #####
+
+water=水
+lava=岩浆
+copper=铜
+steel=钢
+Pneumatic Taker Mk I=气动取料机 MK I
+Pneumatic Taker Mk II=气动取料机 MK II
+Pneumatic Taker Mk III=气动取料机 MK III

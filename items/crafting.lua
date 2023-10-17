@@ -3,27 +3,27 @@ local S = factory.S
 minetest.register_craft({
 	output = "factory:small_steel_gear 4",
 	recipe = {
-		{"default:steel_ingot", "", "default:steel_ingot"},
 		{"", "default:steel_ingot", ""},
-		{"default:steel_ingot", "", "default:steel_ingot"}
+		{"default:steel_ingot", "default:iron_lump", "default:steel_ingot"},
+		{"", "default:steel_ingot", ""}
 	}
 })
 
 minetest.register_craft({
 	output = "factory:small_gold_gear 4",
 	recipe = {
-		{"default:gold_ingot", "", "default:gold_ingot"},
-		{"", "factory:small_steel_gear", ""},
-		{"default:gold_ingot", "", "default:gold_ingot"}
+		{"", "default:gold_ingot", ""},
+		{"default:gold_ingot", "factory:small_steel_gear", "default:gold_ingot"},
+		{"", "default:gold_ingot", ""}
 	}
 })
 
 minetest.register_craft({
 	output = "factory:small_diamond_gear 4",
 	recipe = {
-		{"default:diamond", "", "default:diamond"},
-		{"", "factory:small_gold_gear", ""},
-		{"default:diamond", "", "default:diamond"}
+		{"", "default:diamond", ""},
+		{"default:diamond", "factory:small_gold_gear", "default:diamond"},
+		{"", "default:diamond", ""}
 	}
 })
 
@@ -128,3 +128,4 @@ minetest.register_craft({
 	recipe = "factory:tree_sap",
 	burntime = 20,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

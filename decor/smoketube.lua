@@ -126,3 +126,4 @@ function factory.smoke_on_tube(machine_pos, active)
 		end
 	end
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

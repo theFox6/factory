@@ -1,9 +1,9 @@
 minetest.register_craft({
 	output = "factory:smoke_tube",
 	recipe = {
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"}
+		{"default:steel_ingot",              "", "default:steel_ingot"},
+		{"default:steel_ingot",              "", "default:steel_ingot"},
+		{"default:steel_ingot", "default:stick", "default:steel_ingot"}
 	}
 })
 
@@ -64,3 +64,4 @@ minetest.register_craft({
 		{'factory:half_sieve_single'},
 	}
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -20,6 +20,7 @@ function factory.register_recipe_type(typename, origdata)
 	if have_ui and unified_inventory.register_craft_type and data.output_size == 1 then
 		unified_inventory.register_craft_type(typename, {
 			description = data.description,
+			icon = data.icon,
 			width = data.input_size,
 			height = 1,
 		})
@@ -119,3 +120,4 @@ function factory.get_recipe(typename, items)
 		return nil
 	end
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -5,25 +5,25 @@ local count_index = factory.count_index
 local function oarm_handle (a, b, target, stack, obj)
 	--throws anything that is already in the inventory (more than one stack) out
 	if factory.has_main_inv(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 		local inv_index = count_index(inv:get_list("main"))
 
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
 			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-			obj:moveto(vector.add(pos,dir_right), false)
+			obj:move_to(vector.add(pos,dir_right), false)
 		else
 			if not insert(inv,"main", stack, obj) then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			end
 		end
 	end
 	if factory.has_fuel_input(target) then
 		if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-			local meta = minetest.env:get_meta(b)
+			local meta = minetest.get_meta(b)
 			local inv = meta:get_inventory()
 			-- back, fuel
 			local inv_index = count_index(inv:get_list("fuel"))
@@ -31,31 +31,31 @@ local function oarm_handle (a, b, target, stack, obj)
 			if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			else
 				if not insert(inv,"fuel", stack, obj) then
 					local pos = vector.subtract(b, a)
 					local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-					obj:moveto(vector.add(pos,dir_right), false)
+					obj:move_to(vector.add(pos,dir_right), false)
 				end
 			end
 			return
 		end
 	end
 	if factory.has_src_input(target) then
-		local meta = minetest.env:get_meta(b)
+		local meta = minetest.get_meta(b)
 		local inv = meta:get_inventory()
 		local inv_index = count_index(inv:get_list("src"))
 
 		if inv_index[stack:get_name()]~=nil and inv_index[stack:get_name()]>=99 then
 			local pos = vector.subtract(b, a)
 			local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-			obj:moveto(vector.add(pos,dir_right), false)
+			obj:move_to(vector.add(pos,dir_right), false)
 		else
 			if not insert(inv,"src", stack, obj) then
 				local pos = vector.subtract(b, a)
 				local dir_right = {x = a.z, y = a.y + 0.25, z = -a.x}
-				obj:moveto(vector.add(pos,dir_right), false)
+				obj:move_to(vector.add(pos,dir_right), false)
 			end
 		end
 	end
@@ -115,3 +115,4 @@ minetest.register_abm({
 		end
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

@@ -46,37 +46,38 @@ minetest.register_abm({
 				local stack = ItemStack(obj:get_luaentity().itemstring)
 
 				if factory.has_main_inv(target) then
-					local meta = minetest.env:get_meta(b)
+					local meta = minetest.get_meta(b)
 					local inv = meta:get_inventory()
 					if not insert(inv,"main", stack, obj) then
-						obj:setvelocity({x=0,y=0,z=0})
-						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
+						obj:set_velocity({x=0,y=0,z=0})
+						obj:move_to({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
 				if factory.has_fuel_input(target) then
 					if minetest.dir_to_facedir({x = -a.x, y = -a.y, z = -a.z}) == minetest.get_node(b).param2 then
-						local meta = minetest.env:get_meta(b)
+						local meta = minetest.get_meta(b)
 						local inv = meta:get_inventory()
 
 						-- back, fuel
 						if not insert(inv,"fuel", stack, obj) then
-							obj:setvelocity({x=0,y=0,z=0})
-							obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
+							obj:set_velocity({x=0,y=0,z=0})
+							obj:move_to({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 						end
 						return
 					end
 				end
 
 				if factory.has_src_input(target) then
-					local meta = minetest.env:get_meta(b)
+					local meta = minetest.get_meta(b)
 					local inv = meta:get_inventory()
 
 					if not insert(inv,"src", stack, obj) then
-						obj:setvelocity({x=0,y=0,z=0})
-						obj:moveto({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
+						obj:set_velocity({x=0,y=0,z=0})
+						obj:move_to({x = b.x + a.x, y = pos.y + 0.5, z = b.z + a.z}, false)
 					end
 				end
 			end
 		end
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

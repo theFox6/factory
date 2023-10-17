@@ -100,7 +100,7 @@ minetest.register_entity("factory:moving_item", {
 					end
 				end
 				dir=vector.multiply(dir,2) --correct speed
-				self.object:setvelocity(vector.divide(dir,speed))
+				self.object:set_velocity(vector.divide(dir,speed))
 				return
 			end
 		end
@@ -108,7 +108,7 @@ minetest.register_entity("factory:moving_item", {
 		local dir = vector.new(minetest.facedir_to_dir(napos.param2))
 		if napos.name == "factory:belt" then
 			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
-			self.object:setvelocity(vector.divide(dir,speed))
+			self.object:set_velocity(vector.divide(dir,speed))
 		elseif napos.name == "factory:belt_center" then
 			dir.y = math.floor(pos.y + 0.5) + 0.15 - pos.y --target height
 			if dir.x == 0 then
@@ -116,12 +116,12 @@ minetest.register_entity("factory:moving_item", {
 			elseif dir.z == 0 then
 				dir.z = (apos.z - pos.z) * 2
 			end
-			self.object:setvelocity(vector.divide(dir,speed))
+			self.object:set_velocity(vector.divide(dir,speed))
 		elseif minetest.get_item_group(napos.name, "factory_mover") > 0 then
 			dir = vector.subtract(vector.round(pos),pos) --distance to the middle
 			if math.abs(dir.x)>0.2 or math.abs(dir.z)>0.2 then
 				if dir.y~=0.29 then
-					self.object:setpos(vector.add(pos,{x=0,y=dir.y+0.19,z=0})) -- correct position
+					self.object:set_pos(vector.add(pos,{x=0,y=dir.y+0.19,z=0})) -- correct position
 				end
 				dir.y=0
 			end
@@ -131,14 +131,14 @@ minetest.register_entity("factory:moving_item", {
 				self.object:remove()
 			end
 			dir=vector.multiply(dir,2) --correct speed
-			self.object:setvelocity(vector.divide(dir,speed))
+			self.object:set_velocity(vector.divide(dir,speed))
 		elseif napos.name:find("factory:") and napos.name:find("taker") then
 			dir = vector.multiply(dir,-1) --output direction
 			dir.y = (math.floor(pos.y + 0.5) + 0.19 - pos.y) * 8 --target height
-			self.object:setvelocity(vector.divide(dir,speed))
+			self.object:set_velocity(vector.divide(dir,speed))
 		else
 			local stack = ItemStack(self.itemstring)
-			local veldir = self.object:getvelocity();
+			local veldir = self.object:get_velocity();
 			--perhaps don't drop into nodes
 			minetest.add_item({x = pos.x + veldir.x / 3, y = pos.y, z = pos.z + veldir.z / 3}, stack)
 			self.object:remove()
@@ -169,3 +169,4 @@ if factory.setting_enabled("stepBeltvelocity") then
 		end
 	end)
 end
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

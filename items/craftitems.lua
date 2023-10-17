@@ -25,3 +25,4 @@ minetest.register_craftitem("factory:fan_blade", {
 })
 
 --TODO: tar from cooking tree sap
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

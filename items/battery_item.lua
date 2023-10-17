@@ -13,3 +13,4 @@ minetest.register_craft({
 		{'technic:zinc_ingot'},
 	}
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

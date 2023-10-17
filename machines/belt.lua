@@ -6,6 +6,7 @@ minetest.register_node("factory:belt_center", {
 	tiles = {{name="factory_belt_top_animation.png",
 		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	use_texture_alpha = "clip",
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -23,6 +24,7 @@ minetest.register_node("factory:belt", {
 	tiles = {{name="factory_belt_st_top_animation.png",
 		animation={type="vertical_frames", aspect_w=16, aspect_h=16, length=0.4}}, "factory_belt_bottom.png",
 		"factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png", "factory_belt_side.png"},
+	use_texture_alpha = "clip",
 	groups = {cracky=1},
 	drawtype = "nodebox",
 	paramtype = "light",
@@ -56,7 +58,7 @@ function belts.move_player(player,bpos,speed,belt_node)
 	end
 	-- reduce speed by portion of player velocity
 	-- fast players receive less velocity
-	local pv = player:get_player_velocity()
+	local pv = player:get_velocity()
 	for c,v in pairs(dir) do
 		dir[c] = v*2
 		--don't increase speed when already fast
@@ -64,14 +66,15 @@ function belts.move_player(player,bpos,speed,belt_node)
 		  dir[c] = dir[c] - math.sign(v) * math.sqrt(math.abs(pv[c]))
 		end
 	end
-	if belt_move_player and not player.add_player_velocity then
+	-- TODO check for add_velocity at init
+	if belt_move_player and not player.add_velocity then
 	  abm_move_player = false
 	  minetest.settings:set_bool("factory_enableabmBeltvelocity",false)
 	  minetest.settings:set_bool("factory_enablestepBeltvelocity",false)
 	  belt_move_player = false
           return
 	end
-	player:add_player_velocity(vector.multiply(dir,speed))
+	player:add_velocity(vector.multiply(dir,speed))
 end
 
 minetest.register_abm({
@@ -98,3 +101,4 @@ minetest.register_abm({
 })
 
 return belts
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

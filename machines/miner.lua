@@ -282,3 +282,4 @@ minetest.register_abm({
 		meta:set_string("infotext",S("@1 has reached the maximum length",S("Upgraded Miner")))
 	end,
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

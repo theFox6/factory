@@ -147,3 +147,4 @@ return {
   set_default = set_default,
   set_defaults = set_defaults,
 }
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

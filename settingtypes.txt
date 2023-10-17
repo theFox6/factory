@@ -40,3 +40,6 @@ factory_enablestepBeltvelocity (Enable step belt velocity) bool true
 #Enable fans moving players.
 #Fans will move players if this option is enabled.
 factory_enableFanmove (Enable fan move) bool false
+
+# make flour from seeds
+factory_grindSeeds (Produce flour from seeds) bool false

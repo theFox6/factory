@@ -13,3 +13,4 @@ minetest.register_craftitem("factory:small_diamond_gear", {
 	description = S("Small Diamond Gear"),
 	inventory_image = "factory_small_diamond_gear.png"
 })
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

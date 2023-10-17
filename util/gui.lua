@@ -16,3 +16,4 @@ end
 
 factory.gui = gui
 return gui
+-- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

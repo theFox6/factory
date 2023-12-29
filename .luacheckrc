@@ -3,6 +3,8 @@ max_line_length = false
 read_globals = {
 	"default",
 	"dump",
+	"farming",
+	"ingots",
 	"intllib",
 	"ItemStack",
 	math = { fields = {"sign"} },

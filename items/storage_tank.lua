@@ -133,7 +133,7 @@ function factory.register_storage_tank(name, increment, tiles, plaintile, light,
 		wield_image = "factory_storage_tank.png",
 		groups = {not_in_creative_inventory = 1},
 		stack_max = 1,
-		on_place = function(itemstack, placer, pointed_thing)
+		on_place = function(itemstack, _, pointed_thing)
 			if not pointed_thing or pointed_thing.type ~= "node" then
 				return
 			end

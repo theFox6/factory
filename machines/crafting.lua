@@ -43,9 +43,9 @@ minetest.register_craft({
 minetest.register_craft( {
 	output = "factory:autocrafter",
 	recipe = {
-	        { "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" },
-	        { "factory:small_diamond_gear", "default:steel_ingot", "factory:small_diamond_gear" },
-	        { "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" }
+		{ "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" },
+		{ "factory:small_diamond_gear", "default:steel_ingot", "factory:small_diamond_gear" },
+		{ "factory:factory_brick", "factory:factory_brick", "factory:factory_brick" }
 	},
 })
 
@@ -67,7 +67,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "factory:taker_diamond",
-	recipe = {"factory:taker_gold", "factory:small_diamond_gear"}  --"default:diamondblock"
+	recipe = {"factory:taker_gold", "factory:small_diamond_gear"} --"default:diamondblock"
 })
 
 minetest.register_craft({
@@ -101,12 +101,12 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-  output = "factory:grinder",
-  recipe = {
-    {"default:stonebrick",  "default:stonebrick", "default:stonebrick"},
-    {"factory:small_diamond_gear", "",    "factory:small_diamond_gear"},
-    {"default:stonebrick",  "default:furnace",    "default:stonebrick"}
-  }
+	output = "factory:grinder",
+	recipe = {
+		{"default:stonebrick",  "default:stonebrick", "default:stonebrick"},
+		{"factory:small_diamond_gear", "",    "factory:small_diamond_gear"},
+		{"default:stonebrick",  "default:furnace",    "default:stonebrick"}
+	}
 })
 
 minetest.register_craft({
@@ -170,13 +170,13 @@ minetest.register_craft({
 })
 
 if factory.setting_enabled("StpCraft") then
-  minetest.register_craft({
-  	output = "factory:stp",
-  	recipe = {
-  		{ "factory:factory_brick", "factory:small_diamond_gear", "factory:factory_brick" },
-  		{ "default:glass",         "default:dirt",               "factory:factory_brick" },
-  		{ "factory:factory_brick", "default:mese_crystal",        "factory:factory_brick" }
-  	}
-  })
+	minetest.register_craft({
+		output = "factory:stp",
+		recipe = {
+			{ "factory:factory_brick", "factory:small_diamond_gear", "factory:factory_brick" },
+			{ "default:glass",         "default:dirt",               "factory:factory_brick" },
+			{ "factory:factory_brick", "default:mese_crystal",        "factory:factory_brick" }
+		}
+	})
 end
 -- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

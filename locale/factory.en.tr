@@ -63,6 +63,7 @@ Industrial Miner=Industrial Miner
 @1 forceloading block=
 @1 hit protected block=@1 hit protected block
 @1 hit lava=@1 hit lava
+@1 hit unknown block=@1 hit unknown block
 @1 hit undiggable block=@1 hit undiggable block
 @1 has reached the maximum length=@1 has reached the maximum length
 Upgraded Miner=Upgraded Miner

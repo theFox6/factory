@@ -61,6 +61,7 @@ half item sieve=halbes Gegenstandssieb
 Industrial Miner=Industrieller Bohrer
 @1 was switched off=@1 wurde ausgeschaltet
 @1 forceloading block=
+@1 hit unknown block=@1 ist auf einen unbekannten Block gestoßen
 @1 hit protected block=@1 ist auf einen geschützten Block gestoßen
 @1 hit lava=@1 ist auf Lava gestoßen
 @1 hit undiggable block=@1 ist auf einen nicht grabbaren Block gestoßen

@@ -24,5 +24,11 @@ minetest.register_craftitem("factory:fan_blade", {
 	inventory_image = "factory_fan_blade.png"
 })
 
+minetest.register_craftitem("factory:piston", {
+  description = S("Piston"),
+  inventory_image = "factory_piston.png",
+  groups = { piston_craftable = 1 }
+})
+
 --TODO: tar from cooking tree sap
 -- vim: et:ai:sw=2:ts=2:fdm=indent:syntax=lua

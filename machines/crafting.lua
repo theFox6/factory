@@ -85,8 +85,8 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "factory:ind_squeezer",
 	recipe = {
-		{"default:glass", "default:stick", "default:glass"},
-		{"default:glass", "default:steel_ingot", "default:glass"},
+		{"default:glass", "factory:piston", "default:glass"},
+		{"default:glass", "", "default:glass"},
 		{"factory:small_gold_gear", "factory:ind_furnace", "factory:small_gold_gear"}
 	}
 })

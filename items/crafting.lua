@@ -37,6 +37,25 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+  output = "factory:piston",
+  recipe = {
+    {"group:wood", "group:wood", "group:wood"},
+    {"group:stone", "default:steel_ingot", "group:stone"},
+    {"group:stone", "", "group:stone"}
+  }
+})
+
+if minetest.get_modpath("mesecons_pistons") then
+  minetest.register_craft({
+    output = "mesecons_pistons:piston_normal_off",
+    recipe = {
+      {"factory:piston"},
+      {"group:mesecon_conductor_craftable"},
+    }
+  })
+end
+
+minetest.register_craft({
 	output = "factory:storage_tank",
 	recipe = {
 		{"default:glass", 	"default:steel_ingot", 		"default:glass"},
